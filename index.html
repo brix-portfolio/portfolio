@@ -149,13 +149,24 @@
       -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
       mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
     }
-    .tools-heading {
-      font-size: 11px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gold);
-      padding: 0 16px 10px;
-    }
+.tools-heading {
+  grid-column: 1 / -1;
+  font-family: var(--font-d);
+  font-size: clamp(16px, 1.8vw, 20px);
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 6px;
+}
+.tools-heading::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  opacity: 0.5;
+}
     .tools-track {
       display: flex; align-items: center; gap: 12px; width: max-content;
       animation: toolsScroll 26s linear infinite;
@@ -475,8 +486,8 @@
         <div class="stat-card"><div class="stat-num">BSIT</div><div class="stat-label">Graduate</div></div>
         <div class="stat-card"><div class="stat-num">∞</div><div class="stat-label">Creative Drive</div></div>
         
+      <div class="tools-heading">Tools I Use</div>
       <div class="tools-marquee reveal reveal-delay-2">
-        <div class="tools-heading">Tools I Use</div>
         <div class="tools-track" id="toolsTrack"></div>
       </div>
       </div>
@@ -634,6 +645,15 @@ const WORKS = [
   {
     category: 'ai',
     type:     'youtube',
+    thumb:    'https://img.youtube.com/vi/sa_gY8AqlWo/hqdefault.jpg',
+    media:    'sa_gY8AqlWo',
+    cat:      'AI Creatives',
+    title:    'Project Title',
+    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
+  },
+  {
+    category: 'ai',
+    type:     'youtube',
     thumb:    'https://img.youtube.com/vi/cVtREW3naVU/hqdefault.jpg',
     media:    'cVtREW3naVU',
     cat:      'AI Creatives',
@@ -643,8 +663,8 @@ const WORKS = [
   {
     category: 'ai',
     type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/AI_VIDEO_ID_2/hqdefault.jpg',
-    media:    'AI_VIDEO_ID_2',
+    thumb:    'https://img.youtube.com/vi/B1I1StHxQTA/hqdefault.jpg',
+    media:    'B1I1StHxQTA',
     cat:      'AI Creatives',
     title:    'Project Title',
     desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
@@ -652,17 +672,8 @@ const WORKS = [
   {
     category: 'ai',
     type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/AI_VIDEO_ID_3/hqdefault.jpg',
-    media:    'AI_VIDEO_ID_3',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/AI_VIDEO_ID_4/hqdefault.jpg',
-    media:    'AI_VIDEO_ID_4',
+    thumb:    'https://img.youtube.com/vi/WodrD-Y30TA/hqdefault.jpg',
+    media:    'WodrD-Y30TA',
     cat:      'AI Creatives',
     title:    'Project Title',
     desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
@@ -710,8 +721,8 @@ const WORKS = [
   {
     category: 'poster',
     type:     'image',
-    thumb:    'workimages/work1.png',
-    media:    'workimages/work1.png',
+    thumb:    'workimages/work1.jpg',
+    media:    'workimages/work1.jpg',
     cat:      'Product Poster',
     title:    'Project Title',
     desc:     'Brief description — what it was for, tools used, etc.'
@@ -719,8 +730,8 @@ const WORKS = [
   {
     category: 'poster',
     type:     'image',
-    thumb:    'workimages/work2.png',
-    media:    'workimages/work2.png',
+    thumb:    'workimages/work2.jpg',
+    media:    'workimages/work2.jpg',
     cat:      'Product Poster',
     title:    'Project Title',
     desc:     'Brief description — what it was for, tools used, etc.'
@@ -728,8 +739,8 @@ const WORKS = [
   {
     category: 'poster',
     type:     'image',
-    thumb:    'workimages/work3.png',
-    media:    'workimages/work3.png',
+    thumb:    'workimages/work3.jpg',
+    media:    'workimages/work3.jpg',
     cat:      'Product Poster',
     title:    'Project Title',
     desc:     'Brief description — what it was for, tools used, etc.'
@@ -737,17 +748,8 @@ const WORKS = [
   {
     category: 'poster',
     type:     'image',
-    thumb:    'workimages/work4.png',
-    media:    'workimages/work4.png',
-    cat:      'Product Poster',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'poster',
-    type:     'image',
-    thumb:    'workimages/work5.png',
-    media:    'workimages/work5.png',
+    thumb:    'workimages/work4.jpg',
+    media:    'workimages/work4.jpg',
     cat:      'Product Poster',
     title:    'Project Title',
     desc:     'Brief description — what it was for, tools used, etc.'

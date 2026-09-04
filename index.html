@@ -139,16 +139,23 @@
     .stat-num { font-family: var(--font-d); font-size: 36px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
     .stat-label { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
 
-    /* ── TOOLS CAROUSEL — auto-scrolling strip of software/tool names ── */
+    /* ── TOOLS CAROUSEL — swipeable strip of software/tool names ── */
     .tools-marquee {
       grid-column: 1 / -1; /* spans both stat-card columns */
-      position: relative; overflow: hidden;
+      position: relative; overflow-x: auto; overflow-y: hidden;
       border-radius: 10px; border: 1px solid var(--border);
       background: rgba(18,26,48,0.5); backdrop-filter: blur(10px);
-      padding: 16px 0;
+      padding: 26px 0;
       -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
       mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      cursor: grab;
+      touch-action: pan-x;
+      user-select: none;
     }
+    .tools-marquee::-webkit-scrollbar { display: none; }
+    .tools-marquee.dragging { cursor: grabbing; }
 .tools-heading {
   grid-column: 1 / -1;
   font-family: var(--font-d);
@@ -168,27 +175,22 @@
   opacity: 0.5;
 }
     .tools-track {
-      display: flex; align-items: center; gap: 12px; width: max-content;
-      animation: toolsScroll 26s linear infinite;
+      display: flex; align-items: center; gap: 16px; width: max-content;
     }
-    .tools-marquee:hover .tools-track { animation-play-state: paused; }
     .tool-chip {
-      display: inline-flex; align-items: center; gap: 9px;
-      padding: 8px 20px 8px 10px; font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 12px 26px 12px 12px; font-size: 14px; font-weight: 500; letter-spacing: 0.04em;
       color: var(--text); white-space: nowrap;
       border: 1px solid var(--border); border-radius: 100px;
       background: rgba(12,18,35,0.6);
     }
     .tool-chip img {
-      width: 22px; height: 22px; border-radius: 6px; object-fit: contain;
+      width: 30px; height: 30px; border-radius: 7px; object-fit: contain;
       background: rgba(255,255,255,0.06); flex-shrink: 0;
+      -webkit-user-drag: none;
     }
     /* Fallback dot for any tool with no logo path set */
     .tool-chip.no-logo::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
-    @keyframes toolsScroll {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); } /* track content is duplicated ×2, so -50% = one seamless loop */
-    }
 
     .services { background: transparent; }
     .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
@@ -952,16 +954,90 @@ const TOOLS = [
 function buildToolsMarquee() {
   const track = document.getElementById('toolsTrack');
   if (!track) return;
-  // Duplicated ×2 so the -50% scroll animation loops seamlessly with no gap/jump.
+  // Duplicated ×2 so the loop can wrap seamlessly with no gap/jump.
   const chips = [...TOOLS, ...TOOLS]
     .map(t => {
       const hasLogo = !!t.logo;
       return `<span class="tool-chip${hasLogo ? '' : ' no-logo'}">${
-        hasLogo ? `<img src="${t.logo}" alt="${t.name}" onerror="this.style.display='none'" />` : ''
+        hasLogo ? `<img src="${t.logo}" alt="${t.name}" draggable="false" onerror="this.style.display='none'" />` : ''
       }${t.name}</span>`;
     })
     .join('');
   track.innerHTML = chips;
+  initToolsCarousel();
+}
+
+// Swipeable + always-drifting tools strip.
+// - Auto-scrolls slowly, continuously — including while being swiped/dragged.
+// - Swipe/drag with a finger or mouse adds extra movement on top of the
+//   constant auto-drift, instead of pausing it.
+// - Loops seamlessly because TOOLS is duplicated ×2 in the track above.
+function initToolsCarousel() {
+  const marquee = document.querySelector('.tools-marquee');
+  const track = document.getElementById('toolsTrack');
+  if (!marquee || !track) return;
+
+  const AUTO_SPEED = 0.45; // px per animation frame, always applied
+
+  let pos = 1;          // our own float source of truth for scroll position
+  let isDragging = false;
+  let lastX = 0;
+
+  function halfWidth() {
+    return track.scrollWidth / 2;
+  }
+
+  function normalize() {
+    const half = halfWidth();
+    if (half > 0) pos = ((pos % half) + half) % half;
+  }
+
+  function applyPos() {
+    normalize();
+    marquee.scrollLeft = pos;
+  }
+
+  // The animation loop never stops — it keeps nudging pos forward every
+  // frame regardless of whether the user is currently dragging.
+  function frame() {
+    pos += AUTO_SPEED;
+    applyPos();
+    requestAnimationFrame(frame);
+  }
+
+  // Drag/swipe with mouse or touch (pointer events cover both).
+  marquee.addEventListener('pointerdown', e => {
+    isDragging = true;
+    marquee.classList.add('dragging');
+    lastX = e.clientX;
+    marquee.setPointerCapture(e.pointerId);
+  });
+
+  marquee.addEventListener('pointermove', e => {
+    if (!isDragging) return;
+    const dx = e.clientX - lastX;
+    lastX = e.clientX;
+    pos -= dx; // swipe stacks on top of the auto-drift happening in frame()
+    applyPos();
+  });
+
+  function endDrag() {
+    isDragging = false;
+    marquee.classList.remove('dragging');
+  }
+  marquee.addEventListener('pointerup', endDrag);
+  marquee.addEventListener('pointercancel', endDrag);
+  marquee.addEventListener('pointerleave', () => { if (isDragging) endDrag(); });
+
+  // Trackpad/mouse-wheel horizontal scroll also stacks on top of the drift.
+  marquee.addEventListener('wheel', e => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      pos += e.deltaX;
+      applyPos();
+    }
+  }, { passive: true });
+
+  requestAnimationFrame(frame);
 }
 buildToolsMarquee();
 

@@ -982,10 +982,22 @@ const DARK_VIGNETTE  = 'rgba(8,13,26,0.55)';
 const LIGHT_VIGNETTE = 'rgba(230,225,210,0.5)';
 let vignetteColor = DARK_VIGNETTE;
 
+// Background canvas (drifting lines + particles) colors, swapped per
+// theme. The dark-mode gold/blue at low alpha reads fine on the navy
+// background but nearly disappears on the light cream background, so
+// light mode uses deeper, more saturated tones with a stronger alpha
+// boost so the animation stays clearly visible either way.
+const BG_COLORS = {
+  dark:  { gold: '201,168,76', blue: '80,140,220', alphaBoost: 1    },
+  light: { gold: '138,100,18', blue: '20,72,158',  alphaBoost: 1.9  }
+};
+let bgColors = BG_COLORS.dark;
+
 function applyTheme(theme) {
   const isLight = theme === 'light';
   document.body.classList.toggle('light-mode', isLight);
   vignetteColor = isLight ? LIGHT_VIGNETTE : DARK_VIGNETTE;
+  bgColors = isLight ? BG_COLORS.light : BG_COLORS.dark;
   const toggleBtn = document.getElementById('themeToggle');
   if (toggleBtn) toggleBtn.setAttribute('aria-pressed', String(isLight));
 }
@@ -1032,11 +1044,13 @@ function drawLines() {
     l.offset += l.speed;
     if (l.horiz) { if (l.offset > W + l.len) l.offset = -l.len; if (l.offset < -l.len) l.offset = W + l.len; }
     else { if (l.offset > H + l.len) l.offset = -l.len; if (l.offset < -l.len) l.offset = H + l.len; }
+    const isGold = l.hue === 43;
+    const rgb = isGold ? bgColors.gold : bgColors.blue;
+    const alpha = Math.min(l.alpha * bgColors.alphaBoost, 0.95);
     const grad = l.horiz ? ctx.createLinearGradient(l.offset - l.len/2, l.pos, l.offset + l.len/2, l.pos) : ctx.createLinearGradient(l.pos, l.offset - l.len/2, l.pos, l.offset + l.len/2);
-    const col = l.hue === 43 ? 'rgba(201,168,76,' : 'rgba(80,140,220,';
-    grad.addColorStop(0, col + '0)'); grad.addColorStop(0.5, col + l.alpha + ')'); grad.addColorStop(1, col + '0)');
+    grad.addColorStop(0, `rgba(${rgb},0)`); grad.addColorStop(0.5, `rgba(${rgb},${alpha})`); grad.addColorStop(1, `rgba(${rgb},0)`);
     ctx.save(); ctx.strokeStyle = grad; ctx.lineWidth = l.width; ctx.shadowBlur = 12;
-    ctx.shadowColor = l.hue === 43 ? 'rgba(201,168,76,0.4)' : 'rgba(80,140,220,0.4)';
+    ctx.shadowColor = `rgba(${rgb},0.4)`;
     ctx.beginPath();
     if (l.horiz) { ctx.moveTo(l.offset - l.len/2, l.pos); ctx.lineTo(l.offset + l.len/2, l.pos); }
     else { ctx.moveTo(l.pos, l.offset - l.len/2); ctx.lineTo(l.pos, l.offset + l.len/2); }
@@ -1050,9 +1064,11 @@ function drawParticles() {
     if (p.x < 0) p.x = W; if (p.x > W) p.x = 0; if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
     const dx = p.x - mouse.x, dy = p.y - mouse.y, dist = Math.sqrt(dx*dx + dy*dy);
     if (dist < 100) { p.x += dx / dist * 0.6; p.y += dy / dist * 0.6; }
+    const rgb = bgColors.gold;
+    const alpha = Math.min(p.alpha * bgColors.alphaBoost, 0.95);
     ctx.save(); ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(201,168,76,${p.alpha})`; ctx.shadowBlur = 6;
-    ctx.shadowColor = 'rgba(201,168,76,0.5)'; ctx.fill(); ctx.restore();
+    ctx.fillStyle = `rgba(${rgb},${alpha})`; ctx.shadowBlur = 6;
+    ctx.shadowColor = `rgba(${rgb},0.5)`; ctx.fill(); ctx.restore();
   });
 }
 

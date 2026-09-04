@@ -570,6 +570,48 @@ const WORKS = [
     desc:     'Brief description — what it was for, tools used, etc.'
   },
 
+  // ── AI CREATIVES ────────────────────────────────────
+  // Displays with the same phone-frame treatment as Video Editing.
+  // These are YouTube Shorts, just like the Video Editing section —
+  // paste each video's ID into both "thumb" and "media" below
+  // (see the note above WORKS for how to get the ID from a Shorts URL).
+  {
+    category: 'ai',
+    type:     'youtube',
+    thumb:    'https://img.youtube.com/vi/cVtREW3naVU/hqdefault.jpg',
+    media:    'cVtREW3naVU',
+    cat:      'AI Creatives',
+    title:    'Project Title',
+    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
+  },
+  {
+    category: 'ai',
+    type:     'youtube',
+    thumb:    'https://img.youtube.com/vi/AI_VIDEO_ID_2/hqdefault.jpg',
+    media:    'AI_VIDEO_ID_2',
+    cat:      'AI Creatives',
+    title:    'Project Title',
+    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
+  },
+  {
+    category: 'ai',
+    type:     'youtube',
+    thumb:    'https://img.youtube.com/vi/AI_VIDEO_ID_3/hqdefault.jpg',
+    media:    'AI_VIDEO_ID_3',
+    cat:      'AI Creatives',
+    title:    'Project Title',
+    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
+  },
+  {
+    category: 'ai',
+    type:     'youtube',
+    thumb:    'https://img.youtube.com/vi/AI_VIDEO_ID_4/hqdefault.jpg',
+    media:    'AI_VIDEO_ID_4',
+    cat:      'AI Creatives',
+    title:    'Project Title',
+    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
+  },
+
   // ── GRAPHIC DESIGN / MOTION GRAPHICS ───────────────
   {
     category: 'graphic',
@@ -659,8 +701,8 @@ const WORKS = [
 // ═══════════════════════════════════════════════════════
 
 // ── BUILD CARDS ──────────────────────────────────────
-const CATEGORY_ORDER  = ['video', 'graphic', 'poster'];
-const CATEGORY_LABELS = { video: 'Video Editing', graphic: 'Motion Graphics', poster: 'Product Poster' };
+const CATEGORY_ORDER  = ['video', 'ai', 'graphic', 'poster'];
+const CATEGORY_LABELS = { video: 'Video Editing', ai: 'AI Creatives', graphic: 'Motion Graphics', poster: 'Product Poster' };
 
 function buildCards() {
   const container = document.getElementById('workContainer');
@@ -682,6 +724,7 @@ function buildCards() {
 
       // Frame choice is driven by category:
       //  - video   → phone frame, plays the clip
+      //  - ai      → phone frame, plays the clip or shows the still (AI Creatives)
       //  - graphic → phone frame, shows the static image
       //  - poster  → laptop frame, shows the static image
       const isMotion = (w.type === 'video' || w.type === 'youtube');
@@ -696,7 +739,7 @@ function buildCards() {
 
       let previewHtml;
 
-      if (w.category === 'video') {
+      if (w.category === 'video' || w.category === 'ai') {
         if (w.type === 'youtube') {
           previewHtml = `
             <div class="video-preview-frame">
@@ -707,11 +750,19 @@ function buildCards() {
                   referrerpolicy="strict-origin-when-cross-origin"></iframe>
               </div>
             </div>`;
-        } else {
+        } else if (w.type === 'video') {
           previewHtml = `
             <div class="video-preview-frame">
               <div class="phone-mockup">
                 <video src="${w.media}" autoplay muted loop playsinline preload="metadata"></video>
+              </div>
+            </div>`;
+        } else {
+          // AI-generated still image inside the same phone frame
+          previewHtml = `
+            <div class="video-preview-frame">
+              <div class="phone-mockup">
+                <img src="${w.thumb}" alt="${w.title}" />
               </div>
             </div>`;
         }

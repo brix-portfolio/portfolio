@@ -187,9 +187,21 @@
       pointer-events: none;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
     }
-    .phone-mockup video, .phone-mockup iframe {
+    .phone-mockup video {
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover; border: none; pointer-events: none; background: #000;
+    }
+    /* YouTube's own player letterboxes inside the iframe since object-fit
+       can't reach cross-origin iframe content. Instead, force the iframe
+       to the video's true 9:16 ratio, oversize it past the frame, and let
+       the frame's overflow:hidden crop the excess — same visual result
+       as object-fit: cover. */
+    .phone-mockup iframe {
+      position: absolute; top: 50%; left: 50%;
+      height: 100%; width: auto; aspect-ratio: 9 / 16;
+      min-width: 100%;
+      transform: translate(-50%, -50%);
+      border: none; pointer-events: none; background: #000;
     }
     .phone-mockup img {
       position: absolute; inset: 0; width: 100%; height: 100%;
@@ -578,8 +590,8 @@ const WORKS = [
   {
     category: 'ai',
     type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/cVtREW3naVU/hqdefault.jpg',
-    media:    'cVtREW3naVU',
+    thumb:    'https://img.youtube.com/vi/AI_VIDEO_ID_1/hqdefault.jpg',
+    media:    'AI_VIDEO_ID_1',
     cat:      'AI Creatives',
     title:    'Project Title',
     desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'

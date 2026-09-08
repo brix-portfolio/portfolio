@@ -297,6 +297,28 @@
     .work-thumb-wrap { position: relative; }
     .work-thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; border-radius: 10px; }
 
+    /* ── SWIPEABLE WORK CAROUSEL (used for AI Creatives) ── */
+    .work-carousel {
+      display: flex; flex-wrap: nowrap;
+      overflow-x: auto; overflow-y: hidden;
+      gap: 20px;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      cursor: grab;
+      user-select: none;
+      padding-bottom: 6px;
+      margin: 0 -4px;
+      padding-left: 4px; padding-right: 4px;
+    }
+    .work-carousel::-webkit-scrollbar { display: none; }
+    .work-carousel.dragging { cursor: grabbing; scroll-snap-type: none; }
+    .work-carousel .work-card {
+      flex: 0 0 clamp(180px, 22vw, 240px);
+      scroll-snap-align: start;
+    }
+    .work-carousel .work-card:hover { transform: none; }
+
     /* ── PHONE-FRAME PREVIEW for vertical video/shorts cards ── */
     .video-preview-frame {
       width: 100%; aspect-ratio: 3/4; position: relative; overflow: visible;
@@ -872,6 +894,9 @@ const WORKS = [
 // 'graphic' back into this list whenever you want it visible again.
 const CATEGORY_ORDER  = ['video', 'ai', 'poster'];
 const CATEGORY_LABELS = { video: 'Short form/Reelsg', ai: 'AI Creatives', graphic: 'Motion Graphics', poster: 'Product Poster' };
+// Categories that render as a swipeable horizontal carousel instead
+// of the normal wrapping grid. Add/remove category keys here.
+const CAROUSEL_CATEGORIES = ['ai'];
 
 function buildCards() {
   const container = document.getElementById('workContainer');
@@ -881,11 +906,13 @@ function buildCards() {
     const items = WORKS.filter(w => w.category === cat);
     if (!items.length) return;
 
+    const isCarousel = CAROUSEL_CATEGORIES.includes(cat);
+
     const section = document.createElement('div');
     section.className = 'work-category';
     section.innerHTML = `
       <h3 class="work-category-title reveal">${CATEGORY_LABELS[cat] || cat}</h3>
-      <div class="work-grid"></div>`;
+      <div class="work-grid${isCarousel ? ' work-carousel' : ''}"></div>`;
     const grid = section.querySelector('.work-grid');
 
     items.forEach((w, i) => {
@@ -969,9 +996,50 @@ function buildCards() {
     });
 
     container.appendChild(section);
+
+    if (isCarousel) initDragScroll(grid);
   });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// Adds mouse/touch drag-to-scroll to a horizontally scrollable element.
+// Native touch swipe already works on overflow-x:auto containers, this
+// mainly adds click-and-drag support for mouse/trackpad users, and
+// suppresses the card's click-to-open-lightbox if the pointer actually
+// moved (so a swipe doesn't accidentally trigger the lightbox).
+function initDragScroll(el) {
+  let isDown = false, startX = 0, scrollLeft = 0, moved = false;
+
+  el.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    isDown = true; moved = false;
+    el.classList.add('dragging');
+    startX = e.clientX;
+    scrollLeft = el.scrollLeft;
+    el.setPointerCapture(e.pointerId);
+  });
+
+  el.addEventListener('pointermove', e => {
+    if (!isDown) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) moved = true;
+    el.scrollLeft = scrollLeft - dx;
+  });
+
+  function endDrag() {
+    isDown = false;
+    el.classList.remove('dragging');
+  }
+  el.addEventListener('pointerup', endDrag);
+  el.addEventListener('pointercancel', endDrag);
+  el.addEventListener('pointerleave', () => { if (isDown) endDrag(); });
+
+  // Suppress the click that fires right after a drag so swiping
+  // doesn't also pop open the lightbox.
+  el.addEventListener('click', e => {
+    if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; }
+  }, true);
 }
 
 // ── THEME (dark / light) ─────────────────────────────

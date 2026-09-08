@@ -329,34 +329,31 @@
       margin-right: -50vw;
     }
     .edge-glow {
-      position: absolute; top: 0; bottom: 0; width: 90px;
+      position: absolute; top: 50%; width: 150px; height: 150px;
+      border-radius: 50%; filter: blur(6px);
       pointer-events: none; z-index: 6; opacity: 0;
-      transition: opacity 0.15s ease;
+      transform: translateY(-50%) scale(0.55);
+      transition: opacity 0.28s cubic-bezier(0.22,1,0.36,1), transform 0.28s cubic-bezier(0.22,1,0.36,1);
     }
     .edge-glow-left {
-      left: 0;
-      background: linear-gradient(90deg, rgba(201,168,76,0.4), transparent);
+      left: -70px;
+      background: radial-gradient(circle, rgba(201,168,76,0.55), rgba(201,168,76,0) 68%);
     }
     .edge-glow-right {
-      right: 0;
-      background: linear-gradient(270deg, rgba(201,168,76,0.4), transparent);
+      right: -70px;
+      background: radial-gradient(circle, rgba(201,168,76,0.55), rgba(201,168,76,0) 68%);
     }
     .edge-glow.active { opacity: 1; }
-    .edge-glow.pulse { animation: edgePulse 0.4s ease; }
-    @keyframes edgePulse {
-      0% { opacity: 0.4; }
-      40% { opacity: 1; }
-      100% { opacity: 0.4; }
-    }
     .work-carousel {
       display: flex; flex-wrap: nowrap;
       overflow-x: auto; overflow-y: hidden;
       gap: 20px;
       scroll-snap-type: x proximity;
-      -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       cursor: grab;
       user-select: none;
+      touch-action: pan-y;
+      overscroll-behavior-x: contain;
       padding-bottom: 6px;
       padding-left: 60px; padding-right: 60px;
       will-change: transform;
@@ -1075,9 +1072,9 @@ function buildCards() {
 // start or end of the carousel (an edge-of-screen swipe indicator).
 function initDragScroll(el) {
   let isDown = false, startX = 0, scrollLeft = 0, moved = false;
-  let overdrag = 0;
-  const MAX_OVERDRAG = 64;
-  const RESISTANCE = 0.45;
+  let overdrag = 0;               // raw, unclamped drag distance past the edge (px)
+  const ELASTIC_RANGE = 130;      // px of visual travel the bounce eases toward
+  const ELASTIC_CONST = 0.55;     // Apple's UIScrollView rubber-band constant
 
   const wrap = el.closest('.carousel-wrap');
   const glowLeft = wrap ? wrap.querySelector('.edge-glow-left') : null;
@@ -1087,45 +1084,55 @@ function initDragScroll(el) {
     return Math.max(0, el.scrollWidth - el.clientWidth);
   }
 
-  function setOverdrag(raw) {
-    overdrag = Math.max(-MAX_OVERDRAG, Math.min(MAX_OVERDRAG, raw));
-    el.style.transform = overdrag ? `translateX(${-overdrag * RESISTANCE}px)` : '';
+  // The classic iOS overscroll curve: displacement grows fast at first,
+  // then eases off and asymptotically approaches `range` — the further
+  // you pull, the more resistance you feel, but it never hard-stops.
+  function rubberBand(distance, range) {
+    return (distance * range * ELASTIC_CONST) / (range + ELASTIC_CONST * distance);
+  }
 
+  function setOverdrag(raw) {
+    overdrag = raw; // signed, unclamped
+    const eased = rubberBand(Math.abs(overdrag), ELASTIC_RANGE);
+    el.style.transform = overdrag ? `translateX(${-Math.sign(overdrag) * eased}px)` : '';
+
+    const ratio = Math.min(1, eased / ELASTIC_RANGE);
+    const scale = 0.55 + ratio * 0.55;
     if (glowLeft) {
-      if (overdrag < -2) {
+      if (overdrag < -1) {
         glowLeft.classList.add('active');
-        glowLeft.style.opacity = Math.min(1, Math.abs(overdrag) / MAX_OVERDRAG);
+        glowLeft.style.opacity = ratio;
+        glowLeft.style.transform = `translateY(-50%) scale(${scale})`;
       } else {
         glowLeft.classList.remove('active');
         glowLeft.style.opacity = '';
+        glowLeft.style.transform = '';
       }
     }
     if (glowRight) {
-      if (overdrag > 2) {
+      if (overdrag > 1) {
         glowRight.classList.add('active');
-        glowRight.style.opacity = Math.min(1, overdrag / MAX_OVERDRAG);
+        glowRight.style.opacity = ratio;
+        glowRight.style.transform = `translateY(-50%) scale(${scale})`;
       } else {
         glowRight.classList.remove('active');
         glowRight.style.opacity = '';
+        glowRight.style.transform = '';
       }
     }
   }
 
   function releaseOverdrag() {
-    const hitEdge = overdrag !== 0;
     overdrag = 0;
-    el.style.transition = 'transform 0.4s cubic-bezier(0.22,1,0.36,1)';
+    // Springy snap-back — a touch of overshoot past 0 before settling,
+    // the same felt-physics as the native iOS/Android edge bounce.
+    el.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
     el.style.transform = '';
-    if (glowLeft) { glowLeft.classList.remove('active'); glowLeft.style.opacity = ''; }
-    if (glowRight) { glowRight.classList.remove('active'); glowRight.style.opacity = ''; }
-    if (hitEdge) {
-      const flashSide = el.scrollLeft <= 0 ? glowLeft : (el.scrollLeft >= maxScroll() ? glowRight : null);
-      if (flashSide) {
-        flashSide.classList.add('pulse');
-        setTimeout(() => flashSide.classList.remove('pulse'), 420);
-      }
-    }
-    setTimeout(() => { el.style.transition = ''; }, 400);
+    // Single smooth fade — no separate "flash" step, so a hard/fast
+    // swipe can't show the glow twice (once live, once as a pulse).
+    if (glowLeft) { glowLeft.classList.remove('active'); glowLeft.style.opacity = ''; glowLeft.style.transform = ''; }
+    if (glowRight) { glowRight.classList.remove('active'); glowRight.style.opacity = ''; glowRight.style.transform = ''; }
+    setTimeout(() => { el.style.transition = ''; }, 500);
   }
 
   el.addEventListener('pointerdown', e => {
@@ -1173,20 +1180,18 @@ function initDragScroll(el) {
     if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; }
   }, true);
 
-  // "Swipe to see more" hint: hidden once the user has scrolled away
-  // from the start, and shown again whenever they scroll back to it —
-  // covers dragging, native touch scroll, and momentum, since all of
-  // those update scrollLeft and fire 'scroll'.
+  // "Swipe to see more" hint: visible while the carousel is near its
+  // start, hidden once scrolled meaningfully away. Uses a generous
+  // buffer zone (not just scrollLeft === 0) so it reappears on the way
+  // back to the start — independent of the edge-glow rubberband, which
+  // only ever fires exactly at the 0/max boundary. Without this buffer
+  // both effects trigger in the same instant and look like one thing.
   const hint = el.closest('.work-category')?.querySelector('.title-swipe-hint');
   if (hint) {
-    let hintFrame = null;
-    const updateHint = () => {
-      hintFrame = null;
-      hint.classList.toggle('hidden', el.scrollLeft > 4);
-    };
-    el.addEventListener('scroll', () => {
-      if (hintFrame === null) hintFrame = requestAnimationFrame(updateHint);
-    }, { passive: true });
+    const HINT_ZONE = 32;
+    const updateHint = () => hint.classList.toggle('hidden', el.scrollLeft > HINT_ZONE);
+    el.addEventListener('scroll', updateHint, { passive: true });
+    updateHint();
   }
 }
 

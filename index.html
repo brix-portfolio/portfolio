@@ -24,9 +24,6 @@
       --font-d:   'Playfair Display', Georgia, serif;
       --font-b:   'DM Sans', system-ui, sans-serif;
 
-      /* Panel / scrim tones used across cards, nav, lightbox, etc. —
-         themed separately from --navy so light mode can flip them
-         from frosted-dark to frosted-light without touching every rule. */
       --panel:            rgba(18,26,48,0.65);
       --panel-soft:       rgba(18,26,48,0.5);
       --panel-strong:     rgba(18,26,48,0.9);
@@ -42,10 +39,6 @@
       --vignette-color:   rgba(8,13,26,0.55);
     }
 
-    /* ── LIGHT MODE ────────────────────────────────────
-       Flips the same variable set to a warm off-white editorial
-       palette. Nothing else in the file needs to change — every
-       rule below reads from these custom properties. */
     body.light-mode {
       --navy:     #f6f3ec;
       --gold:     #a9843a;
@@ -204,7 +197,6 @@
     }
     .work-category-title::after { content: ''; flex: 1; min-width: 24px; height: 1px; background: linear-gradient(90deg, var(--gold), transparent); opacity: 0.5; order: 1; }
 
-    /* ── "Swipe to see more" hint (AI Creatives carousel heading) ── */
     .title-swipe-hint {
       order: 2;
       display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px;
@@ -242,9 +234,8 @@
     .stat-num { font-family: var(--font-d); font-size: 36px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
     .stat-label { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
 
-    /* ── TOOLS CAROUSEL — swipeable strip of software/tool names ── */
     .tools-marquee {
-      grid-column: 1 / -1; /* spans both stat-card columns */
+      grid-column: 1 / -1;
       position: relative; overflow-x: auto; overflow-y: hidden;
       border-radius: 10px; border: 1px solid var(--border);
       background: var(--panel-soft); backdrop-filter: blur(10px);
@@ -260,24 +251,24 @@
     }
     .tools-marquee::-webkit-scrollbar { display: none; }
     .tools-marquee.dragging { cursor: grabbing; }
-.tools-heading {
-  grid-column: 1 / -1;
-  font-family: var(--font-d);
-  font-size: clamp(16px, 1.8vw, 20px);
-  font-weight: 600;
-  color: var(--heading);
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 6px;
-}
-.tools-heading::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, var(--gold), transparent);
-  opacity: 0.5;
-}
+    .tools-heading {
+      grid-column: 1 / -1;
+      font-family: var(--font-d);
+      font-size: clamp(16px, 1.8vw, 20px);
+      font-weight: 600;
+      color: var(--heading);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 6px;
+    }
+    .tools-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      opacity: 0.5;
+    }
     .tools-track {
       display: flex; align-items: center; gap: 16px; width: max-content;
     }
@@ -294,7 +285,6 @@
       background: var(--icon-fill-soft); flex-shrink: 0;
       -webkit-user-drag: none;
     }
-    /* Fallback dot for any tool with no logo path set */
     .tool-chip.no-logo::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
 
     .services { background: transparent; }
@@ -316,10 +306,6 @@
     .work-thumb-wrap { position: relative; }
     .work-thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; border-radius: 10px; }
 
-    /* ── SWIPEABLE WORK CAROUSEL (used for AI Creatives) ──
-       Full-bleed: breaks out of the section's side padding so the
-       scroll track spans the full viewport width and cards can swipe
-       flush to the screen edges. */
     .carousel-wrap {
       position: relative;
       width: 100vw;
@@ -343,17 +329,15 @@
       right: -70px;
       background: radial-gradient(circle, rgba(201,168,76,0.55), rgba(201,168,76,0) 68%);
     }
-
     .edge-glow.active {
-  opacity: 1;
-  animation: edgeGlowPop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-@keyframes edgeGlowPop {
-  0%   { transform: translateY(-50%) scale(0.55); opacity: 0; }
-  60%  { transform: translateY(-50%) scale(1.15); opacity: 1; }
-  100% { transform: translateY(-50%) scale(1); opacity: 1; }
-}
-    .edge-glow.active { opacity: 1; }
+      opacity: 1;
+      animation: edgeGlowPop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes edgeGlowPop {
+      0%   { transform: translateY(-50%) scale(0.55); opacity: 0; }
+      60%  { transform: translateY(-50%) scale(1.15); opacity: 1; }
+      100% { transform: translateY(-50%) scale(1); opacity: 1; }
+    }
     .work-carousel {
       display: flex; flex-wrap: nowrap;
       overflow-x: auto; overflow-y: hidden;
@@ -363,7 +347,7 @@
       scrollbar-width: none;
       cursor: grab;
       user-select: none;
-      touch-action: pan-X pan-Y;
+      touch-action: pan-x pan-y;
       overscroll-behavior-x: contain;
       padding-bottom: 6px;
       padding-left: 60px; padding-right: 60px;
@@ -379,14 +363,12 @@
     }
     .work-carousel .work-card:hover { transform: none; }
 
-    /* ── PHONE-FRAME PREVIEW for vertical video/shorts cards ── */
     .video-preview-frame {
       width: 100%; aspect-ratio: 3/4; position: relative; overflow: visible;
       display: flex; align-items: center; justify-content: center;
       background: transparent;
     }
     .phone-mockup {
-      /* Actual iPhone 13 body ratio: 71.5mm wide x 146.7mm tall */
       position: relative; height: 96%; aspect-ratio: 715 / 1467;
       background: #000; border-radius: 12% / 5.8%;
       border: 3px solid #3a3a3e;
@@ -396,13 +378,11 @@
         0 18px 40px rgba(0,0,0,0.6);
       overflow: hidden;
     }
-    /* iPhone 13-style notch (attached to top edge, actual proportions ~40% width / 3.3% height) */
     .phone-mockup::before {
       content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
       width: 40%; height: 3.3%; background: #000;
       border-radius: 0 0 999px 999px; z-index: 3;
     }
-    /* subtle screen-edge sheen for realism */
     .phone-mockup::after {
       content: ''; position: absolute; inset: 0; border-radius: 12% / 5.8%; z-index: 4;
       pointer-events: none;
@@ -412,11 +392,6 @@
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover; border: none; pointer-events: none; background: #000;
     }
-    /* YouTube's own player letterboxes inside the iframe since object-fit
-       can't reach cross-origin iframe content. Instead, force the iframe
-       to the video's true 9:16 ratio, oversize it past the frame, and let
-       the frame's overflow:hidden crop the excess — same visual result
-       as object-fit: cover. */
     .phone-mockup iframe {
       position: absolute; top: 50%; left: 50%;
       height: 100%; width: auto; aspect-ratio: 9 / 16;
@@ -429,9 +404,6 @@
       object-fit: cover; border: none; pointer-events: none; background: #000;
     }
 
-    /* ── GALLERY-FRAME PREVIEW for product-poster cards ──
-       A framed print on a wall, matting and all — reads far more like
-       a "poster" than a laptop screen would. */
     .poster-preview-frame {
       width: 100%; aspect-ratio: 3/4; position: relative; overflow: visible;
       display: flex; align-items: center; justify-content: center;
@@ -450,7 +422,6 @@
       display: flex; align-items: center; justify-content: center;
       transition: background 0.3s ease;
     }
-    /* thin hanging wire, top of the frame, for the wall-art feel */
     .poster-frame::before {
       content: ''; position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
       width: 46%; height: 20px;
@@ -477,7 +448,6 @@
     .work-title { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 7px; }
     .work-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
 
-    /* ── LIGHTBOX — image only, no text ── */
     .lightbox-overlay {
       display: none; position: fixed; inset: 0; z-index: 999;
       background: var(--lightbox-bg);
@@ -575,6 +545,9 @@
       .title-swipe-hint { flex: 1 1 100%; order: 3; margin-top: -2px; }
       .video-preview-frame { aspect-ratio: 3/5; }
       footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+      .edge-glow { width: 90px; height: 90px; }
+      .edge-glow-left { left: 4px; }
+      .edge-glow-right { right: 4px; }
     }
 
     @media (max-width: 480px) {
@@ -677,7 +650,7 @@
         <div class="stat-card"><div class="stat-num">PH</div><div class="stat-label">Philippines-based</div></div>
         <div class="stat-card"><div class="stat-num">BSIT</div><div class="stat-label">Graduate</div></div>
         <div class="stat-card"><div class="stat-num">∞</div><div class="stat-label">Creative Drive</div></div>
-        
+
       <div class="tools-heading">Tools I Use</div>
       <div class="tools-marquee reveal reveal-delay-2">
         <div class="tools-track" id="toolsTrack"></div>
@@ -773,34 +746,19 @@
 <script>
 // ═══════════════════════════════════════════════════════
 //  YOUR WORKS — edit this array to add/remove items
-//  category: 'video' | 'graphic' | 'poster'
-//  type:     'image' | 'video' | 'youtube'
-//  thumb:    thumbnail shown on the card
-//  media:    file opened in the lightbox
-//            - for type 'image'/'video' → file path
-//            - for type 'youtube'       → just the YouTube video ID
-//
-//  HOW TO GET THE VIDEO ID FROM A YOUTUBE SHORTS LINK:
-//  A Shorts URL looks like: https://youtube.com/shorts/RUW_7e6cpBQ
-//  The ID is everything after the last "/" → RUW_7e6cpBQ
-//  Use that same ID in both "thumb" (inside the img.youtube.com URL)
-//  and "media" below. No file uploads needed — it streams straight
-//  from YouTube.
 // ═══════════════════════════════════════════════════════
 const WORKS = [
 
   // ── VIDEO EDITING ──────────────────────────────────
-  // All video items below pull directly from YouTube Shorts —
-  // just swap in your own video IDs (see note above).
-{
-  category: 'video',
-  type:     'youtube',
-  thumb:    'https://img.youtube.com/vi/RUW_7e6cpBQ/hqdefault.jpg',
-  media:    'RUW_7e6cpBQ',  // paste the ID from your Shorts URL here
-  cat:      'Video Editing',
-  title:    'Project Title',
-  desc:     'Brief description — what it was for, tools used, etc.'
-},
+  {
+    category: 'video',
+    type:     'youtube',
+    thumb:    'https://img.youtube.com/vi/RUW_7e6cpBQ/hqdefault.jpg',
+    media:    'RUW_7e6cpBQ',
+    cat:      'Video Editing',
+    title:    'Project Title',
+    desc:     'Brief description — what it was for, tools used, etc.'
+  },
   {
     category: 'video',
     type:     'youtube',
@@ -830,37 +788,33 @@ const WORKS = [
   },
 
   // ── AI CREATIVES ────────────────────────────────────
-  // Displays with the same phone-frame treatment as Video Editing.
-  // These are YouTube Shorts, just like the Video Editing section —
-  // paste each video's ID into both "thumb" and "media" below
-  // (see the note above WORKS for how to get the ID from a Shorts URL).
   {
-  category: 'ai',
-  type:     'youtube',
-  thumb:    'https://img.youtube.com/vi/cZd-4XwCfl4/hqdefault.jpg',
-  media:    'cZd-4XwCfl4',  // paste the ID from your Shorts URL here
-  cat:      'AI Creatives',
-  title:    'Project Title',
-  desc:     'Brief description — what it was for, tools used, etc.'
-},
-{
-  category: 'ai',
-  type:     'youtube',
-  thumb:    'https://img.youtube.com/vi/P9yNcy-9N6g/hqdefault.jpg',
-  media:    'P9yNcy-9N6g',  // paste the ID from your Shorts URL here
-  cat:      'AI Creatives',
-  title:    'Project Title',
-  desc:     'Brief description — what it was for, tools used, etc.'
-},
-{
-  category: 'ai',
-  type:     'youtube',
-  thumb:    'https://img.youtube.com/vi/SzvHUkWb4tc/hqdefault.jpg',
-  media:    'SzvHUkWb4tc',  // paste the ID from your Shorts URL here
-  cat:      'AI Creatives',
-  title:    'Project Title',
-  desc:     'Brief description — what it was for, tools used, etc.'
-},
+    category: 'ai',
+    type:     'youtube',
+    thumb:    'https://img.youtube.com/vi/cZd-4XwCfl4/hqdefault.jpg',
+    media:    'cZd-4XwCfl4',
+    cat:      'AI Creatives',
+    title:    'Project Title',
+    desc:     'Brief description — what it was for, tools used, etc.'
+  },
+  {
+    category: 'ai',
+    type:     'youtube',
+    thumb:    'https://img.youtube.com/vi/P9yNcy-9N6g/hqdefault.jpg',
+    media:    'P9yNcy-9N6g',
+    cat:      'AI Creatives',
+    title:    'Project Title',
+    desc:     'Brief description — what it was for, tools used, etc.'
+  },
+  {
+    category: 'ai',
+    type:     'youtube',
+    thumb:    'https://img.youtube.com/vi/SzvHUkWb4tc/hqdefault.jpg',
+    media:    'SzvHUkWb4tc',
+    cat:      'AI Creatives',
+    title:    'Project Title',
+    desc:     'Brief description — what it was for, tools used, etc.'
+  },
   {
     category: 'ai',
     type:     'youtube',
@@ -978,13 +932,8 @@ const WORKS = [
 // ═══════════════════════════════════════════════════════
 
 // ── BUILD CARDS ──────────────────────────────────────
-// 'graphic' temporarily removed from here to hide the Motion Graphics
-// section — the WORKS entries are still below, untouched, so just add
-// 'graphic' back into this list whenever you want it visible again.
 const CATEGORY_ORDER  = ['video', 'ai', 'poster'];
 const CATEGORY_LABELS = { video: 'Short form/Reelsg', ai: 'AI Creatives', graphic: 'Motion Graphics', poster: 'Product Poster' };
-// Categories that render as a swipeable horizontal carousel instead
-// of the normal wrapping grid. Add/remove category keys here.
 const CAROUSEL_CATEGORIES = ['video', 'ai', 'poster'];
 
 function buildCards() {
@@ -1022,12 +971,6 @@ function buildCards() {
     items.forEach((w, i) => {
       const card = document.createElement('div');
 
-      // Frame choice is driven by category:
-      //  - video   → phone frame, plays the clip
-      //  - ai      → phone frame, plays the clip or shows the still (AI Creatives)
-      //  - graphic → phone frame, shows the static image
-      //  - poster  → gallery/wall-frame, shows the static image
-      const isMotion = (w.type === 'video' || w.type === 'youtube');
       card.className = 'work-card reveal' + (i % 3 === 1 ? ' reveal-delay-1' : i % 3 === 2 ? ' reveal-delay-2' : '');
       card.dataset.category  = w.category;
       card.dataset.media     = w.media;
@@ -1058,7 +1001,6 @@ function buildCards() {
               </div>
             </div>`;
         } else {
-          // AI-generated still image inside the same phone frame
           previewHtml = `
             <div class="video-preview-frame">
               <div class="phone-mockup">
@@ -1067,7 +1009,6 @@ function buildCards() {
             </div>`;
         }
       } else if (w.category === 'graphic') {
-        // Static image inside a phone frame
         previewHtml = `
           <div class="video-preview-frame">
             <div class="phone-mockup">
@@ -1075,7 +1016,6 @@ function buildCards() {
             </div>
           </div>`;
       } else if (w.category === 'poster') {
-        // Framed print on a wall — matting, hanging wire, drop shadow
         previewHtml = `
           <div class="poster-preview-frame">
             <div class="poster-frame">
@@ -1110,22 +1050,6 @@ function buildCards() {
 // Adds mouse/touch drag-to-scroll to a horizontally scrollable element,
 // plus a rubber-band "bounce" + edge glow when the drag runs past the
 // start or end of the carousel (an edge-of-screen swipe indicator).
-//
-// Smoothness notes:
-// - All scrollLeft / transform writes from pointer input are batched into
-//   a single requestAnimationFrame instead of applied on every raw
-//   pointermove. Touchmove can fire much faster than the display can
-//   paint on mid-range phones, and writing `el.scrollLeft` synchronously
-//   on each one forces a layout every time — that's what reads as
-//   "stuttery" scrolling on small screens. Batching collapses a burst of
-//   events into one DOM write per frame.
-// - Only mouse/pen pointers are captured for drag-scroll. Touch pointers
-//   are left to the browser's native (GPU-accelerated, momentum-enabled)
-//   scrolling via `overflow-x: auto` + `-webkit-overflow-scrolling: touch`,
-//   which is far smoother on phones than hand-rolled scrollLeft dragging.
-//   The rubber-band/edge-glow effect still runs on touch via the
-//   element's own `scroll` event, just without us fighting native touch
-//   scrolling for control of the pointer.
 function initDragScroll(el) {
   let isDown = false, startX = 0, scrollLeft = 0, moved = false;
   let overdrag = 0;
@@ -1138,54 +1062,16 @@ function initDragScroll(el) {
   const glowLeft = wrap ? wrap.querySelector('.edge-glow-left') : null;
   const glowRight = wrap ? wrap.querySelector('.edge-glow-right') : null;
 
-  function maxScroll() { ... }
-  function rubberBand(distance, range) { ... }
-  function setOverdrag(raw) { ... }
-  function releaseOverdrag() { ... }
-  function flushPointerFrame() { ... }
-  function schedulePointerFrame(target) { ... }
+  function maxScroll() {
+    return Math.max(0, el.scrollWidth - el.clientWidth);
+  }
 
-  el.addEventListener('pointerdown', ...);
-  el.addEventListener('pointermove', ...);
-  function endDrag() { ... }
-  el.addEventListener('pointerup', endDrag);
-  el.addEventListener('pointercancel', endDrag);
-  el.addEventListener('pointerleave', ...);
-  el.addEventListener('click', ...);
-
-  // ↓↓↓ your existing edge-glow scroll listener from the last fix ↓↓↓
-  let edgeGlowFadeTimer = null;
-  const GLOW_FADE_DELAY = 400;
-  function updateEdgeGlow() { ... }
-  el.addEventListener('scroll', () => { ... }, { passive: true });
-
-  // ↓↓↓ PASTE THE NEW CODE RIGHT HERE ↓↓↓
-  let touchLastX = null;
-  let lastPulseLeft = 0;
-  let lastPulseRight = 0;
-  const PULSE_COOLDOWN = 260;
-
-  function pulseGlow(glowEl) { ... }
-
-  el.addEventListener('touchstart', ...);
-  el.addEventListener('touchmove', ...);
-  el.addEventListener('touchend', ...);
-  // ↑↑↑ END OF NEW CODE ↑↑↑
-
-  // "Swipe to see more" hint code stays after, unchanged
-  const hint = el.closest('.work-category')?.querySelector('.title-swipe-hint');
-  ...
-}
-
-  // The classic iOS overscroll curve: displacement grows fast at first,
-  // then eases off and asymptotically approaches `range` — the further
-  // you pull, the more resistance you feel, but it never hard-stops.
   function rubberBand(distance, range) {
     return (distance * range * ELASTIC_CONST) / (range + ELASTIC_CONST * distance);
   }
 
   function setOverdrag(raw) {
-    overdrag = raw; // signed, unclamped
+    overdrag = raw;
     const eased = rubberBand(Math.abs(overdrag), ELASTIC_RANGE);
     el.style.transform = overdrag ? `translateX(${-Math.sign(overdrag) * eased}px)` : '';
 
@@ -1217,20 +1103,13 @@ function initDragScroll(el) {
 
   function releaseOverdrag() {
     overdrag = 0;
-    // Springy snap-back — a touch of overshoot past 0 before settling,
-    // the same felt-physics as the native iOS/Android edge bounce.
     el.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
     el.style.transform = '';
-    // Single smooth fade — no separate "flash" step, so a hard/fast
-    // swipe can't show the glow twice (once live, once as a pulse).
     if (glowLeft) { glowLeft.classList.remove('active'); glowLeft.style.opacity = ''; glowLeft.style.transform = ''; }
     if (glowRight) { glowRight.classList.remove('active'); glowRight.style.opacity = ''; glowRight.style.transform = ''; }
     setTimeout(() => { el.style.transition = ''; }, 500);
   }
 
-  // Applies the latest pointer target at most once per animation frame —
-  // this is what keeps small-screen dragging smooth instead of jumping
-  // between many synchronous scrollLeft writes per frame.
   function flushPointerFrame() {
     rafScheduled = false;
     if (pendingTarget === null) return;
@@ -1259,9 +1138,6 @@ function initDragScroll(el) {
   }
 
   el.addEventListener('pointerdown', e => {
-    // Only take over dragging for mouse/pen. Touch input scrolls the
-    // element natively (smoother + momentum-enabled on phones); our
-    // rubber-band/glow effect still reacts to that native scroll below.
     if (e.pointerType === 'touch') return;
     if (e.pointerType === 'mouse' && e.button !== 0) return;
     isDown = true; moved = false;
@@ -1290,49 +1166,85 @@ function initDragScroll(el) {
   el.addEventListener('pointercancel', endDrag);
   el.addEventListener('pointerleave', () => { if (isDown) endDrag(); });
 
-  // Suppress the click that fires right after a drag so swiping
-  // doesn't also pop open the lightbox.
   el.addEventListener('click', e => {
     if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; }
   }, true);
 
-  // Edge-glow reaction to *native* touch scrolling (phones): watch
-  // scroll position directly instead of pointer deltas, so the effect
-  // stays in sync with the browser's own momentum scroll rather than
-  // competing with it.
-let edgeGlowFadeTimer = null;
-const GLOW_FADE_DELAY = 400; // ms after scrolling stops before the glow disappears
+  // ── Edge-glow reaction to native touch scrolling ──
+  let edgeGlowFadeTimer = null;
+  const GLOW_FADE_DELAY = 400;
 
-function updateEdgeGlow() {
-  const max = maxScroll();
-  const atStart = el.scrollLeft <= 1;
-  const atEnd = el.scrollLeft >= max - 1;
+  function updateEdgeGlow() {
+    const max = maxScroll();
+    const atStart = el.scrollLeft <= 1;
+    const atEnd = el.scrollLeft >= max - 1;
 
-  if (glowLeft)  glowLeft.classList.toggle('active', atStart && max > 0);
-  if (glowRight) glowRight.classList.toggle('active', atEnd && max > 0);
-}
+    if (glowLeft)  glowLeft.classList.toggle('active', atStart && max > 0);
+    if (glowRight) glowRight.classList.toggle('active', atEnd && max > 0);
+  }
 
-el.addEventListener('scroll', () => {
-  if (isDown) return; // mouse-drag path already handles this via setOverdrag
+  el.addEventListener('scroll', () => {
+    if (isDown) return;
 
-  updateEdgeGlow();
+    updateEdgeGlow();
 
-  // Reset the fade-out countdown every time a scroll event fires.
-  // Once scrolling actually stops (no more events for GLOW_FADE_DELAY),
-  // both glows turn off together — same rule, same timer, for both sides.
-  clearTimeout(edgeGlowFadeTimer);
-  edgeGlowFadeTimer = setTimeout(() => {
-    if (glowLeft)  glowLeft.classList.remove('active');
-    if (glowRight) glowRight.classList.remove('active');
-  }, GLOW_FADE_DELAY);
-}, { passive: true });
+    clearTimeout(edgeGlowFadeTimer);
+    edgeGlowFadeTimer = setTimeout(() => {
+      if (glowLeft)  glowLeft.classList.remove('active');
+      if (glowRight) glowRight.classList.remove('active');
+    }, GLOW_FADE_DELAY);
+  }, { passive: true });
 
-  // "Swipe to see more" hint: visible while the carousel is near its
-  // start, hidden once scrolled meaningfully away. Uses a generous
-  // buffer zone (not just scrollLeft === 0) so it reappears on the way
-  // back to the start — independent of the edge-glow rubberband, which
-  // only ever fires exactly at the 0/max boundary. Without this buffer
-  // both effects trigger in the same instant and look like one thing.
+  // ── Edge-glow "pulse" for repeated overdrag on touch ──
+  // Once already at an edge, swiping further doesn't move scrollLeft,
+  // so no 'scroll' event fires and the pop animation never replays.
+  // This tracks raw touch movement instead, so every new overdrag
+  // attempt re-triggers the glow even though position isn't changing.
+  let touchLastX = null;
+  let lastPulseLeft = 0;
+  let lastPulseRight = 0;
+  const PULSE_COOLDOWN = 260;
+
+  function pulseGlow(glowEl) {
+    if (!glowEl) return;
+    clearTimeout(edgeGlowFadeTimer);
+    glowEl.classList.remove('active');
+    void glowEl.offsetWidth; // force reflow so the CSS animation restarts from frame 0
+    glowEl.classList.add('active');
+    edgeGlowFadeTimer = setTimeout(() => {
+      if (glowLeft)  glowLeft.classList.remove('active');
+      if (glowRight) glowRight.classList.remove('active');
+    }, GLOW_FADE_DELAY);
+  }
+
+  el.addEventListener('touchstart', e => {
+    touchLastX = e.touches[0].clientX;
+  }, { passive: true });
+
+  el.addEventListener('touchmove', e => {
+    if (touchLastX === null) return;
+    const x = e.touches[0].clientX;
+    const dx = x - touchLastX;
+    touchLastX = x;
+    if (Math.abs(dx) < 2) return;
+
+    const max = maxScroll();
+    const atStart = el.scrollLeft <= 1;
+    const atEnd = el.scrollLeft >= max - 1;
+    const now = Date.now();
+
+    if (dx > 0 && atStart && max > 0 && now - lastPulseLeft > PULSE_COOLDOWN) {
+      lastPulseLeft = now;
+      pulseGlow(glowLeft);
+    } else if (dx < 0 && atEnd && max > 0 && now - lastPulseRight > PULSE_COOLDOWN) {
+      lastPulseRight = now;
+      pulseGlow(glowRight);
+    }
+  }, { passive: true });
+
+  el.addEventListener('touchend', () => { touchLastX = null; }, { passive: true });
+
+  // "Swipe to see more" hint
   const hint = el.closest('.work-category')?.querySelector('.title-swipe-hint');
   if (hint) {
     const HINT_ZONE = 32;
@@ -1343,18 +1255,11 @@ el.addEventListener('scroll', () => {
 }
 
 // ── THEME (dark / light) ─────────────────────────────
-// Reads/saves the choice in localStorage, falls back to the visitor's
-// OS-level preference, then to dark (the site's original design).
 const THEME_KEY = 'brix-portfolio-theme';
 const DARK_VIGNETTE  = 'rgba(8,13,26,0.55)';
 const LIGHT_VIGNETTE = 'rgba(230,225,210,0.5)';
 let vignetteColor = DARK_VIGNETTE;
 
-// Background canvas (drifting lines + particles) colors, swapped per
-// theme. The dark-mode gold/blue at low alpha reads fine on the navy
-// background but nearly disappears on the light cream background, so
-// light mode uses deeper, more saturated tones with a stronger alpha
-// boost so the animation stays clearly visible either way.
 const BG_COLORS = {
   dark:  { gold: '201,168,76', blue: '80,140,220', alphaBoost: 1    },
   light: { gold: '138,100,18', blue: '20,72,158',  alphaBoost: 1.9  }
@@ -1453,10 +1358,6 @@ window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.cli
 init(); animate();
 
 // ── DISABLE PINCH / DOUBLE-TAP ZOOM ──────────────────
-// The viewport meta tag (maximum-scale=1, user-scalable=no) handles
-// most browsers, but iOS Safari ignores user-scalable=no by default
-// (an accessibility change in iOS 10+), so it's backed up here:
-// block pinch-zoom gestures and the double-tap-to-zoom shortcut.
 document.addEventListener('gesturestart', e => e.preventDefault());
 document.addEventListener('gesturechange', e => e.preventDefault());
 document.addEventListener('gestureend', e => e.preventDefault());
@@ -1491,13 +1392,10 @@ const observer = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Build cards — show everything, no filtering needed
+// Build cards
 buildCards();
 
 // ── TOOLS CAROUSEL ────────────────────────────────────
-// Edit this list to match your actual toolkit — order shown left to right.
-// logo: path to a small square icon/logo image, e.g. 'tools/capcut.png'.
-// Leave logo blank ('') to show a plain gold-dot chip instead of an image.
 const TOOLS = [
   { name: 'CapCut',            logo: 'tools/capcut.jpg' },
   { name: 'Alight Motion',     logo: 'tools/alight-motion.png' },
@@ -1513,7 +1411,6 @@ const TOOLS = [
 function buildToolsMarquee() {
   const track = document.getElementById('toolsTrack');
   if (!track) return;
-  // Duplicated ×2 so the loop can wrap seamlessly with no gap/jump.
   const chips = [...TOOLS, ...TOOLS]
     .map(t => {
       const hasLogo = !!t.logo;
@@ -1526,19 +1423,14 @@ function buildToolsMarquee() {
   initToolsCarousel();
 }
 
-// Swipeable + always-drifting tools strip.
-// - Auto-scrolls slowly, continuously — including while being swiped/dragged.
-// - Swipe/drag with a finger or mouse adds extra movement on top of the
-//   constant auto-drift, instead of pausing it.
-// - Loops seamlessly because TOOLS is duplicated ×2 in the track above.
 function initToolsCarousel() {
   const marquee = document.querySelector('.tools-marquee');
   const track = document.getElementById('toolsTrack');
   if (!marquee || !track) return;
 
-  const AUTO_SPEED = 0.45; // px per animation frame, always applied
+  const AUTO_SPEED = 0.45;
 
-  let pos = 1;          // our own float source of truth for scroll position
+  let pos = 1;
   let isDragging = false;
   let lastX = 0;
 
@@ -1556,15 +1448,12 @@ function initToolsCarousel() {
     marquee.scrollLeft = pos;
   }
 
-  // The animation loop never stops — it keeps nudging pos forward every
-  // frame regardless of whether the user is currently dragging.
   function frame() {
     pos += AUTO_SPEED;
     applyPos();
     requestAnimationFrame(frame);
   }
 
-  // Drag/swipe with mouse or touch (pointer events cover both).
   marquee.addEventListener('pointerdown', e => {
     isDragging = true;
     marquee.classList.add('dragging');
@@ -1576,7 +1465,7 @@ function initToolsCarousel() {
     if (!isDragging) return;
     const dx = e.clientX - lastX;
     lastX = e.clientX;
-    pos -= dx; // swipe stacks on top of the auto-drift happening in frame()
+    pos -= dx;
     applyPos();
   });
 
@@ -1588,7 +1477,6 @@ function initToolsCarousel() {
   marquee.addEventListener('pointercancel', endDrag);
   marquee.addEventListener('pointerleave', () => { if (isDragging) endDrag(); });
 
-  // Trackpad/mouse-wheel horizontal scroll also stacks on top of the drift.
   marquee.addEventListener('wheel', e => {
     if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
       pos += e.deltaX;
@@ -1623,7 +1511,6 @@ function closeLightbox() {
   document.body.style.overflow = '';
   const vid = lb.querySelector('video');
   if (vid) vid.pause();
-  // Stop YouTube iframe by clearing it
   const inner = document.getElementById('lbInner');
   const frame = inner.querySelector('iframe');
   if (frame) inner.innerHTML = '';
@@ -1651,7 +1538,6 @@ function renderLightbox() {
   const mediaType = d.mediaType || 'image';
 
   if (mediaType === 'youtube') {
-    // Vertical (Shorts) friendly embed — tall aspect ratio, fits within viewport height
     inner.innerHTML = `<iframe
         style="border:none; border-radius:4px; box-shadow:0 32px 100px rgba(0,0,0,0.8); height:90vh; width:calc(90vh * 9 / 16); max-width:96vw;"
         src="https://www.youtube.com/embed/${mediaSrc}?autoplay=1&rel=0&cc_load_policy=0&iv_load_policy=3"

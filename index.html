@@ -322,11 +322,11 @@
       transition: opacity 0.28s cubic-bezier(0.22,1,0.36,1), transform 0.28s cubic-bezier(0.22,1,0.36,1);
     }
     .edge-glow-left {
-      left: -70px;
+      left: -40px;
       background: radial-gradient(circle, rgba(201,168,76,0.55), rgba(201,168,76,0) 68%);
     }
     .edge-glow-right {
-      right: -70px;
+      right: -40px;
       background: radial-gradient(circle, rgba(201,168,76,0.55), rgba(201,168,76,0) 68%);
     }
     .edge-glow.active {
@@ -546,8 +546,8 @@
       .video-preview-frame { aspect-ratio: 3/5; }
       footer { padding: 24px; flex-direction: column; align-items: flex-start; }
       .edge-glow { width: 90px; height: 90px; }
-      .edge-glow-left { left: 4px; }
-      .edge-glow-right { right: 4px; }
+      .edge-glow-left { left: -20px; }
+      .edge-glow-right { right: -20px; }
     }
 
     @media (max-width: 480px) {
@@ -1170,54 +1170,43 @@ function initDragScroll(el) {
     if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; }
   }, true);
 
-  // ── Edge-glow reaction to native touch scrolling ──
-  let edgeGlowFadeTimer = null;
-  const GLOW_FADE_DELAY = 400;
+  // ── Edge-glow: stays lit continuously while held, fades only on release ──
+  // activeEdge tracks which side (if any) is currently glowing, so we
+  // don't restart the pop animation every touchmove tick while the
+  // finger is held still against the edge — it just stays lit.
+  let isTouching = false;
+  let touchLastX = null;
+  let activeEdge = null; // 'left' | 'right' | null
 
-  function updateEdgeGlow() {
+  function showEdgeGlow(side) {
+    const glowEl = side === 'left' ? glowLeft : glowRight;
+    if (!glowEl || activeEdge === side) return; // already lit — don't restart
+    activeEdge = side;
+    glowEl.classList.remove('active');
+    void glowEl.offsetWidth; // force reflow so the pop animation restarts from frame 0
+    glowEl.classList.add('active');
+  }
+
+  function hideEdgeGlow() {
+    activeEdge = null;
+    if (glowLeft)  glowLeft.classList.remove('active');
+    if (glowRight) glowRight.classList.remove('active');
+  }
+
+  // Native momentum-scroll fallback (covers the brief bounce that can
+  // happen right after a fast flick, once the finger is already up).
+  el.addEventListener('scroll', () => {
+    if (isDown || isTouching) return; // touch/mouse paths above handle their own state
     const max = maxScroll();
     const atStart = el.scrollLeft <= 1;
     const atEnd = el.scrollLeft >= max - 1;
-
-    if (glowLeft)  glowLeft.classList.toggle('active', atStart && max > 0);
-    if (glowRight) glowRight.classList.toggle('active', atEnd && max > 0);
-  }
-
-  el.addEventListener('scroll', () => {
-    if (isDown) return;
-
-    updateEdgeGlow();
-
-    clearTimeout(edgeGlowFadeTimer);
-    edgeGlowFadeTimer = setTimeout(() => {
-      if (glowLeft)  glowLeft.classList.remove('active');
-      if (glowRight) glowRight.classList.remove('active');
-    }, GLOW_FADE_DELAY);
+    if (atStart && max > 0) showEdgeGlow('left');
+    else if (atEnd && max > 0) showEdgeGlow('right');
+    else hideEdgeGlow();
   }, { passive: true });
 
-  // ── Edge-glow "pulse" for repeated overdrag on touch ──
-  // Once already at an edge, swiping further doesn't move scrollLeft,
-  // so no 'scroll' event fires and the pop animation never replays.
-  // This tracks raw touch movement instead, so every new overdrag
-  // attempt re-triggers the glow even though position isn't changing.
-  let touchLastX = null;
-  let lastPulseLeft = 0;
-  let lastPulseRight = 0;
-  const PULSE_COOLDOWN = 260;
-
-  function pulseGlow(glowEl) {
-    if (!glowEl) return;
-    clearTimeout(edgeGlowFadeTimer);
-    glowEl.classList.remove('active');
-    void glowEl.offsetWidth; // force reflow so the CSS animation restarts from frame 0
-    glowEl.classList.add('active');
-    edgeGlowFadeTimer = setTimeout(() => {
-      if (glowLeft)  glowLeft.classList.remove('active');
-      if (glowRight) glowRight.classList.remove('active');
-    }, GLOW_FADE_DELAY);
-  }
-
   el.addEventListener('touchstart', e => {
+    isTouching = true;
     touchLastX = e.touches[0].clientX;
   }, { passive: true });
 
@@ -1226,23 +1215,32 @@ function initDragScroll(el) {
     const x = e.touches[0].clientX;
     const dx = x - touchLastX;
     touchLastX = x;
-    if (Math.abs(dx) < 2) return;
 
     const max = maxScroll();
     const atStart = el.scrollLeft <= 1;
     const atEnd = el.scrollLeft >= max - 1;
-    const now = Date.now();
 
-    if (dx > 0 && atStart && max > 0 && now - lastPulseLeft > PULSE_COOLDOWN) {
-      lastPulseLeft = now;
-      pulseGlow(glowLeft);
-    } else if (dx < 0 && atEnd && max > 0 && now - lastPulseRight > PULSE_COOLDOWN) {
-      lastPulseRight = now;
-      pulseGlow(glowRight);
+    if (dx > 2 && atStart && max > 0) {
+      showEdgeGlow('left');
+    } else if (dx < -2 && atEnd && max > 0) {
+      showEdgeGlow('right');
+    } else if (
+      (activeEdge === 'left' && !atStart) ||
+      (activeEdge === 'right' && !atEnd)
+    ) {
+      // Finger moved away from the edge while still holding — hide now,
+      // don't wait for release.
+      hideEdgeGlow();
     }
   }, { passive: true });
 
-  el.addEventListener('touchend', () => { touchLastX = null; }, { passive: true });
+  function endTouch() {
+    isTouching = false;
+    touchLastX = null;
+    hideEdgeGlow(); // disappears the moment the finger lifts
+  }
+  el.addEventListener('touchend', endTouch, { passive: true });
+  el.addEventListener('touchcancel', endTouch, { passive: true });
 
   // "Swipe to see more" hint
   const hint = el.closest('.work-category')?.querySelector('.title-swipe-hint');

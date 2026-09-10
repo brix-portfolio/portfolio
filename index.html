@@ -343,6 +343,16 @@
       right: -70px;
       background: radial-gradient(circle, rgba(201,168,76,0.55), rgba(201,168,76,0) 68%);
     }
+
+    .edge-glow.active {
+  opacity: 1;
+  animation: edgeGlowPop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes edgeGlowPop {
+  0%   { transform: translateY(-50%) scale(0.55); opacity: 0; }
+  60%  { transform: translateY(-50%) scale(1.15); opacity: 1; }
+  100% { transform: translateY(-50%) scale(1); opacity: 1; }
+}
     .edge-glow.active { opacity: 1; }
     .work-carousel {
       display: flex; flex-wrap: nowrap;

@@ -1255,58 +1255,31 @@ function initDragScroll(el) {
   // scroll position directly instead of pointer deltas, so the effect
   // stays in sync with the browser's own momentum scroll rather than
   // competing with it.
-let touchGlowTicking = false;
-let glowLeftTimer = null;
-let glowRightTimer = null;
-let settleTimer = null;
-const GLOW_HOLD_MS = 550;   // how long the glow stays lit once scrolling has settled
-const SETTLE_MS = 120;      // wait for scrolling to stop bouncing before starting the hold timer
+let edgeGlowFadeTimer = null;
+const GLOW_FADE_DELAY = 400; // ms after scrolling stops before the glow disappears
+
+function updateEdgeGlow() {
+  const max = maxScroll();
+  const atStart = el.scrollLeft <= 1;
+  const atEnd = el.scrollLeft >= max - 1;
+
+  if (glowLeft)  glowLeft.classList.toggle('active', atStart && max > 0);
+  if (glowRight) glowRight.classList.toggle('active', atEnd && max > 0);
+}
 
 el.addEventListener('scroll', () => {
   if (isDown) return; // mouse-drag path already handles this via setOverdrag
-  if (touchGlowTicking) return;
-  touchGlowTicking = true;
-  requestAnimationFrame(() => {
-    touchGlowTicking = false;
-    const max = maxScroll();
-    const atStart = el.scrollLeft <= 0;
-    const atEnd = el.scrollLeft >= max - 1;
 
-    // Light up immediately so it still feels responsive...
-    if (glowLeft) {
-      if (atStart && max > 0) { glowLeft.classList.add('active'); glowLeft.style.opacity = '1'; }
-      else { glowLeft.classList.remove('active'); glowLeft.style.opacity = ''; }
-    }
-    if (glowRight) {
-      if (atEnd && max > 0) { glowRight.classList.add('active'); glowRight.style.opacity = '1'; }
-      else { glowRight.classList.remove('active'); glowRight.style.opacity = ''; }
-    }
+  updateEdgeGlow();
 
-    // ...but only schedule the fade-out once the bounce has actually settled,
-    // so repeated scroll events during native overscroll don't keep resetting it.
-    clearTimeout(settleTimer);
-    settleTimer = setTimeout(() => {
-      const stillMax = maxScroll();
-      const stillAtStart = el.scrollLeft <= 0;
-      const stillAtEnd = el.scrollLeft >= stillMax - 1;
-
-      clearTimeout(glowLeftTimer);
-      if (glowLeft && stillAtStart && stillMax > 0) {
-        glowLeftTimer = setTimeout(() => {
-          glowLeft.classList.remove('active');
-          glowLeft.style.opacity = '';
-        }, GLOW_HOLD_MS);
-      }
-
-      clearTimeout(glowRightTimer);
-      if (glowRight && stillAtEnd && stillMax > 0) {
-        glowRightTimer = setTimeout(() => {
-          glowRight.classList.remove('active');
-          glowRight.style.opacity = '';
-        }, GLOW_HOLD_MS);
-      }
-    }, SETTLE_MS);
-  });
+  // Reset the fade-out countdown every time a scroll event fires.
+  // Once scrolling actually stops (no more events for GLOW_FADE_DELAY),
+  // both glows turn off together — same rule, same timer, for both sides.
+  clearTimeout(edgeGlowFadeTimer);
+  edgeGlowFadeTimer = setTimeout(() => {
+    if (glowLeft)  glowLeft.classList.remove('active');
+    if (glowRight) glowRight.classList.remove('active');
+  }, GLOW_FADE_DELAY);
 }, { passive: true });
 
   // "Swipe to see more" hint: visible while the carousel is near its

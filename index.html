@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Brix — Video Editor & Graphic Designer</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
@@ -72,8 +72,8 @@
       --vignette-color:   rgba(230,225,210,0.5);
     }
 
-    html { scroll-behavior: smooth; }
-    body { background: var(--navy); color: var(--text); font-family: var(--font-b); font-size: 15px; line-height: 1.7; overflow-x: hidden; transition: background-color 0.3s ease, color 0.3s ease; }
+    html { scroll-behavior: smooth; touch-action: manipulation; }
+    body { background: var(--navy); color: var(--text); font-family: var(--font-b); font-size: 15px; line-height: 1.7; overflow-x: hidden; transition: background-color 0.3s ease, color 0.3s ease; touch-action: manipulation; }
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: var(--navy); }
     ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 4px; }
@@ -349,6 +349,7 @@
       overflow-x: auto; overflow-y: hidden;
       gap: 20px;
       scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       cursor: grab;
       user-select: none;
@@ -356,7 +357,9 @@
       overscroll-behavior-x: contain;
       padding-bottom: 6px;
       padding-left: 60px; padding-right: 60px;
-      will-change: transform;
+      will-change: scroll-position, transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
     .work-carousel::-webkit-scrollbar { display: none; }
     .work-carousel.dragging { cursor: grabbing; scroll-snap-type: none; }
@@ -1097,9 +1100,27 @@ function buildCards() {
 // Adds mouse/touch drag-to-scroll to a horizontally scrollable element,
 // plus a rubber-band "bounce" + edge glow when the drag runs past the
 // start or end of the carousel (an edge-of-screen swipe indicator).
+//
+// Smoothness notes:
+// - All scrollLeft / transform writes from pointer input are batched into
+//   a single requestAnimationFrame instead of applied on every raw
+//   pointermove. Touchmove can fire much faster than the display can
+//   paint on mid-range phones, and writing `el.scrollLeft` synchronously
+//   on each one forces a layout every time — that's what reads as
+//   "stuttery" scrolling on small screens. Batching collapses a burst of
+//   events into one DOM write per frame.
+// - Only mouse/pen pointers are captured for drag-scroll. Touch pointers
+//   are left to the browser's native (GPU-accelerated, momentum-enabled)
+//   scrolling via `overflow-x: auto` + `-webkit-overflow-scrolling: touch`,
+//   which is far smoother on phones than hand-rolled scrollLeft dragging.
+//   The rubber-band/edge-glow effect still runs on touch via the
+//   element's own `scroll` event, just without us fighting native touch
+//   scrolling for control of the pointer.
 function initDragScroll(el) {
   let isDown = false, startX = 0, scrollLeft = 0, moved = false;
   let overdrag = 0;               // raw, unclamped drag distance past the edge (px)
+  let pendingTarget = null;       // latest desired scrollLeft, applied once per rAF
+  let rafScheduled = false;
   const ELASTIC_RANGE = 130;      // px of visual travel the bounce eases toward
   const ELASTIC_CONST = 0.55;     // Apple's UIScrollView rubber-band constant
 
@@ -1162,21 +1183,14 @@ function initDragScroll(el) {
     setTimeout(() => { el.style.transition = ''; }, 500);
   }
 
-  el.addEventListener('pointerdown', e => {
-    if (e.pointerType === 'mouse' && e.button !== 0) return;
-    isDown = true; moved = false;
-    el.classList.add('dragging');
-    el.style.transition = '';
-    startX = e.clientX;
-    scrollLeft = el.scrollLeft;
-    el.setPointerCapture(e.pointerId);
-  });
-
-  el.addEventListener('pointermove', e => {
-    if (!isDown) return;
-    const dx = e.clientX - startX;
-    if (Math.abs(dx) > 4) moved = true;
-    const target = scrollLeft - dx;
+  // Applies the latest pointer target at most once per animation frame —
+  // this is what keeps small-screen dragging smooth instead of jumping
+  // between many synchronous scrollLeft writes per frame.
+  function flushPointerFrame() {
+    rafScheduled = false;
+    if (pendingTarget === null) return;
+    const target = pendingTarget;
+    pendingTarget = null;
     const max = maxScroll();
 
     if (target < 0) {
@@ -1189,12 +1203,42 @@ function initDragScroll(el) {
       el.scrollLeft = target;
       if (overdrag !== 0) setOverdrag(0);
     }
+  }
+
+  function schedulePointerFrame(target) {
+    pendingTarget = target;
+    if (!rafScheduled) {
+      rafScheduled = true;
+      requestAnimationFrame(flushPointerFrame);
+    }
+  }
+
+  el.addEventListener('pointerdown', e => {
+    // Only take over dragging for mouse/pen. Touch input scrolls the
+    // element natively (smoother + momentum-enabled on phones); our
+    // rubber-band/glow effect still reacts to that native scroll below.
+    if (e.pointerType === 'touch') return;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    isDown = true; moved = false;
+    el.classList.add('dragging');
+    el.style.transition = '';
+    startX = e.clientX;
+    scrollLeft = el.scrollLeft;
+    el.setPointerCapture(e.pointerId);
+  });
+
+  el.addEventListener('pointermove', e => {
+    if (!isDown || e.pointerType === 'touch') return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) moved = true;
+    schedulePointerFrame(scrollLeft - dx);
   });
 
   function endDrag() {
     if (!isDown) return;
     isDown = false;
     el.classList.remove('dragging');
+    pendingTarget = null;
     releaseOverdrag();
   }
   el.addEventListener('pointerup', endDrag);
@@ -1206,6 +1250,27 @@ function initDragScroll(el) {
   el.addEventListener('click', e => {
     if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; }
   }, true);
+
+  // Edge-glow reaction to *native* touch scrolling (phones): watch
+  // scroll position directly instead of pointer deltas, so the effect
+  // stays in sync with the browser's own momentum scroll rather than
+  // competing with it.
+  let touchGlowTicking = false;
+  el.addEventListener('scroll', () => {
+    if (isDown) return; // mouse-drag path already handles this via setOverdrag
+    if (touchGlowTicking) return;
+    touchGlowTicking = true;
+    requestAnimationFrame(() => {
+      touchGlowTicking = false;
+      const max = maxScroll();
+      const atStart = el.scrollLeft <= 0;
+      const atEnd = el.scrollLeft >= max - 1;
+      if (glowLeft) glowLeft.classList.toggle('active', atStart && max > 0);
+      if (glowRight) glowRight.classList.toggle('active', atEnd && max > 0);
+      if (glowLeft) glowLeft.style.opacity = atStart && max > 0 ? '1' : '';
+      if (glowRight) glowRight.style.opacity = atEnd && max > 0 ? '1' : '';
+    });
+  }, { passive: true });
 
   // "Swipe to see more" hint: visible while the carousel is near its
   // start, hidden once scrolled meaningfully away. Uses a generous
@@ -1331,6 +1396,21 @@ function animate() { ctx.clearRect(0, 0, W, H); drawLines(); drawParticles(); dr
 window.addEventListener('resize', resize);
 window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
 init(); animate();
+
+// ── DISABLE PINCH / DOUBLE-TAP ZOOM ──────────────────
+// The viewport meta tag (maximum-scale=1, user-scalable=no) handles
+// most browsers, but iOS Safari ignores user-scalable=no by default
+// (an accessibility change in iOS 10+), so it's backed up here:
+// block pinch-zoom gestures and the double-tap-to-zoom shortcut.
+document.addEventListener('gesturestart', e => e.preventDefault());
+document.addEventListener('gesturechange', e => e.preventDefault());
+document.addEventListener('gestureend', e => e.preventDefault());
+let lastTouchEnd = 0;
+document.addEventListener('touchend', e => {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) e.preventDefault();
+  lastTouchEnd = now;
+}, { passive: false });
 
 // ── MOBILE NAV (hamburger) ───────────────────────────
 const navToggle = document.getElementById('navToggle');

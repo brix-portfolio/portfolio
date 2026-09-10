@@ -1128,19 +1128,54 @@ function buildCards() {
 //   scrolling for control of the pointer.
 function initDragScroll(el) {
   let isDown = false, startX = 0, scrollLeft = 0, moved = false;
-  let overdrag = 0;               // raw, unclamped drag distance past the edge (px)
-  let pendingTarget = null;       // latest desired scrollLeft, applied once per rAF
+  let overdrag = 0;
+  let pendingTarget = null;
   let rafScheduled = false;
-  const ELASTIC_RANGE = 130;      // px of visual travel the bounce eases toward
-  const ELASTIC_CONST = 0.55;     // Apple's UIScrollView rubber-band constant
+  const ELASTIC_RANGE = 130;
+  const ELASTIC_CONST = 0.55;
 
   const wrap = el.closest('.carousel-wrap');
   const glowLeft = wrap ? wrap.querySelector('.edge-glow-left') : null;
   const glowRight = wrap ? wrap.querySelector('.edge-glow-right') : null;
 
-  function maxScroll() {
-    return Math.max(0, el.scrollWidth - el.clientWidth);
-  }
+  function maxScroll() { ... }
+  function rubberBand(distance, range) { ... }
+  function setOverdrag(raw) { ... }
+  function releaseOverdrag() { ... }
+  function flushPointerFrame() { ... }
+  function schedulePointerFrame(target) { ... }
+
+  el.addEventListener('pointerdown', ...);
+  el.addEventListener('pointermove', ...);
+  function endDrag() { ... }
+  el.addEventListener('pointerup', endDrag);
+  el.addEventListener('pointercancel', endDrag);
+  el.addEventListener('pointerleave', ...);
+  el.addEventListener('click', ...);
+
+  // ↓↓↓ your existing edge-glow scroll listener from the last fix ↓↓↓
+  let edgeGlowFadeTimer = null;
+  const GLOW_FADE_DELAY = 400;
+  function updateEdgeGlow() { ... }
+  el.addEventListener('scroll', () => { ... }, { passive: true });
+
+  // ↓↓↓ PASTE THE NEW CODE RIGHT HERE ↓↓↓
+  let touchLastX = null;
+  let lastPulseLeft = 0;
+  let lastPulseRight = 0;
+  const PULSE_COOLDOWN = 260;
+
+  function pulseGlow(glowEl) { ... }
+
+  el.addEventListener('touchstart', ...);
+  el.addEventListener('touchmove', ...);
+  el.addEventListener('touchend', ...);
+  // ↑↑↑ END OF NEW CODE ↑↑↑
+
+  // "Swipe to see more" hint code stays after, unchanged
+  const hint = el.closest('.work-category')?.querySelector('.title-swipe-hint');
+  ...
+}
 
   // The classic iOS overscroll curve: displacement grows fast at first,
   // then eases off and asymptotically approaches `range` — the further

@@ -1255,22 +1255,52 @@ function initDragScroll(el) {
   // scroll position directly instead of pointer deltas, so the effect
   // stays in sync with the browser's own momentum scroll rather than
   // competing with it.
-  let touchGlowTicking = false;
-  el.addEventListener('scroll', () => {
-    if (isDown) return; // mouse-drag path already handles this via setOverdrag
-    if (touchGlowTicking) return;
-    touchGlowTicking = true;
-    requestAnimationFrame(() => {
-      touchGlowTicking = false;
-      const max = maxScroll();
-      const atStart = el.scrollLeft <= 0;
-      const atEnd = el.scrollLeft >= max - 1;
-      if (glowLeft) glowLeft.classList.toggle('active', atStart && max > 0);
-      if (glowRight) glowRight.classList.toggle('active', atEnd && max > 0);
-      if (glowLeft) glowLeft.style.opacity = atStart && max > 0 ? '1' : '';
-      if (glowRight) glowRight.style.opacity = atEnd && max > 0 ? '1' : '';
-    });
-  }, { passive: true });
+let touchGlowTicking = false;
+let glowLeftTimer = null;
+let glowRightTimer = null;
+const GLOW_HOLD_MS = 550; // how long the edge glow stays lit before auto-fading
+
+el.addEventListener('scroll', () => {
+  if (isDown) return; // mouse-drag path already handles this via setOverdrag
+  if (touchGlowTicking) return;
+  touchGlowTicking = true;
+  requestAnimationFrame(() => {
+    touchGlowTicking = false;
+    const max = maxScroll();
+    const atStart = el.scrollLeft <= 0;
+    const atEnd = el.scrollLeft >= max - 1;
+
+    if (glowLeft) {
+      clearTimeout(glowLeftTimer);
+      if (atStart && max > 0) {
+        glowLeft.classList.add('active');
+        glowLeft.style.opacity = '1';
+        glowLeftTimer = setTimeout(() => {
+          glowLeft.classList.remove('active');
+          glowLeft.style.opacity = '';
+        }, GLOW_HOLD_MS);
+      } else {
+        glowLeft.classList.remove('active');
+        glowLeft.style.opacity = '';
+      }
+    }
+
+    if (glowRight) {
+      clearTimeout(glowRightTimer);
+      if (atEnd && max > 0) {
+        glowRight.classList.add('active');
+        glowRight.style.opacity = '1';
+        glowRightTimer = setTimeout(() => {
+          glowRight.classList.remove('active');
+          glowRight.style.opacity = '';
+        }, GLOW_HOLD_MS);
+      } else {
+        glowRight.classList.remove('active');
+        glowRight.style.opacity = '';
+      }
+    }
+  });
+}, { passive: true });
 
   // "Swipe to see more" hint: visible while the carousel is near its
   // start, hidden once scrolled meaningfully away. Uses a generous

@@ -321,27 +321,37 @@
       margin-right: -50vw;
     }
     .edge-glow {
-      position: absolute; top: 50%; width: 150px; height: 150px;
-      border-radius: 50%; filter: blur(6px);
+      position: absolute; top: 50%; width: 56px; height: 56px;
       pointer-events: none; z-index: 6; opacity: 0;
-      transform: translateY(-50%) scale(0.55);
-      transition: opacity 0.28s cubic-bezier(0.22,1,0.36,1), transform 0.28s cubic-bezier(0.22,1,0.36,1);
+      transform: translateY(-50%) scale(0.4);
+      transition: opacity 0.32s cubic-bezier(0.22,1,0.36,1), transform 0.32s cubic-bezier(0.22,1,0.36,1);
+      display: flex; align-items: center; justify-content: center;
     }
-    .edge-glow-left {
-      left: -40px;
-      background: radial-gradient(circle, rgba(201,168,76,0.55), rgba(201,168,76,0) 68%);
+    .edge-glow::before {
+      content: '';
+      position: absolute; inset: -18px;
+      border-radius: 50%; filter: blur(10px);
+      background: radial-gradient(circle, rgba(201,168,76,0.45), rgba(201,168,76,0) 70%);
     }
-    .edge-glow-right {
-      right: -40px;
-      background: radial-gradient(circle, rgba(201,168,76,0.55), rgba(201,168,76,0) 68%);
+    .edge-glow-badge {
+      position: relative; width: 100%; height: 100%; border-radius: 50%;
+      background: var(--panel-strong);
+      border: 1px solid var(--border-md);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
     }
+    .edge-glow-badge svg { width: 20px; height: 20px; }
+    .edge-glow-left { left: -28px; }
+    .edge-glow-right { right: -28px; }
     .edge-glow.active {
       opacity: 1;
-      animation: edgeGlowPop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      animation: edgeGlowPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
     @keyframes edgeGlowPop {
-      0%   { transform: translateY(-50%) scale(0.55); opacity: 0; }
-      60%  { transform: translateY(-50%) scale(1.15); opacity: 1; }
+      0%   { transform: translateY(-50%) scale(0.4); opacity: 0; }
+      55%  { transform: translateY(-50%) scale(1.08); opacity: 1; }
       100% { transform: translateY(-50%) scale(1); opacity: 1; }
     }
     .work-carousel {
@@ -549,7 +559,7 @@
       .title-swipe-hint { flex: 1 1 100%; order: 3; margin-top: -2px; }
       .video-preview-frame { aspect-ratio: 3/5; }
       footer { padding: 24px; flex-direction: column; align-items: flex-start; }
-      .edge-glow { width: 90px; height: 90px; }
+      .edge-glow { width: 44px; height: 44px; }
       .edge-glow-left { left: -20px; }
       .edge-glow-right { right: -20px; }
     }
@@ -937,7 +947,7 @@ const WORKS = [
 
 // ── BUILD CARDS ──────────────────────────────────────
 const CATEGORY_ORDER  = ['video', 'ai', 'poster'];
-const CATEGORY_LABELS = { video: 'Short form / Reels', ai: 'AI Creatives', graphic: 'Motion Graphics', poster: 'Product Poster' };
+const CATEGORY_LABELS = { video: 'Short form/Reelsg', ai: 'AI Creatives', graphic: 'Motion Graphics', poster: 'Product Poster' };
 const CAROUSEL_CATEGORIES = ['video', 'ai', 'poster'];
 
 function buildCards() {
@@ -965,9 +975,9 @@ function buildCards() {
         </span>` : ''}</h3>
       ${isCarousel
         ? `<div class="carousel-wrap">
-             <div class="edge-glow edge-glow-left"></div>
+             <div class="edge-glow edge-glow-left"><span class="edge-glow-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></span></div>
              <div class="work-grid work-carousel"></div>
-             <div class="edge-glow edge-glow-right"></div>
+             <div class="edge-glow edge-glow-right"><span class="edge-glow-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span></div>
            </div>`
         : `<div class="work-grid"></div>`}`;
     const grid = section.querySelector('.work-grid');
@@ -1077,10 +1087,11 @@ function initDragScroll(el) {
   function setOverdrag(raw) {
     overdrag = raw;
     const eased = rubberBand(Math.abs(overdrag), ELASTIC_RANGE);
-    el.style.transform = overdrag ? `translateX(${-Math.sign(overdrag) * eased}px)` : '';
-
     const ratio = Math.min(1, eased / ELASTIC_RANGE);
-    const scale = 0.55 + ratio * 0.55;
+    const squeeze = 1 - ratio * 0.025;
+    el.style.transform = overdrag ? `translateX(${-Math.sign(overdrag) * eased}px) scale(${squeeze})` : '';
+
+    const scale = 0.6 + ratio * 0.4;
     if (glowLeft) {
       if (overdrag < -1) {
         glowLeft.classList.add('active');

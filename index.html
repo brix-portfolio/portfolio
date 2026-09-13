@@ -747,6 +747,7 @@
 
 <footer>
   <span>© 2026 Brix</span>
+  <span id="visitorCount">Loading visitors…</span>
   <span>Video Editor &amp; Graphic Designer</span>
 </footer>
 
@@ -1591,6 +1592,16 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft')  lbNav(-1);
   if (e.key === 'ArrowRight') lbNav(1);
 });
+
+  // ── VISITOR COUNTER ──────────────────────────────────
+(function() {
+  const el = document.getElementById('visitorCount');
+  if (!el) return;
+  fetch('https://api.counterapi.dev/v1/brix-portfolio-vigan/visits/up')
+    .then(res => res.json())
+    .then(data => { el.textContent = data.count.toLocaleString() + ' visitors'; })
+    .catch(() => { el.textContent = ''; });
+})();
 </script>
 </body>
 </html>

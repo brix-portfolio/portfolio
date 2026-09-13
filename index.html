@@ -552,6 +552,123 @@
     @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+    .visitor-counter {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: var(--panel-strong);
+      border: 1px solid var(--border-md);
+      border-radius: 100px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      opacity: 0;
+      transform: translateY(10px);
+      animation: visitorFadeIn 0.6s 1s forwards;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    @keyframes visitorFadeIn { to { opacity: 1; transform: translateY(0); } }
+    .visitor-counter-icon {
+      width: 28px; height: 28px;
+      background: var(--gold-dim);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .visitor-counter-text { display: flex; flex-direction: column; line-height: 1.15; }
+    .visitor-counter-num {
+      font-family: var(--font-d);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .visitor-counter-label {
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .visitor-counter { cursor: pointer; }
+    .visitor-counter-chevron {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      opacity: 0.7;
+      margin-left: 2px;
+      transition: transform 0.25s ease;
+      animation: chevronPulse 2.2s ease-in-out infinite;
+    }
+    .visitor-counter.open .visitor-counter-chevron { transform: rotate(180deg); }
+    @keyframes chevronPulse {
+      0%, 100% { transform: translateY(0); opacity: 0.5; }
+      50% { transform: translateY(-2px); opacity: 1; }
+    }
+    .visitor-counter.open .visitor-counter-chevron { animation: none; }
+
+    @media (max-width: 900px) {
+      .visitor-counter { bottom: 16px; right: 16px; padding: 8px 12px; }
+    }
+
+    .country-panel {
+      position: fixed;
+      bottom: 74px;
+      right: 20px;
+      z-index: 51;
+      width: 240px;
+      max-height: 320px;
+      overflow-y: auto;
+      background: var(--panel-strong);
+      border: 1px solid var(--border-md);
+      border-radius: 14px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+      padding: 14px;
+      opacity: 0;
+      transform: translateY(10px) scale(0.97);
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease, background-color 0.3s ease, border-color 0.3s ease;
+    }
+    .country-panel.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    .country-panel-title {
+      font-family: var(--font-d);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--heading);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .country-panel-list { display: flex; flex-direction: column; gap: 2px; }
+    .country-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 4px;
+      font-size: 12.5px;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+    .country-row:last-child { border-bottom: none; }
+    .country-row-name { display: flex; align-items: center; gap: 8px; }
+    .country-row-flag { font-size: 15px; line-height: 1; }
+    .country-row-count { color: var(--gold); font-weight: 600; font-family: var(--font-d); }
+    .country-panel-empty { font-size: 12px; color: var(--muted); padding: 6px 4px; }
+
+    @media (max-width: 900px) {
+      .country-panel { bottom: 68px; right: 16px; width: 210px; }
+    }
+
     @media (max-width: 900px) {
       nav { padding: 0 24px; }
       .nav-links, .nav-cta { display: none; }
@@ -747,10 +864,29 @@
 
 <footer>
   <span>© 2026 Brix</span>
-  <span><img src="https://visitor-badge.laobi.icu/badge?page_id=brixolegario.portfolio" alt="visitors" style="vertical-align:middle;" /></span>
   <span>Video Editor &amp; Graphic Designer</span>
 </footer>
-  
+
+<div class="country-panel" id="countryPanel">
+  <div class="country-panel-title">🌍 Visitors by Country</div>
+  <div class="country-panel-list" id="countryPanelList">
+    <div class="country-panel-empty">Loading...</div>
+  </div>
+</div>
+
+<div class="visitor-counter" id="visitorCounter">
+  <div class="visitor-counter-icon">
+    <svg width="16" height="16" fill="none" stroke="#c9a84c" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+  </div>
+  <div class="visitor-counter-text">
+    <span class="visitor-counter-num" id="visitorCounterNum">0</span>
+    <span class="visitor-counter-label">Visitors</span>
+  </div>
+  <div class="visitor-counter-chevron">
+    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+  </div>
+</div>
+
 <!-- LIGHTBOX -->
 <div class="lightbox-overlay" id="lightbox" onclick="lbBgClick(event)">
   <button class="lb-close" onclick="closeLightbox()" title="Close (Esc)">
@@ -1593,15 +1729,125 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') lbNav(1);
 });
 
-  // ── VISITOR COUNTER ──────────────────────────────────
-(function() {
-  const el = document.getElementById('visitorCount');
+// ── VISITOR COUNTER (animated) ───────────────────────
+function animateVisitorCount(target) {
+  const el = document.getElementById('visitorCounterNum');
   if (!el) return;
-  fetch('https://api.counterapi.dev/v1/brix-portfolio-vigan/visits/up')
-    .then(res => res.json())
-    .then(data => { el.textContent = data.count.toLocaleString() + ' visitors'; })
-    .catch(() => { el.textContent = ''; });
-})();
+  const duration = 1200;
+  const start = performance.now();
+  function tick(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(eased * target).toLocaleString();
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+function abacusVisitorCallback(res) {
+  animateVisitorCount(res.value);
+}
+
+// ── VISITORS BY COUNTRY ───────────────────────────────
+// Predefined country list we track (keeps API calls reasonable).
+// Add/remove entries here anytime.
+const TRACKED_COUNTRIES = [
+  { code: 'PH', name: 'Philippines' },
+  { code: 'US', name: 'United States' },
+  { code: 'GB', name: 'United Kingdom' },
+  { code: 'CA', name: 'Canada' },
+  { code: 'AU', name: 'Australia' },
+  { code: 'SG', name: 'Singapore' },
+  { code: 'JP', name: 'Japan' },
+  { code: 'KR', name: 'South Korea' },
+  { code: 'IN', name: 'India' },
+  { code: 'DE', name: 'Germany' },
+  { code: 'FR', name: 'France' },
+  { code: 'ES', name: 'Spain' },
+  { code: 'IT', name: 'Italy' },
+  { code: 'NL', name: 'Netherlands' },
+  { code: 'BR', name: 'Brazil' },
+  { code: 'MX', name: 'Mexico' },
+  { code: 'ID', name: 'Indonesia' },
+  { code: 'MY', name: 'Malaysia' },
+  { code: 'TH', name: 'Thailand' },
+  { code: 'VN', name: 'Vietnam' },
+  { code: 'AE', name: 'UAE' },
+  { code: 'SA', name: 'Saudi Arabia' },
+  { code: 'CN', name: 'China' },
+  { code: 'RU', name: 'Russia' },
+  { code: 'ZA', name: 'South Africa' }
+];
+const COUNTRY_NAMESPACE = 'brix-portfolio-vigan-country';
+
+function flagEmoji(code) {
+  return code.toUpperCase().replace(/./g, ch => String.fromCodePoint(127397 + ch.charCodeAt(0)));
+}
+
+// Records the current visitor's country by incrementing that country's
+// counter. Runs once per page load.
+async function recordVisitorCountry() {
+  try {
+    const geoRes = await fetch('https://ipwho.is/');
+    const geo = await geoRes.json();
+    const code = (geo && geo.country_code) ? geo.country_code.toUpperCase() : null;
+    if (!code) return;
+    await fetch(`https://abacus.jasoncameron.dev/hit/${COUNTRY_NAMESPACE}/${code}`);
+  } catch (e) {
+    // Silently ignore — geolocation or counting failure shouldn't break the page.
+  }
+}
+
+// Fetches current counts for every tracked country and renders the list.
+async function loadCountryPanel() {
+  const listEl = document.getElementById('countryPanelList');
+  if (!listEl) return;
+  try {
+    const results = await Promise.all(
+      TRACKED_COUNTRIES.map(c =>
+        fetch(`https://abacus.jasoncameron.dev/get/${COUNTRY_NAMESPACE}/${c.code}`)
+          .then(r => r.json())
+          .then(data => ({ ...c, count: data.value || 0 }))
+          .catch(() => ({ ...c, count: 0 }))
+      )
+    );
+    const withVisits = results.filter(r => r.count > 0).sort((a, b) => b.count - a.count);
+    if (!withVisits.length) {
+      listEl.innerHTML = '<div class="country-panel-empty">No visits recorded yet.</div>';
+      return;
+    }
+    listEl.innerHTML = withVisits.map(r => `
+      <div class="country-row">
+        <span class="country-row-name"><span class="country-row-flag">${flagEmoji(r.code)}</span>${r.name}</span>
+        <span class="country-row-count">${r.count.toLocaleString()}</span>
+      </div>
+    `).join('');
+  } catch (e) {
+    listEl.innerHTML = '<div class="country-panel-empty">Couldn\'t load right now.</div>';
+  }
+}
+
+recordVisitorCountry();
+
+const visitorCounterEl = document.getElementById('visitorCounter');
+const countryPanelEl = document.getElementById('countryPanel');
+let countryPanelLoaded = false;
+if (visitorCounterEl && countryPanelEl) {
+  visitorCounterEl.addEventListener('click', () => {
+    const isOpen = countryPanelEl.classList.toggle('open');
+    visitorCounterEl.classList.toggle('open', isOpen);
+    if (isOpen && !countryPanelLoaded) {
+      countryPanelLoaded = true;
+      loadCountryPanel();
+    }
+  });
+  document.addEventListener('click', e => {
+    if (!countryPanelEl.contains(e.target) && !visitorCounterEl.contains(e.target)) {
+      countryPanelEl.classList.remove('open');
+      visitorCounterEl.classList.remove('open');
+    }
+  });
+}
 </script>
+<script async src="https://abacus.jasoncameron.dev/hit/brix-portfolio-vigan/visits?callback=abacusVisitorCallback"></script>
 </body>
 </html>

@@ -295,7 +295,7 @@
     .service-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
     .work { background: transparent; }
-    .work-grid { display: grid; grid-template-columns: repeat(auto-fill, 240px); gap: 22px; }
+    .work-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; }
     .work-card { background: transparent; border: none; border-radius: 10px; overflow: visible; transition: transform 0.3s, opacity 0.4s ease; cursor: pointer; }
     .work-card:hover { transform: translateY(-6px); }
     .work-card:hover .work-overlay { opacity: 1; }
@@ -606,6 +606,10 @@
       .country-panel { bottom: 68px; right: 16px; width: 210px; }
     }
 
+    @media (max-width: 1200px) {
+      .work-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
     @media (max-width: 900px) {
       nav { padding: 0 24px; }
       .nav-links, .nav-cta { display: none; }
@@ -616,7 +620,7 @@
       .scroll-hint { left: 24px; }
       section { padding: 44px 24px; }
       .about-grid, .services-grid, .contact-inner { grid-template-columns: 1fr; gap: 36px; }
-      .work-grid { grid-template-columns: repeat(auto-fill, 180px); gap: 14px; }
+      .work-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
       .video-preview-frame { aspect-ratio: 3/5; }
       footer { padding: 24px; flex-direction: column; align-items: flex-start; }
     }
@@ -1007,9 +1011,18 @@ const WORKS = [
 // ── BUILD CARDS ──────────────────────────────────────
 const CATEGORY_ORDER  = ['video', 'ai', 'poster'];
 const CATEGORY_LABELS = { video: 'Short form/Reelsg', ai: 'AI Creatives', graphic: 'Motion Graphics', poster: 'Product Poster' };
-const ITEMS_PER_PAGE = 6; // how many items each section shows initially, and adds per "Load more" click
+// A section shows every item up to ITEMS_PER_PAGE with no "Load more"
+// button at all. The button only appears once a section has MORE than
+// ITEMS_PER_PAGE items, and each click reveals another ITEMS_PER_PAGE.
+// On bigger screens that's 10; on smaller screens (900px and below,
+// same breakpoint the work-grid columns collapse at) it's 9.
+const SMALL_SCREEN_QUERY = window.matchMedia('(max-width: 900px)');
+function currentItemsPerPage() {
+  return SMALL_SCREEN_QUERY.matches ? 9 : 10;
+}
 
 function buildCards() {
+  const ITEMS_PER_PAGE = currentItemsPerPage();
   const container = document.getElementById('workContainer');
   container.innerHTML = '';
 
@@ -1088,9 +1101,13 @@ function buildCards() {
 
     function renderControls() {
       loadMoreWrap.innerHTML = '';
+      // If the whole category fits within ITEMS_PER_PAGE, there is
+      // nothing more to load and nothing expanded to collapse — no
+      // button is ever shown for that section.
+      if (items.length <= ITEMS_PER_PAGE) return;
+
       const hasMore = visibleCount < items.length;
       const isExpanded = visibleCount > ITEMS_PER_PAGE;
-      if (!hasMore && !isExpanded) return;
 
       if (hasMore) {
         const btn = document.createElement('button');
@@ -1238,6 +1255,13 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 // issue in this browser (blocked by a privacy extension, GPU disabled,
 // etc.) can never prevent the Work section from rendering.
 buildCards();
+
+// If the viewport crosses the 900px breakpoint (e.g. rotating a tablet,
+// resizing a desktop window), the Load-more threshold changes (10 vs 9),
+// so rebuild the Work section to match. This does briefly reload any
+// visible video/YouTube embeds, but only happens on an actual breakpoint
+// crossing, not on every resize tick.
+SMALL_SCREEN_QUERY.addEventListener('change', () => buildCards());
 
 // ── ANIMATED BACKGROUND ──────────────────────────────
 const canvas = document.getElementById('bgCanvas');

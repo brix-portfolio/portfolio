@@ -1031,21 +1031,37 @@ const CATEGORY_LABELS = { video: 'Short form/Reelsg', ai: 'AI Creatives', graphi
 // A section shows every item up to ITEMS_PER_PAGE with no "Load more"
 // button at all. The button only appears once a section has MORE than
 // ITEMS_PER_PAGE items, and each click reveals another ITEMS_PER_PAGE.
-// On bigger screens that's 10; on smaller screens (900px and below,
-// same breakpoint the work-grid columns collapse at) it's 9.
-const SMALL_SCREEN_QUERY = window.matchMedia('(max-width: 900px)');
-function currentItemsPerPage() {
-  return SMALL_SCREEN_QUERY.matches ? 9 : 10;
+// ITEMS_PER_PAGE is not a fixed number: it's however many cards make up
+// ROWS_PER_PAGE full rows of the .work-grid CSS grid as it is *actually*
+// rendering right now (5 cols on a wide desktop, 2 on a small phone,
+// etc.), so "Load more" always appears after the same number of complete
+// rows no matter the device or window width.
+const ROWS_PER_PAGE = 2;
+
+// Reads how many columns the CSS grid is currently laying out, straight
+// from the computed grid-template-columns (one token per column) — this
+// is content-independent, so it works even on an empty grid.
+function getGridColumns(gridEl) {
+  const value = window.getComputedStyle(gridEl).gridTemplateColumns;
+  const cols = value.split(' ').filter(Boolean);
+  return cols.length || 1;
 }
 
+// Tracks the column count last used to build the page, so a resize/
+// rotation only triggers a rebuild when it actually crosses a breakpoint
+// (not on every pixel of dragging).
+let lastGridColumns = null;
+
 function buildCards() {
-  const ITEMS_PER_PAGE = currentItemsPerPage();
   const container = document.getElementById('workContainer');
   container.innerHTML = '';
 
-  CATEGORY_ORDER.forEach(cat => {
+  // First pass: create every section with its (still empty) grid and
+  // attach them all to the page. Attaching before measuring means the
+  // grid's real, breakpoint-aware column count is available to read.
+  const sections = CATEGORY_ORDER.map(cat => {
     const items = WORKS.filter(w => w.category === cat);
-    if (!items.length) return;
+    if (!items.length) return null;
 
     const section = document.createElement('div');
     section.className = 'work-category';
@@ -1066,6 +1082,19 @@ function buildCards() {
     // clicking Load more on AI Creatives.
     container.appendChild(section);
 
+    return { cat, items, section, grid, loadMoreWrap };
+  }).filter(Boolean);
+
+  if (!sections.length) return;
+
+  // All .work-grid elements share the same CSS rules, so one measurement
+  // (from the first section already in the DOM) tells us the column
+  // count for all of them.
+  const columns = getGridColumns(sections[0].grid);
+  lastGridColumns = columns;
+  const ITEMS_PER_PAGE = columns * ROWS_PER_PAGE;
+
+  sections.forEach(({ items, section, grid, loadMoreWrap }) => {
     let visibleCount = 0;
 
     // Appends the next `count` items to the grid (never re-renders
@@ -1273,12 +1302,20 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 // etc.) can never prevent the Work section from rendering.
 buildCards();
 
-// If the viewport crosses the 900px breakpoint (e.g. rotating a tablet,
-// resizing a desktop window), the Load-more threshold changes (10 vs 9),
-// so rebuild the Work section to match. This does briefly reload any
-// visible video/YouTube embeds, but only happens on an actual breakpoint
-// crossing, not on every resize tick.
-SMALL_SCREEN_QUERY.addEventListener('change', () => buildCards());
+// If resizing/rotating changes how many columns the .work-grid actually
+// renders (5→4→3→2 at this page's breakpoints), the Load-more threshold
+// (columns × ROWS_PER_PAGE) changes too, so rebuild to match. Debounced,
+// and only rebuilds when the column count truly changed — not on every
+// resize tick — since a rebuild briefly reloads visible video embeds.
+let columnsResizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(columnsResizeTimer);
+  columnsResizeTimer = setTimeout(() => {
+    const grid = document.querySelector('.work-grid');
+    if (!grid) return;
+    if (getGridColumns(grid) !== lastGridColumns) buildCards();
+  }, 200);
+});
 
 // ── ANIMATED BACKGROUND ──────────────────────────────
 const canvas = document.getElementById('bgCanvas');

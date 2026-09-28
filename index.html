@@ -1257,7 +1257,7 @@ function buildCard(w, i, useRevealClass) {
 
   let previewHtml;
 
-  if (w.category === 'video' || w.category === 'ai') {
+  if (w.category === 'video' || w.category === 'ai' || w.category === 'ugc') {
     if (w.type === 'youtube') {
       previewHtml = `
         <div class="video-preview-frame">

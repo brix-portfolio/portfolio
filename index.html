@@ -1,1768 +1,650 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Brix — Video Editor & Graphic Designer</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0X0H0HGM8Z"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-0X0H0HGM8Z');
-</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#fffefa" />
+  <meta name="description" content="Brix Allan Dave Olegario — video editor, graphic designer, and AI ad creative based in the Philippines." />
+  <title>Brix Olegario · Video Editor &amp; AI Ad Creative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fredoka:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --navy:     #080d1a;
-      --navy2:    #0c1223;
-      --navy3:    #121a30;
-      --navy4:    #1a2440;
-      --gold:     #c9a84c;
-      --gold-dim: rgba(201,168,76,0.12);
-      --border:   rgba(201,168,76,0.14);
-      --border-md:rgba(201,168,76,0.30);
-      --text:     #e8eaf2;
-      --muted:    rgba(232,234,242,0.50);
-      --dim:      rgba(232,234,242,0.28);
-      --heading:  #ffffff;
-      --font-d:   'Playfair Display', Georgia, serif;
-      --font-b:   'DM Sans', system-ui, sans-serif;
+    :root { --paper:#fffefa; --ink:#151613; --muted:#686a65; --line:#e6e4dd; --yellow:#ffcf00; --yellow-soft:#ffdc35; --panel:#f6f5ef; --display:'Fredoka', 'Arial Rounded MT Bold', sans-serif; --body:'Manrope', Arial, sans-serif; --mono:'DM Mono', monospace; --max:1280px; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:92px; }
+    body { margin:0; background-color:var(--paper); background-image:radial-gradient(circle,rgba(21,22,19,.075) .8px,transparent .95px),radial-gradient(ellipse at 12% 9%,rgba(255,207,0,.09),transparent 24%),radial-gradient(ellipse at 88% 44%,rgba(255,207,0,.06),transparent 23%); background-size:18px 18px,auto,auto; color:var(--ink); font:400 15px/1.65 var(--body); -webkit-font-smoothing:antialiased; }
+    a { color:inherit; }
+    button { font:inherit; }
+    .wrap { width:min(var(--max), calc(100% - 72px)); margin-inline:auto; }
+    .mono { font:500 10px/1.4 var(--mono); letter-spacing:.085em; text-transform:uppercase; }
+    .header { position:sticky; top:0; z-index:10; background:rgba(255,254,250,.96); backdrop-filter:blur(14px); border-bottom:1px solid var(--line); }
+    .nav { min-height:78px; display:flex; align-items:center; justify-content:space-between; gap:22px; }
+    .logo { display:flex; flex-direction:column; text-decoration:none; line-height:1.15; }
+    .logo strong { font-size:14px; font-weight:800; letter-spacing:.035em; }
+    .logo span { margin-top:5px; color:var(--muted); font:400 9px/1.2 var(--mono); letter-spacing:.18em; text-transform:uppercase; }
+    .nav-right { display:flex; align-items:center; gap:clamp(15px,2.5vw,34px); }
+    .nav-links { display:flex; align-items:center; gap:clamp(16px,2.4vw,34px); list-style:none; padding:0; margin:0; }
+    .nav-links a { font-size:12px; font-weight:700; text-decoration:none; transition:opacity .18s; }
+    .nav-links a:hover { opacity:.58; }
+    .pill { min-height:42px; display:inline-flex; align-items:center; justify-content:center; gap:9px; padding:0 18px; border:1px solid var(--ink); border-radius:999px; color:var(--ink); background:transparent; text-decoration:none; font-size:11px; font-weight:800; transition:transform .18s, background .18s; }
+    .pill:hover { transform:translateY(-2px); }
+    .pill-yellow { background:var(--yellow); border-color:var(--yellow); }
+    .pill-yellow:hover { background:var(--yellow-soft); }
+    .theme-toggle { height:42px; display:inline-flex; align-items:center; gap:8px; padding:0 14px; border:1px solid var(--line); border-radius:999px; background:transparent; color:var(--ink); font-size:11px; font-weight:700; cursor:pointer; }
+    .theme-toggle svg { width:14px; height:14px; }
+    .menu-toggle { display:none; width:40px; height:40px; border:1px solid var(--line); border-radius:50%; background:transparent; color:var(--ink); cursor:pointer; }
+    .menu-toggle span { display:block; width:15px; height:1.5px; margin:4px auto; background:currentColor; transition:transform .2s; }
+    .menu-toggle[aria-expanded="true"] span:first-child { transform:translateY(2.75px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] span:last-child { transform:translateY(-2.75px) rotate(-45deg); }
 
-      --panel:            rgba(18,26,48,0.65);
-      --panel-soft:       rgba(18,26,48,0.5);
-      --panel-strong:     rgba(18,26,48,0.9);
-      --panel-hero:       rgba(18,26,48,0.95);
-      --chip-bg:          rgba(12,18,35,0.6);
-      --nav-bg:           rgba(8,13,26,0.85);
-      --mobile-nav-bg:    rgba(8,13,26,0.98);
-      --work-overlay-bg:  rgba(8,13,26,0.5);
-      --lightbox-bg:      rgba(4,8,18,0.97);
-      --poster-grad-1:    #14192c;
-      --poster-grad-2:    #0c1020;
-      --icon-fill-soft:   rgba(255,255,255,0.06);
-      --vignette-color:   rgba(8,13,26,0.55);
-      --device-border:    #3a3a3e;
-      --device-ring:      #1c1c1e;
-      --device-shadow:    rgba(0,0,0,0.55);
-    }
+    .hero { position:relative; isolation:isolate; overflow:hidden; padding:clamp(42px,5vw,70px) 0 50px; }
+    .hero::before,.hero::after { content:''; position:absolute; z-index:-1; pointer-events:none; border-radius:50%; }
+    .hero::before { width:390px; height:390px; left:-190px; top:-190px; border:1px solid rgba(21,22,19,.09); box-shadow:0 0 0 24px rgba(255,207,0,.08),0 0 0 55px rgba(21,22,19,.025),0 0 0 92px rgba(255,207,0,.045); animation:orbit-drift 24s ease-in-out infinite alternate; }
+    .hero::after { width:225px; height:225px; right:8%; top:8%; background:radial-gradient(circle,rgba(255,207,0,.18),rgba(255,207,0,.04) 58%,transparent 70%); animation:glow-breathe 7s ease-in-out infinite; }
+    @keyframes orbit-drift { from { transform:translate3d(-8px,0,0) rotate(-8deg); } to { transform:translate3d(16px,20px,0) rotate(9deg); } }
+    @keyframes glow-breathe { 0%,100% { opacity:.55; transform:scale(.92); } 50% { opacity:1; transform:scale(1.08); } }
+    .hero-grid { display:grid; grid-template-columns:minmax(250px,1.03fr) minmax(260px,.96fr) minmax(260px,.95fr); align-items:center; gap:clamp(25px,4vw,52px); }
+    .role-tag { display:inline-flex; align-items:center; min-height:34px; padding:0 14px; border:1px solid #20211e; border-radius:999px; font-size:11px; font-weight:800; }
+    h1, h2, h3, p { margin-top:0; }
+    .hero h1 { margin:19px 0 19px; font:700 clamp(38px,4.2vw,58px)/.99 var(--display); letter-spacing:-.045em; }
+    .marker { position:relative; display:inline; z-index:0; }
+    .marker::after { content:''; position:absolute; z-index:-1; left:0; right:0; bottom:.015em; height:.19em; background:var(--yellow); }
+    .hero-lead { margin:0 0 13px; font-size:14px; font-weight:700; line-height:1.55; }
+    .hero-copy { margin:0; color:var(--muted); font-size:13px; line-height:1.8; }
+    .hero-buttons { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+    .hero-buttons .pill { min-height:44px; padding-inline:18px; }
+    .identity { padding:17px 18px; border:1px solid #c9c7be; border-radius:18px; box-shadow:0 4px 0 rgba(21,22,19,.04); }
+    .identity strong { display:block; font:600 18px/1.25 var(--display); }
+    .identity span { color:var(--muted); font-size:12px; }
+    .contact-title { margin:17px 0 10px; font:600 18px/1.3 var(--display); }
+    .contact-stack { display:grid; gap:8px; }
+    .contact-chip { min-height:46px; display:flex; align-items:center; gap:11px; padding:5px 14px 5px 7px; border:1px solid var(--yellow); border-radius:999px; background:var(--yellow); color:var(--ink); text-decoration:none; font-size:11px; font-weight:800; overflow-wrap:anywhere; transition:transform .18s, box-shadow .18s; }
+    .contact-chip:hover { transform:translateX(3px); box-shadow:0 4px 14px rgba(21,22,19,.1); }
+    .chip-icon { width:31px; height:31px; flex:0 0 31px; display:grid; place-items:center; border-radius:50%; background:var(--ink); color:var(--yellow); }
+    .chip-icon svg { width:14px; height:14px; }
+    .portrait-stage { min-height:360px; position:relative; display:flex; align-items:flex-end; justify-content:center; }
+    .portrait-stage::before { content:''; position:absolute; width:78px; height:78px; top:10%; left:0; border:1px solid rgba(21,22,19,.35); border-radius:50%; box-shadow:inset 0 0 0 10px rgba(255,207,0,.22),0 0 0 9px rgba(255,207,0,.12); animation:float-mark 5s ease-in-out infinite; }
+    .portrait-stage::after { content:'✳'; position:absolute; top:4%; right:4%; color:var(--ink); font-size:30px; line-height:1; animation:spin-mark 18s linear infinite; }
+    @keyframes float-mark { 0%,100% { transform:translateY(0) rotate(-8deg); } 50% { transform:translateY(-11px) rotate(7deg); } }
+    @keyframes spin-mark { to { transform:rotate(360deg); } }
+    .portrait-yellow { position:absolute; inset:21% 3% 4%; border-radius:15px 15px 2px 2px; background:var(--yellow); }
+    .portrait { z-index:1; position:relative; width:100%; height:360px; display:flex; align-items:flex-end; justify-content:center; overflow:hidden; }
+    .portrait img { position:relative; z-index:2; width:100%; height:100%; object-fit:contain; object-position:center bottom; filter:grayscale(1) contrast(1.08); }
+    .portrait-fallback { position:absolute; z-index:1; inset:0; display:grid; place-items:center; font:700 92px/1 var(--display); letter-spacing:-.08em; }
+    .portrait.has-image .portrait-fallback { display:none; }
+    .location-note { position:absolute; z-index:3; right:0; top:8px; padding:8px 11px; border:1px solid var(--ink); border-radius:999px; background:var(--paper); font:400 9px/1.2 var(--mono); letter-spacing:.04em; }
 
-    body.light-mode {
-      --navy:     #f6f3ec;
-      --gold:     #a9843a;
-      --gold-dim: rgba(169,132,58,0.12);
-      --border:   rgba(20,22,18,0.10);
-      --border-md:rgba(20,22,18,0.22);
-      --text:     #171a1f;
-      --muted:    rgba(23,26,31,0.60);
-      --dim:      rgba(23,26,31,0.35);
-      --heading:  #14171d;
+    .feature-section { padding:25px 0 80px; }
+    .feature-panel { min-height:445px; padding:clamp(24px,4vw,42px); position:relative; overflow:hidden; display:grid; grid-template-columns:minmax(200px,.82fr) minmax(200px,1fr) minmax(190px,.75fr); align-items:center; gap:26px; border-radius:24px; background:var(--yellow); }
+    .feature-panel::before,.feature-panel::after { content:''; position:absolute; width:300px; height:300px; border:1px solid rgba(21,22,19,.13); border-radius:50%; pointer-events:none; }
+    .feature-panel::before { right:-100px; top:-160px; box-shadow:0 0 0 30px rgba(21,22,19,.025),0 0 0 60px rgba(21,22,19,.025); }
+    .feature-panel::after { left:-220px; bottom:-250px; }
+    .feature-info,.feature-phone,.feature-detail { position:relative; z-index:1; }
+    .feature-label { margin:0 0 10px; font:500 10px/1.4 var(--mono); letter-spacing:.14em; text-transform:uppercase; }
+    .feature-info h2 { margin:0; font:600 clamp(30px,4vw,48px)/1.02 var(--display); letter-spacing:-.04em; }
+    .feature-info p:not(.feature-label) { max-width:290px; margin:14px 0 0; font-size:12px; line-height:1.75; }
+    .feature-phone { display:flex; justify-content:center; align-self:end; }
+    .phone { width:min(230px,100%); aspect-ratio:9/17.9; padding:8px; position:relative; border:1px solid #45463f; border-radius:34px; background:#131410; box-shadow:0 20px 40px rgba(21,22,19,.24); transform:translateY(18px); }
+    .phone::before { content:''; position:absolute; z-index:3; width:62px; height:14px; top:10px; left:50%; transform:translateX(-50%); border-radius:20px; background:#131410; }
+    .phone-screen { height:100%; position:relative; overflow:hidden; border-radius:27px; background:#272821; }
+    .phone-screen img { width:100%; height:100%; object-fit:cover; }
+    .phone-screen::after { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg,rgba(0,0,0,.15),transparent 48%,rgba(0,0,0,.16)); }
+    .play-button { position:absolute; z-index:2; inset:0; display:grid; place-items:center; border:0; background:transparent; cursor:pointer; }
+    .play-button span { width:54px; height:54px; display:grid; place-items:center; padding-left:4px; border:1px solid var(--ink); border-radius:50%; background:var(--yellow); transition:transform .18s; }
+    .play-button:hover span { transform:scale(1.08); }
+    .phone iframe { position:absolute; inset:0; z-index:4; width:100%; height:100%; border:0; }
+    .feature-detail { align-self:center; }
+    .feature-detail .project-no { font:500 10px/1.3 var(--mono); letter-spacing:.12em; }
+    .feature-detail h3 { margin:12px 0 8px; font:600 20px/1.2 var(--display); }
+    .feature-detail p { margin:0 0 18px; max-width:230px; font-size:11px; line-height:1.7; }
+    .feature-detail .pill { min-height:38px; padding-inline:14px; font-size:10px; background:var(--ink); color:var(--paper); border-color:var(--ink); }
 
-      --panel:            rgba(255,255,255,0.72);
-      --panel-soft:       rgba(255,255,255,0.55);
-      --panel-strong:     rgba(255,255,255,0.92);
-      --panel-hero:       rgba(255,255,255,0.95);
-      --chip-bg:          rgba(255,255,255,0.65);
-      --nav-bg:           rgba(246,243,236,0.85);
-      --mobile-nav-bg:    rgba(246,243,236,0.98);
-      --work-overlay-bg:  rgba(246,243,236,0.65);
-      --lightbox-bg:      rgba(246,243,236,0.97);
-      --poster-grad-1:    #ffffff;
-      --poster-grad-2:    #eae6db;
-      --icon-fill-soft:   rgba(0,0,0,0.05);
-      --vignette-color:   rgba(230,225,210,0.5);
-      --device-border:    #d8d2c2;
-      --device-ring:      #ffffff;
-      --device-shadow:    rgba(60,52,30,0.16);
-    }
+    .work-section { padding:24px 0 76px; }
+    .work-panel { position:relative; overflow:hidden; padding:clamp(20px,3vw,34px); border-radius:23px; background-color:var(--yellow); background-image:radial-gradient(circle,rgba(21,22,19,.11) .8px,transparent 1px); background-size:18px 18px; color:#151613; }
+    .work-panel::after { content:''; position:absolute; width:330px; height:330px; right:-150px; bottom:-220px; border:1px solid rgba(21,22,19,.13); border-radius:50%; box-shadow:0 0 0 35px rgba(21,22,19,.025),0 0 0 70px rgba(21,22,19,.025); pointer-events:none; }
+    .work-head { position:relative; z-index:2; display:flex; align-items:center; flex-wrap:wrap; gap:14px 25px; }
+    .work-head h2 { flex:0 0 auto; margin:0; font:600 clamp(27px,3.2vw,39px)/1 var(--display); letter-spacing:-.04em; }
+    .filter-row { display:flex; flex-wrap:wrap; gap:7px; }
+    .filter-pill { min-height:36px; padding:0 14px; border:1px solid rgba(21,22,19,.72); border-radius:999px; background:transparent; color:#151613; font-size:10px; font-weight:800; cursor:pointer; transition:background .18s,color .18s,transform .18s; }
+    .filter-pill:hover { transform:translateY(-1px); }
+    .filter-pill[aria-pressed="true"] { background:#151613; color:#fffefa; }
+    .work-caption { position:relative; z-index:2; margin:12px 0 0; color:rgba(21,22,19,.75); font-size:11px; }
+    .deck-shell { position:relative; z-index:1; height:340px; margin-top:9px; }
+    .deck-stage { position:absolute; inset:0; touch-action:pan-y; cursor:grab; perspective:1000px; perspective-origin:50% 50%; --drag-turn:0deg; --turn:0deg; --radius:220px; transform-style:preserve-3d; }
+    .deck-stage.is-dragging { cursor:grabbing; }
+    .deck-stage.is-dragging .project-card { pointer-events:none; transition:none; animation:none; }
+    @keyframes cylinder-rotate { from { opacity:.55; transform:translate(-50%,-50%) rotateY(calc(var(--angle) + var(--turn))) translateZ(var(--radius)) scale(var(--scale)); } to { opacity:1; transform:translate(-50%,-50%) rotateY(var(--angle)) translateZ(var(--radius)) scale(var(--scale)); } }
+    .project-card { position:absolute; top:50%; left:50%; width:190px; height:260px; padding:0; overflow:hidden; border:1px solid rgba(255,255,255,.36); border-radius:14px; background:#151613; color:#fffefa; text-align:left; cursor:pointer; box-shadow:0 13px 28px rgba(21,22,19,.2); transform:translate(-50%,-50%) rotateY(calc(var(--angle) + var(--drag-turn))) translateZ(var(--radius)) scale(var(--scale)); transform-origin:center; transform-style:preserve-3d; backface-visibility:hidden; z-index:var(--z); animation:cylinder-rotate .62s cubic-bezier(.22,.72,.22,1) both; transition:transform .34s cubic-bezier(.2,.75,.2,1),box-shadow .2s,filter .2s; }
+    .project-card:hover { box-shadow:0 20px 38px rgba(21,22,19,.27); }
+    .project-card[aria-pressed="true"] { width:218px; height:292px; box-shadow:0 20px 42px rgba(21,22,19,.28); }
+    .card-art { position:absolute; inset:0; background:linear-gradient(150deg,#272a21,#11120f 68%); }
+    .card-art img { width:100%; height:100%; object-fit:cover; opacity:.84; transition:opacity .2s,transform .35s; }
+    .project-card:hover .card-art img,.project-card[aria-pressed="true"] .card-art img { opacity:1; transform:scale(1.035); }
+    .project-card.missing .card-art { background:radial-gradient(circle at 72% 20%,rgba(255,207,0,.6),transparent 26%),linear-gradient(140deg,#4b4c3d,#151613 68%); }
+    .card-shade { position:absolute; inset:0; background:linear-gradient(180deg,rgba(5,6,4,.45),transparent 35%,rgba(5,6,4,.82)); }
+    .card-top { position:absolute; z-index:1; top:14px; left:14px; font:400 8px/1.3 var(--mono); letter-spacing:.13em; }
+    .card-play { position:absolute; z-index:1; left:50%; top:50%; width:48px; height:48px; display:grid; place-items:center; padding-left:3px; border:1px solid rgba(255,255,255,.55); border-radius:50%; background:rgba(21,22,19,.55); transform:translate(-50%,-50%); }
+    .card-title { position:absolute; z-index:1; left:15px; right:12px; bottom:14px; font:600 18px/1.08 var(--display); letter-spacing:-.02em; }
+    .card-category { display:block; margin-top:6px; font:400 8px/1.3 var(--mono); letter-spacing:.1em; text-transform:uppercase; opacity:.73; }
+    .deck-arrow { position:absolute; z-index:5; top:50%; width:42px; height:42px; display:grid; place-items:center; border:1px solid rgba(21,22,19,.7); border-radius:50%; background:rgba(255,207,0,.96); color:#151613; font-size:20px; cursor:pointer; transform:translateY(-50%); transition:background .18s,transform .18s; }
+    .deck-arrow:hover { background:#fffefa; transform:translateY(-50%) scale(1.05); }
+    .deck-arrow.prev { left:4px; }
+    .deck-arrow.next { right:4px; }
+    .deck-arrow:disabled { opacity:.45; cursor:default; }
+    .work-info { position:relative; z-index:2; display:grid; grid-template-columns:1fr auto; align-items:center; gap:15px 24px; padding-top:17px; border-top:1px solid rgba(21,22,19,.24); }
+    .work-count { color:rgba(21,22,19,.67); font:500 9px/1.4 var(--mono); letter-spacing:.1em; }
+    .work-info h3 { margin:5px 0 2px; font:600 21px/1.2 var(--display); }
+    .work-info p { margin:0; color:rgba(21,22,19,.72); font-size:10px; }
+    .watch-button { min-height:39px; padding:0 15px; border:1px solid #151613; border-radius:999px; background:#151613; color:#fffefa; font-size:10px; font-weight:800; cursor:pointer; }
+    .watch-button:hover { background:#303128; }
+    .work-empty { padding:90px 20px; text-align:center; font:500 14px var(--display); }
+    .work-dialog { width:min(920px,calc(100% - 28px)); max-width:920px; max-height:92vh; padding:0; overflow:hidden; border:1px solid rgba(255,255,255,.2); border-radius:18px; background:#11120f; color:#fffefa; }
+    .work-dialog::backdrop { background:rgba(0,0,0,.78); backdrop-filter:blur(5px); }
+    .dialog-head { display:flex; align-items:center; justify-content:space-between; gap:15px; padding:13px 17px; font:500 10px var(--mono); letter-spacing:.07em; }
+    .dialog-close { width:34px; height:34px; border:1px solid rgba(255,255,255,.3); border-radius:50%; background:transparent; color:#fffefa; cursor:pointer; font-size:18px; }
+    .dialog-content { display:grid; place-items:center; max-height:calc(92vh - 60px); min-height:220px; padding:0 14px 14px; }
+    .dialog-content iframe { width:min(100%,720px); aspect-ratio:16/9; border:0; border-radius:9px; }
+    .dialog-content img { max-width:100%; max-height:calc(92vh - 90px); object-fit:contain; }
+    body.dark .work-panel { color:#151613; }
+    body.dark .work-info h3 { color:#151613; }
+    body.dark .work-info p,body.dark .work-count { color:rgba(21,22,19,.75); }
 
-    html { scroll-behavior: smooth; touch-action: manipulation; }
-    body { background: var(--navy); color: var(--text); font-family: var(--font-b); font-size: 15px; line-height: 1.7; overflow-x: hidden; transition: background-color 0.3s ease, color 0.3s ease; touch-action: manipulation; }
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-track { background: var(--navy); }
-    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 4px; }
+    .process-section { position:relative; isolation:isolate; overflow:hidden; padding:68px 0 94px; }
+    .process-section::before { content:''; position:absolute; z-index:-1; width:360px; height:360px; right:-225px; top:8px; border:1px solid rgba(21,22,19,.09); border-radius:50%; box-shadow:0 0 0 24px rgba(255,207,0,.08),0 0 0 55px rgba(21,22,19,.025),0 0 0 88px rgba(255,207,0,.045); pointer-events:none; animation:orbit-drift 28s ease-in-out infinite alternate-reverse; }
+    .process-heading { display:flex; justify-content:space-between; align-items:flex-end; gap:32px; margin-bottom:33px; }
+    .section-kicker { margin:0 0 11px; color:#696b64; font:500 10px/1.4 var(--mono); letter-spacing:.13em; text-transform:uppercase; }
+    .process-heading h2,.about-heading h2,.tools-heading h2 { margin:0; font:600 clamp(34px,4.8vw,57px)/1.03 var(--display); letter-spacing:-.04em; }
+    .process-summary { max-width:340px; margin:0; color:var(--muted); font-size:12px; line-height:1.75; }
+    .process-layout { display:grid; grid-template-columns:minmax(210px,.62fr) minmax(0,1.38fr); gap:24px; align-items:stretch; }
+    .process-tabs { display:grid; gap:7px; align-content:start; }
+    .process-tab { width:100%; min-height:48px; display:flex; align-items:center; gap:12px; padding:0 14px; border:1px solid var(--line); border-radius:999px; background:var(--paper); color:var(--ink); text-align:left; cursor:pointer; font-size:11px; font-weight:800; transition:background .18s,border .18s; }
+    .process-tab span { color:#777970; font:400 9px var(--mono); }
+    .process-tab[aria-selected="true"] { border-color:var(--ink); background:var(--ink); color:var(--paper); }
+    .process-tab[aria-selected="true"] span { color:var(--yellow); }
+    .process-card { min-height:265px; padding:clamp(24px,4vw,42px); display:grid; grid-template-columns:1fr .75fr; gap:24px; align-items:center; border:1px solid var(--line); border-radius:20px; background:var(--panel); }
+    .process-card .step-no { color:#7e7e75; font:500 10px var(--mono); letter-spacing:.12em; }
+    .process-card h3 { margin:12px 0 11px; font:600 clamp(24px,3.2vw,35px)/1.08 var(--display); }
+    .process-card p { max-width:420px; margin:0; color:var(--muted); font-size:12px; line-height:1.8; }
+    .playbook { padding:19px; border:1px solid var(--line); border-radius:14px; background:var(--paper); }
+    .playbook-label { margin:0 0 12px; color:#6e7068; font:500 9px var(--mono); letter-spacing:.1em; text-transform:uppercase; }
+    .playbook h4 { margin:0 0 12px; font:600 19px/1.15 var(--display); }
+    .playbook ul { display:grid; gap:8px; margin:0; padding:0; list-style:none; }
+    .playbook li { display:flex; gap:8px; color:#5c5e58; font-size:10px; }
+    .playbook li::before { content:'✓'; color:#6b7e0b; font-weight:800; }
+    .playbook-foot { margin:15px 0 0; color:#7a7b73; font:400 8px var(--mono); letter-spacing:.05em; }
 
-    #bgCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-    nav, main, footer { position: relative; z-index: 1; }
+    .about-section { position:relative; isolation:isolate; overflow:hidden; padding:60px 0 90px; border-top:1px solid var(--line); }
+    .about-section::after { content:''; position:absolute; z-index:-1; width:270px; height:270px; left:-190px; bottom:-165px; border-radius:50%; background:radial-gradient(circle,rgba(255,207,0,.15),rgba(255,207,0,.04) 56%,transparent 72%); pointer-events:none; }
+    .about-grid { display:grid; grid-template-columns:.8fr 1.2fr; gap:clamp(36px,8vw,100px); align-items:start; }
+    .about-heading h2 { max-width:470px; }
+    .about-copy { color:var(--muted); font-size:13px; line-height:1.9; }
+    .about-copy p { margin:0 0 15px; }
+    .skill-list { display:flex; flex-wrap:wrap; gap:7px; margin-top:20px; }
+    .skill { padding:8px 11px; border:1px solid var(--line); border-radius:999px; font-size:9px; font-weight:700; }
+    .tools-section { padding:42px 0 65px; border-top:1px solid var(--line); }
+    .tools-heading { display:flex; justify-content:space-between; align-items:center; gap:20px; margin-bottom:22px; }
+    .tools-heading h2 { font-size:30px; }
+    .tools { display:flex; flex-wrap:wrap; gap:9px; }
+    .tool { min-height:39px; display:flex; align-items:center; padding:0 14px; border:1px solid var(--line); border-radius:999px; color:#464841; font-size:10px; font-weight:700; }
 
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 60px; height: 64px;
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      transition: background-color 0.3s ease, border-color 0.3s ease;
-    }
-    .nav-logo { font-family: var(--font-d); font-size: 20px; font-weight: 700; color: var(--text); text-decoration: none; }
-    .nav-logo span { color: var(--gold); }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--gold); }
-    .nav-cta { padding: 8px 20px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; background: transparent; color: var(--gold); border: 1px solid var(--border-md); border-radius: 4px; text-decoration: none; transition: all 0.2s; }
-    .nav-cta:hover { background: var(--gold-dim); }
+    .contact-section { padding:32px 0 70px; }
+    .contact-panel { position:relative; overflow:hidden; padding:clamp(25px,5vw,52px); display:flex; align-items:center; justify-content:space-between; gap:30px; border-radius:22px; background-color:var(--yellow); background-image:radial-gradient(circle,rgba(21,22,19,.09) .8px,transparent 1px); background-size:19px 19px; }
+    .contact-panel::after { content:''; position:absolute; width:255px; height:255px; right:13%; top:-190px; border:1px solid rgba(21,22,19,.16); border-radius:50%; box-shadow:0 0 0 22px rgba(21,22,19,.035),0 0 0 48px rgba(21,22,19,.025); pointer-events:none; animation:orbit-drift 22s ease-in-out infinite alternate; }
+    .contact-panel > div { position:relative; z-index:1; }
+    .contact-panel .section-kicker { color:#44443c; }
+    .contact-panel h2 { max-width:760px; margin:0; font:600 clamp(34px,5.5vw,64px)/1 var(--display); letter-spacing:-.045em; }
+    .contact-panel p:not(.section-kicker) { margin:12px 0 0; font-size:12px; }
+    .contact-action { flex:0 0 auto; }
+    .contact-action .pill { min-height:46px; background:var(--ink); color:var(--paper); border-color:var(--ink); }
+    footer { padding:22px 0; border-top:1px solid var(--line); }
+    .footer { display:flex; align-items:center; justify-content:space-between; gap:16px; color:#777870; font-size:10px; }
+    .footer a { color:var(--ink); font-weight:700; text-decoration:none; }
+    :focus-visible { outline:3px solid #6d7518; outline-offset:3px; }
 
-    .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 34px; height: 34px; background: transparent; border: none; padding: 0; cursor: pointer; }
-    .nav-toggle span { display: block; width: 100%; height: 2px; background: var(--gold); transition: transform 0.25s ease, opacity 0.25s ease; }
-    .nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-toggle.active span:nth-child(2) { opacity: 0; }
-    .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    body.dark { --paper:#171815; --ink:#f7f5ed; --muted:#b1b2ab; --line:#363731; --panel:#20211d; --yellow:#ffd000; background-image:radial-gradient(circle,rgba(247,245,237,.065) .8px,transparent .95px),radial-gradient(ellipse at 12% 9%,rgba(255,208,0,.08),transparent 24%),radial-gradient(ellipse at 88% 44%,rgba(255,208,0,.05),transparent 23%); }
+    body.dark .header { background:rgba(23,24,21,.96); }
+    body.dark .role-tag,body.dark .identity { border-color:#5a5b53; }
+    body.dark .contact-chip { color:#171815; }
+    body.dark .playbook { background:#1b1c18; border-color:var(--line); }
+    body.dark .playbook li { color:#c3c4bc; }
+    body.dark .tool,body.dark .skill { color:#d8d8d0; }
+    body.dark .feature-panel { color:#171815; }
+    body.dark .feature-detail .pill { background:#171815; color:#f7f5ed; }
+    body.dark .contact-panel { color:#171815; }
+    body.dark .contact-action .pill { background:#171815; color:#f7f5ed; }
 
-    .theme-toggle {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-      background: transparent; border: 1px solid var(--border-md);
-      color: var(--gold); cursor: pointer;
-      transition: background-color 0.2s ease, border-color 0.2s ease;
+    @media (max-width:1000px) {
+      .wrap { width:min(var(--max),calc(100% - 48px)); }
+      .hero-grid { grid-template-columns:1fr 1fr; gap:32px; }
+      .hero-main { grid-column:1; grid-row:1; }
+      .hero-contact { grid-column:1; grid-row:2; }
+      .portrait-stage { grid-column:2; grid-row:1 / span 2; }
+      .feature-panel { grid-template-columns:.8fr 1fr .7fr; gap:16px; }
+      .deck-shell { height:315px; }
+      .project-card { width:170px; height:235px; }
+      .project-card[aria-pressed="true"] { width:198px; height:268px; }
+      .process-card { grid-template-columns:1fr; }
+      .playbook { display:none; }
     }
-    .theme-toggle:hover { background: var(--gold-dim); }
-    .theme-toggle .icon-moon { display: none; }
-    body.light-mode .theme-toggle .icon-sun { display: none; }
-    body.light-mode .theme-toggle .icon-moon { display: inline-flex; }
-
-    .mobile-nav {
-      position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
-      background: var(--mobile-nav-bg); backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      display: flex; flex-direction: column; padding: 8px 24px 22px;
-      transform: translateY(-10px); opacity: 0; pointer-events: none;
-      transition: transform 0.22s ease, opacity 0.22s ease, background-color 0.3s ease;
+    @media (max-width:720px) {
+      .wrap { width:calc(100% - 36px); }
+      .nav { min-height:68px; }
+      .menu-toggle { display:block; }
+      .nav-right { gap:9px; }
+      .nav-links { display:none; position:absolute; top:67px; left:0; right:0; padding:8px 22px 18px; border-bottom:1px solid var(--line); background:var(--paper); }
+      .nav-links.open { display:grid; gap:0; }
+      .nav-links li { border-bottom:1px solid var(--line); }
+      .nav-links a { display:block; padding:13px 0; }
+      .nav-cta { display:none; }
+      .theme-toggle { width:40px; height:40px; justify-content:center; padding:0; }
+      .theme-toggle .theme-text { display:none; }
+      .hero { padding-top:34px; }
+      .hero-grid { grid-template-columns:1fr 1fr; gap:24px 18px; }
+      .hero-main { grid-column:1 / -1; grid-row:1; }
+      .hero-contact { grid-column:1; grid-row:2; }
+      .portrait-stage { min-height:250px; grid-column:2; grid-row:2; }
+      .portrait { height:260px; }
+      .hero h1 { font-size:clamp(39px,10vw,58px); }
+      .identity { padding:13px; }
+      .identity strong { font-size:15px; }
+      .contact-title { font-size:15px; }
+      .contact-chip { min-height:40px; padding-right:8px; font-size:9px; }
+      .chip-icon { width:27px; height:27px; flex-basis:27px; }
+      .location-note { top:-8px; right:-4px; font-size:8px; }
+      .feature-section { padding:10px 0 60px; }
+      .work-section { padding:8px 0 55px; }
+      .work-panel { padding:21px 15px 17px; border-radius:18px; }
+      .work-head { align-items:flex-start; gap:12px; }
+      .work-head h2 { font-size:31px; }
+      .filter-row { width:100%; flex-wrap:nowrap; overflow-x:auto; padding:1px 1px 5px; scrollbar-width:thin; }
+      .filter-pill { flex:0 0 auto; min-height:33px; padding-inline:12px; font-size:9px; }
+      .deck-shell { height:294px; margin-top:8px; }
+      .project-card { width:148px; height:210px; }
+      .project-card[aria-pressed="true"] { width:176px; height:244px; }
+      .deck-arrow { width:34px; height:34px; font-size:16px; }
+      .deck-arrow.prev { left:-5px; }
+      .deck-arrow.next { right:-5px; }
+      .work-info { gap:9px 14px; }
+      .work-info h3 { font-size:18px; }
+      .watch-button { grid-column:1 / -1; justify-self:start; }
+      .feature-panel { grid-template-columns:1fr 1fr; min-height:0; gap:18px 12px; padding:23px 18px 0; border-radius:18px; }
+      .feature-info { grid-column:1 / -1; }
+      .feature-info p:not(.feature-label) { max-width:430px; }
+      .feature-phone { align-self:end; grid-column:1; grid-row:2; }
+      .feature-detail { grid-column:2; grid-row:2; align-self:center; padding-bottom:20px; }
+      .phone { width:min(190px,100%); transform:translateY(10px); }
+      .process-heading { display:block; }
+      .process-summary { margin-top:13px; }
+      .process-layout { grid-template-columns:1fr; gap:13px; }
+      .process-tabs { display:flex; overflow:auto; padding-bottom:4px; }
+      .process-tab { width:auto; flex:0 0 auto; padding:0 13px; }
+      .process-card { min-height:200px; }
+      .about-grid { grid-template-columns:1fr; gap:20px; }
+      .about-heading h2 { max-width:600px; }
+      .contact-panel { display:block; }
+      .contact-action { margin-top:20px; }
     }
-    .mobile-nav.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
-    .mobile-nav-link {
-      padding: 15px 2px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border);
+    @media (max-width:440px) {
+      .wrap { width:calc(100% - 30px); }
+      .logo strong { font-size:12px; }
+      .logo span { font-size:8px; }
+      .nav-right { gap:6px; }
+      .theme-toggle,.menu-toggle { width:36px; height:36px; }
+      .hero-grid { gap:19px 12px; }
+      .hero h1 { font-size:39px; }
+      .hero-copy,.hero-lead { font-size:11px; }
+      .hero-buttons .pill { min-height:39px; padding-inline:13px; font-size:10px; }
+      .hero-contact { align-self:center; }
+      .identity { padding:11px; }
+      .identity strong { font-size:13px; }
+      .identity span { font-size:10px; }
+      .contact-title { font-size:13px; }
+      .contact-chip { min-height:35px; gap:6px; padding:3px 6px; font-size:8px; }
+      .chip-icon { width:23px; height:23px; flex-basis:23px; }
+      .portrait-stage { min-height:205px; }
+      .portrait { height:215px; }
+      .portrait-fallback { font-size:66px; }
+      .location-note { right:-5px; top:-13px; padding:6px 8px; }
+      .feature-info h2 { font-size:33px; }
+      .feature-info p:not(.feature-label) { font-size:10px; }
+      .deck-shell { height:265px; }
+      .project-card { width:124px; height:185px; }
+      .project-card[aria-pressed="true"] { width:148px; height:214px; }
+      .card-title { left:11px; bottom:11px; font-size:15px; }
+      .card-top { top:11px; left:11px; font-size:7px; }
+      .card-play { width:38px; height:38px; }
+      .work-caption { font-size:9px; }
+      .work-info h3 { font-size:16px; }
+      .work-info p { font-size:9px; }
+      .watch-button { min-height:35px; font-size:9px; }
+      .phone { width:min(165px,100%); }
+      .feature-detail h3 { font-size:17px; }
+      .feature-detail p { font-size:9px; }
+      .feature-detail .pill { min-height:34px; padding-inline:10px; font-size:8px; }
+      .footer { align-items:flex-start; flex-direction:column; }
     }
-    .mobile-nav-cta { margin-top: 18px; text-align: center; justify-content: center; }
-
-    .hero {
-      min-height: 92vh;
-      display: grid; grid-template-columns: 1fr 420px;
-      align-items: center; gap: 60px;
-      padding: 80px 60px;
-      position: relative; overflow: hidden;
-    }
-    .hero-left { position: relative; z-index: 1; }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 12px;
-      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 28px;
-      opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
-    }
-    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
-    .hero-name {
-      font-family: var(--font-d); font-size: clamp(44px,5.5vw,76px); font-weight: 700;
-      line-height: 1.02; letter-spacing: -0.02em; color: var(--heading); margin-bottom: 20px;
-      opacity: 0; animation: fadeUp 0.8s 0.35s forwards;
-    }
-    .hero-name em { color: var(--gold); font-style: normal; }
-    .hero-role { font-size: 15px; color: var(--muted); margin-bottom: 6px; opacity: 0; animation: fadeUp 0.8s 0.5s forwards; }
-    .hero-role strong { color: var(--text); font-weight: 500; }
-    .hero-divider { width: 48px; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin: 28px 0; opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
-    .hero-bio { font-size: 15px; color: var(--muted); max-width: 480px; line-height: 1.8; margin-bottom: 40px; opacity: 0; animation: fadeUp 0.8s 0.7s forwards; }
-    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.85s forwards; }
-
-    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; font-family: var(--font-b); font-weight: 500; text-decoration: none; border: none; border-radius: 4px; cursor: pointer; transition: all 0.22s; }
-    .btn-gold { background: var(--gold); color: #080d1a; }
-    .btn-gold:hover { background: #d4b35a; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
-    .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border-md); }
-    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-
-    .hero-photo-wrap { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; opacity: 0; animation: fadeIn 1s 0.6s forwards; }
-    .hero-photo-frame { position: relative; width: 360px; height: 460px; }
-    .hero-photo-frame::before { content: ''; position: absolute; top: -12px; left: -12px; width: 60px; height: 60px; border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); border-radius: 2px 0 0 0; animation: cornerGlow 3s ease-in-out infinite; }
-    .hero-photo-frame::after { content: ''; position: absolute; bottom: -12px; right: -12px; width: 60px; height: 60px; border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); border-radius: 0 0 2px 0; animation: cornerGlow 3s ease-in-out 1.5s infinite; }
-    @keyframes cornerGlow {
-      0%,100% { filter: drop-shadow(0 0 4px rgba(201,168,76,0.4)); }
-      50% { filter: drop-shadow(0 0 14px rgba(201,168,76,0.9)); }
-    }
-    .hero-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; display: block; border: 1px solid var(--border); }
-    .hero-badge {
-      position: absolute; bottom: 28px; left: -28px;
-      background: var(--panel-hero); border: 1px solid var(--border-md);
-      border-radius: 10px; padding: 14px 18px;
-      display: flex; align-items: center; gap: 12px;
-      backdrop-filter: blur(12px);
-      animation: float 4s ease-in-out infinite;
-      transition: background-color 0.3s ease;
-    }
-    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-    .hero-badge-icon { width: 36px; height: 36px; background: var(--gold-dim); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .hero-badge-label { font-size: 10px; color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
-    .hero-badge-value { font-size: 13px; font-weight: 600; color: var(--text); }
-
-    .scroll-hint { position: absolute; bottom: 32px; left: 60px; display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); opacity: 0; animation: fadeUp 1s 1.2s forwards; }
-    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
-    @keyframes scrollPulse { 0%,100% { opacity: 0.3; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.3); } }
-
-    section { padding: 64px 60px; }
-    .s-eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-    .s-eyebrow::after { content: ''; flex: 0 0 32px; height: 1px; background: var(--gold); opacity: 0.5; }
-    .s-title { font-family: var(--font-d); font-size: clamp(30px,4vw,48px); font-weight: 700; letter-spacing: -0.02em; color: var(--heading); margin-bottom: 56px; line-height: 1.1; }
-
-    .work-category { margin-bottom: 64px; }
-    .work-category:last-child { margin-bottom: 0; }
-    .work-category-title {
-      font-family: var(--font-d); font-size: clamp(20px,2.4vw,26px); font-weight: 600;
-      color: var(--heading); margin-bottom: 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
-    }
-    .work-category-title::after { content: ''; flex: 1; min-width: 24px; height: 1px; background: linear-gradient(90deg, var(--gold), transparent); opacity: 0.5; order: 1; }
-
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-
-    .about { background: transparent; }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    .about-text p { color: var(--muted); margin-bottom: 18px; font-size: 15px; line-height: 1.85; }
-    .about-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
-    .skill-tag { padding: 5px 14px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--border); border-radius: 100px; color: var(--muted); background: var(--chip-bg); transition: all 0.2s; }
-    .skill-tag:hover { border-color: var(--gold); color: var(--gold); }
-    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .stat-card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 24px 20px; position: relative; overflow: hidden; backdrop-filter: blur(10px); transition: border-color 0.3s, transform 0.3s, background-color 0.3s; }
-    .stat-card:hover { border-color: var(--border-md); transform: translateY(-3px); }
-    .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); }
-    .stat-num { font-family: var(--font-d); font-size: 36px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
-    .stat-label { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
-
-    .tools-marquee {
-      grid-column: 1 / -1;
-      position: relative; overflow-x: auto; overflow-y: hidden;
-      border-radius: 10px; border: 1px solid var(--border);
-      background: var(--panel-soft); backdrop-filter: blur(10px);
-      padding: 26px 0;
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      cursor: grab;
-      touch-action: none;
-      user-select: none;
-      transition: background-color 0.3s ease;
-    }
-    .tools-marquee::-webkit-scrollbar { display: none; }
-    .tools-marquee.dragging { cursor: grabbing; }
-    .tools-heading {
-      grid-column: 1 / -1;
-      font-family: var(--font-d);
-      font-size: clamp(16px, 1.8vw, 20px);
-      font-weight: 600;
-      color: var(--heading);
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 6px;
-    }
-    .tools-heading::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, var(--gold), transparent);
-      opacity: 0.5;
-    }
-    .tools-track {
-      display: flex; align-items: center; gap: 16px; width: max-content;
-    }
-    .tool-chip {
-      display: inline-flex; align-items: center; gap: 12px;
-      padding: 12px 26px 12px 12px; font-size: 14px; font-weight: 500; letter-spacing: 0.04em;
-      color: var(--text); white-space: nowrap;
-      border: 1px solid var(--border); border-radius: 100px;
-      background: var(--chip-bg);
-      transition: background-color 0.3s ease;
-    }
-    .tool-chip img {
-      width: 30px; height: 30px; border-radius: 7px; object-fit: contain;
-      background: var(--icon-fill-soft); flex-shrink: 0;
-      -webkit-user-drag: none;
-    }
-    .tool-chip.no-logo::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
-
-    .services { background: transparent; }
-    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-    .service-card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 32px 28px; position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s, background-color 0.3s; backdrop-filter: blur(10px); }
-    .service-card:hover { transform: translateY(-6px); border-color: var(--border-md); }
-    .service-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity 0.3s; }
-    .service-card:hover::after { opacity: 1; }
-    .service-num { font-family: var(--font-d); font-size: 52px; font-weight: 700; color: rgba(201,168,76,0.07); line-height: 1; position: absolute; top: 16px; right: 20px; }
-    .service-icon { width: 48px; height: 48px; background: var(--gold-dim); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-    .service-name { font-size: 17px; font-weight: 600; color: var(--heading); margin-bottom: 10px; }
-    .service-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
-
-    .work { background: transparent; }
-    .work-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; }
-    .work-card { background: transparent; border: none; border-radius: 10px; overflow: visible; transition: transform 0.3s, opacity 0.4s ease; cursor: pointer; }
-    .work-card:hover { transform: translateY(-6px); }
-    .work-card:hover .work-overlay { opacity: 1; }
-    .work-thumb-wrap { position: relative; }
-    .work-thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; border-radius: 10px; }
-
-    /* Load more / Show less enter+exit animation. .card-enter is the
-       "before" state applied right when a new card is appended; removing
-       it on the next frame lets the transition above animate it in. */
-    .work-card.card-enter { opacity: 0; transform: translateY(18px) scale(0.97); }
-    .work-card.card-exit { opacity: 0 !important; transform: translateY(-10px) scale(0.97) !important; transition: transform 0.3s ease, opacity 0.3s ease; pointer-events: none; }
-    .work-card.card-exit:hover { transform: translateY(-10px) scale(0.97) !important; }
-
-    .work-load-more-wrap { display: flex; justify-content: center; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
-    .work-load-more {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 30px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
-      font-family: var(--font-b); font-weight: 500;
-      background: var(--panel); color: var(--gold);
-      border: 1px solid var(--border-md); border-radius: 100px;
-      cursor: pointer; transition: all 0.22s;
-      backdrop-filter: blur(10px);
-    }
-    .work-load-more:hover { background: var(--gold-dim); border-color: var(--gold); transform: translateY(-2px); }
-    .work-load-more svg { transition: transform 0.22s; }
-    .work-load-more:hover svg { transform: translateY(2px); }
-    .work-load-less { color: var(--muted); border-color: var(--border); }
-    .work-load-less:hover { background: var(--panel-soft); border-color: var(--border-md); color: var(--text); }
-    .work-load-less:hover svg { transform: translateY(-2px); }
-
-    .video-preview-frame {
-      width: 100%; aspect-ratio: 3/4; position: relative; overflow: visible;
-      display: flex; align-items: center; justify-content: center;
-      background: transparent;
-    }
-    .phone-mockup {
-      position: relative; height: 96%; aspect-ratio: 715 / 1467;
-      background: #000; border-radius: 12% / 5.8%;
-      border: 3px solid var(--device-border);
-      box-shadow:
-        0 0 0 1.5px rgba(201,168,76,0.35),
-        0 0 0 4.5px var(--device-ring);
-      overflow: hidden;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .phone-mockup::before {
-      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-      width: 40%; height: 3.3%; background: #000;
-      border-radius: 0 0 999px 999px; z-index: 3;
-    }
-    .phone-mockup::after {
-      content: ''; position: absolute; inset: 0; border-radius: 12% / 5.8%; z-index: 4;
-      pointer-events: none;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
-    }
-    .phone-mockup video {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; border: none; pointer-events: none; background: #000;
-    }
-    .phone-mockup iframe {
-      position: absolute; top: 50%; left: 50%;
-      height: 100%; width: auto; aspect-ratio: 9 / 16;
-      min-width: 100%;
-      transform: translate(-50%, -50%);
-      border: none; pointer-events: none; background: #000;
-    }
-    .phone-mockup img {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; border: none; pointer-events: none; background: #000;
-    }
-
-    .poster-preview-frame {
-      width: 100%; aspect-ratio: 3/4; position: relative; overflow: visible;
-      display: flex; align-items: center; justify-content: center;
-      background: transparent;
-    }
-    .poster-frame {
-      position: relative; width: 92%; height: 96%;
-      background: linear-gradient(155deg, var(--poster-grad-1), var(--poster-grad-2));
-      border: 1px solid var(--border-md);
-      border-radius: 3px;
-      padding: 2%;
-      box-sizing: border-box;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.3s ease;
-    }
-    .poster-frame::before {
-      content: ''; position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-      width: 46%; height: 20px;
-      border: 1px solid rgba(201,168,76,0.35);
-      border-bottom: none;
-      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-      opacity: 0.6;
-    }
-    .poster-frame-inner {
-      position: relative; width: 100%; height: 100%;
-      overflow: hidden; border-radius: 1px;
-    }
-    .poster-frame-inner img {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; pointer-events: none;
-    }
-
-    .work-overlay { position: absolute; inset: 0; background: var(--work-overlay-bg); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; opacity: 0; transition: opacity 0.3s, background-color 0.3s; border-radius: 10px; }
-    .work-overlay span { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); opacity: 0; transition: opacity 0.3s 0.05s; }
-    .work-card:hover .work-overlay span { opacity: 1; }
-    .work-body { padding: 20px; }
-    .work-cat { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 7px; }
-    .work-title { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 7px; }
-    .work-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
-
-    .lightbox-overlay {
-      display: none; position: fixed; inset: 0; z-index: 999;
-      background: var(--lightbox-bg);
-      backdrop-filter: blur(20px);
-      align-items: center; justify-content: center;
-      transition: background-color 0.3s ease;
-    }
-    .lightbox-overlay.active { display: flex; animation: lbFadeIn 0.25s ease; }
-    @keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    .lightbox-inner {
-      display: flex; align-items: center; justify-content: center;
-      width: 100vw; height: 100vh;
-      animation: lbSlideUp 0.28s ease;
-    }
-    @keyframes lbSlideUp { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
-
-    .lightbox-media {
-      max-width: 96vw;
-      max-height: 96vh;
-      object-fit: contain;
-      display: block;
-      border-radius: 4px;
-      box-shadow: 0 32px 100px rgba(0,0,0,0.8);
-    }
-    .lightbox-video {
-      max-width: 96vw;
-      max-height: 96vh;
-      width: 960px;
-      border-radius: 4px;
-      box-shadow: 0 32px 100px rgba(0,0,0,0.8);
-    }
-
-    .lb-close {
-      position: fixed; top: 20px; right: 24px;
-      width: 44px; height: 44px; border-radius: 50%;
-      background: var(--panel-strong); border: 1px solid var(--border-md);
-      color: var(--text); cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s; z-index: 1001;
-    }
-    .lb-close:hover { background: var(--gold-dim); color: var(--gold); border-color: var(--gold); }
-
-    .lb-arrow {
-      position: fixed; top: 50%; transform: translateY(-50%);
-      width: 48px; height: 48px; border-radius: 50%;
-      background: var(--panel-strong); border: 1px solid var(--border-md);
-      color: var(--text); cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s; z-index: 1001;
-    }
-    .lb-arrow:hover { background: var(--gold-dim); color: var(--gold); border-color: var(--gold); }
-    .lb-prev { left: 20px; }
-    .lb-next { right: 20px; }
-    .lb-arrow svg { pointer-events: none; }
-
-    .lb-counter {
-      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-      font-size: 11px; letter-spacing: 0.12em; color: var(--dim);
-      background: var(--panel); padding: 5px 14px;
-      border-radius: 100px; border: 1px solid var(--border);
-      z-index: 1001;
-    }
-
-    .contact { background: transparent; }
-    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-    .contact-text p { color: var(--muted); line-height: 1.85; margin-bottom: 16px; }
-    .contact-cards { display: flex; flex-direction: column; gap: 14px; }
-    .contact-card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 20px 22px; display: flex; align-items: center; gap: 16px; transition: border-color 0.2s, transform 0.2s, background-color 0.3s; backdrop-filter: blur(10px); }
-    .contact-card:hover { border-color: var(--border-md); transform: translateX(4px); }
-    .c-icon { width: 44px; height: 44px; flex-shrink: 0; background: var(--gold-dim); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-    .c-label { font-size: 10px; color: var(--dim); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 3px; }
-    .c-val { font-size: 14px; font-weight: 500; color: var(--text); }
-    .c-val a { color: inherit; text-decoration: none; }
-    .c-val a:hover { color: var(--gold); }
-
-    footer { padding: 30px 60px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--dim); flex-wrap: wrap; gap: 12px; }
-    footer span:last-child { color: var(--gold); opacity: 0.7; }
-
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    .visitor-counter {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 16px;
-      background: var(--panel-strong);
-      border: 1px solid var(--border-md);
-      border-radius: 100px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-      opacity: 0;
-      transform: translateY(10px);
-      animation: visitorFadeIn 0.6s 1s forwards;
-      transition: background-color 0.3s ease, border-color 0.3s ease;
-    }
-    @keyframes visitorFadeIn { to { opacity: 1; transform: translateY(0); } }
-    .visitor-counter-icon {
-      width: 28px; height: 28px;
-      background: var(--gold-dim);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .visitor-counter-text { display: flex; flex-direction: column; line-height: 1.15; }
-    .visitor-counter-num {
-      font-family: var(--font-d);
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--gold);
-    }
-    .visitor-counter-label {
-      font-size: 9px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .visitor-counter { cursor: pointer; }
-    .visitor-counter-chevron {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gold);
-      opacity: 0.7;
-      margin-left: 2px;
-      transition: transform 0.25s ease;
-      animation: chevronPulse 2.2s ease-in-out infinite;
-    }
-    .visitor-counter.open .visitor-counter-chevron { transform: rotate(180deg); }
-    @keyframes chevronPulse {
-      0%, 100% { transform: translateY(0); opacity: 0.5; }
-      50% { transform: translateY(-2px); opacity: 1; }
-    }
-    .visitor-counter.open .visitor-counter-chevron { animation: none; }
-
-    @media (max-width: 900px) {
-      .visitor-counter { bottom: 16px; right: 16px; padding: 8px 12px; }
-    }
-
-    .country-panel {
-      position: fixed;
-      bottom: 74px;
-      right: 20px;
-      z-index: 51;
-      width: 240px;
-      max-height: 320px;
-      overflow-y: auto;
-      background: var(--panel-strong);
-      border: 1px solid var(--border-md);
-      border-radius: 14px;
-      backdrop-filter: blur(14px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
-      padding: 14px;
-      opacity: 0;
-      transform: translateY(10px) scale(0.97);
-      pointer-events: none;
-      transition: opacity 0.22s ease, transform 0.22s ease, background-color 0.3s ease, border-color 0.3s ease;
-    }
-    .country-panel.open {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      pointer-events: auto;
-    }
-    .country-panel-title {
-      font-family: var(--font-d);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--heading);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .country-panel-list { display: flex; flex-direction: column; gap: 2px; }
-    .country-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 7px 4px;
-      font-size: 12.5px;
-      color: var(--text);
-      border-bottom: 1px solid var(--border);
-    }
-    .country-row:last-child { border-bottom: none; }
-    .country-row-name { display: flex; align-items: center; gap: 8px; }
-    .country-row-flag { font-size: 15px; line-height: 1; }
-    .country-row-count { color: var(--gold); font-weight: 600; font-family: var(--font-d); }
-    .country-panel-empty { font-size: 12px; color: var(--muted); padding: 6px 4px; }
-
-    @media (max-width: 900px) {
-      .country-panel { bottom: 68px; right: 16px; width: 210px; }
-    }
-
-    @media (max-width: 1200px) {
-      .work-grid { grid-template-columns: repeat(4, 1fr); }
-    }
-
-    @media (max-width: 900px) {
-      nav { padding: 0 24px; }
-      .nav-links, .nav-cta { display: none; }
-      .nav-toggle { display: flex; }
-      .hero { grid-template-columns: 1fr; padding: 60px 24px; min-height: auto; gap: 48px; }
-      .hero-photo-frame { width: 100%; max-width: 320px; height: 380px; margin: 0 auto; }
-      .hero-badge { left: 0; }
-      .scroll-hint { left: 24px; }
-      section { padding: 44px 24px; }
-      .about-grid, .services-grid, .contact-inner { grid-template-columns: 1fr; gap: 36px; }
-      .work-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
-      .video-preview-frame { aspect-ratio: 3/5; }
-      footer { padding: 24px; flex-direction: column; align-items: flex-start; }
-    }
-
-    @media (max-width: 480px) {
-      .work-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .video-preview-frame { aspect-ratio: 2/3; }
-    }
+    @media (max-width:600px) { .hero::after { right:-90px; top:10%; } .portrait-stage::before { width:54px; height:54px; top:8%; left:3%; } .portrait-stage::after { top:1%; right:3%; } }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; } }
   </style>
 </head>
 <body>
-
-<canvas id="bgCanvas"></canvas>
-
-<nav>
-  <a class="nav-logo" href="#"><span>Portfolio</span></a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <div style="display:flex; align-items:center; gap:14px;">
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode" aria-pressed="false" title="Toggle light/dark mode">
-      <svg class="icon-sun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-      <svg class="icon-moon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-    </button>
-    <a class="nav-cta" href="#contact">Hire Me</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<div class="mobile-nav" id="mobileNav">
-  <a class="mobile-nav-link" href="#about">About</a>
-  <a class="mobile-nav-link" href="#services">Services</a>
-  <a class="mobile-nav-link" href="#work">Work</a>
-  <a class="mobile-nav-link" href="#contact">Contact</a>
-  <a class="btn btn-gold mobile-nav-cta" href="#contact">Hire Me</a>
-</div>
-
-<main>
-
-  <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="hero-left">
-      <div class="hero-eyebrow">Visual Creative</div>
-      <h1 class="hero-name">Hi!<br>I'm <em>Brix</em></h1>
-      <p class="hero-role"><strong>Video Editor &amp; Graphic Designer</strong></p>
-      <p class="hero-role" style="margin-top:-4px;">BSIT Graduate &nbsp;·&nbsp;Ilocos Sur, Philippines</p>
-      <div class="hero-divider"></div>
-      <p class="hero-bio">I craft compelling visual content — from cinematic video edits to polished graphic designs and product posters. Every frame, every pixel, intentional.</p>
-      <div class="hero-cta">
-        <a class="btn btn-gold" href="#work">View My Work</a>
-        <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+  <header class="header">
+    <nav class="nav wrap" aria-label="Main navigation">
+      <a class="logo" href="#home"><strong>BRIX ALLAN DAVE OLEGARIO</strong><span>Video Editor · AI Creative</span></a>
+      <div class="nav-right">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#work">My Crafts</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+        <a class="pill pill-yellow nav-cta" href="#contact">Let’s collaborate <span aria-hidden="true">↗</span></a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <span class="theme-text">Dark mode</span>
+        </button>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span></button>
       </div>
-    </div>
+    </nav>
+  </header>
 
-    <div class="hero-photo-wrap">
-      <div class="hero-photo-frame">
-        <img class="hero-photo" src="myphoto.jpg" alt="Brix Allan Dave Olegario" />
-        <div class="hero-badge">
-          <div class="hero-badge-icon">
-            <svg width="18" height="18" fill="none" stroke="#c9a84c" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </div>
-          <div>
-            <div class="hero-badge-label">Available for</div>
-            <div class="hero-badge-value">Full-time/Part-time Work</div>
+  <main id="main">
+    <section class="hero" id="home">
+      <div class="wrap hero-grid">
+        <div class="hero-main">
+          <span class="role-tag">AI Video Specialist</span>
+          <h1>Your vision.<br>My next great <span class="marker">creation.</span></h1>
+          <p class="hero-lead">I create clear, engaging ads and short-form videos for brands.</p>
+          <p class="hero-copy">AI-assisted storytelling, UGC-style ads, and product content—shaped to connect with your audience and fit the feed.</p>
+          <div class="hero-buttons"><a class="pill" style="background:var(--ink);color:var(--paper)" href="#work">Explore my crafts <span aria-hidden="true">↓</span></a><a class="pill" href="#contact">Start a project <span aria-hidden="true">↗</span></a></div>
+        </div>
+        <div class="hero-contact">
+          <div class="identity"><strong>Brix Allan Dave Olegario</strong><span>Video Editor · AI Ad Creative</span></div>
+          <h2 class="contact-title">Let’s work together.</h2>
+          <div class="contact-stack">
+            <a class="contact-chip" href="mailto:brixallandaveo07@gmail.com"><span class="chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></span><span>brixallandaveo07@gmail.com</span></a>
+            <a class="contact-chip" href="tel:09455313866"><span class="chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 3h4l2 5-3 2a15 15 0 006 6l2-3 5 2v4c0 1-1 2-2 2C10 20 4 14 3 5c0-1 1-2 2-2z"/></svg></span><span>+63 945 531 3866</span></a>
+            <div class="contact-chip"><span class="chip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1116 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span>Ilocos Sur, Philippines · Remote</span></div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="scroll-hint">
-      <div class="scroll-line"></div>
-      <span>Scroll</span>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <div class="about-grid">
-      <div class="reveal">
-        <p class="s-eyebrow">About Me</p>
-        <h2 class="s-title">Crafting visuals<br>that leave a mark</h2>
-        <div class="about-text">
-          <p>I'm a freelance Video Editor and Graphic Designer based in Ilocos Sur, Philippines. As a BSIT graduate, I bring both technical precision and a sharp creative eye to every project I take on.</p>
-          <p>Whether it's a cinematic video edit, a brand-defining graphic, or a product poster that makes people stop scrolling — I put care into every output.</p>
-        </div>
-        <div class="about-skills">
-          <span class="skill-tag">Video Editing</span>
-          <span class="skill-tag">Graphic Design</span>
-          <span class="skill-tag">Product Posters</span>
-          <span class="skill-tag">Color Grading</span>
-          <span class="skill-tag">Motion Graphics</span>
-          <span class="skill-tag">Brand Visuals</span>
+        <div class="portrait-stage">
+          <span class="location-note">Based in the Philippines · Working worldwide</span>
+          <div class="portrait-yellow"></div>
+          <div class="portrait" id="portrait"><span class="portrait-fallback" aria-hidden="true">B.</span><img src="myphoto.jpg" alt="Brix Allan Dave Olegario" onload="this.parentElement.classList.add('has-image')" onerror="this.remove()" /></div>
         </div>
       </div>
-      <div class="about-stats reveal reveal-delay-2">
-        <div class="stat-card"><div class="stat-num">3+</div><div class="stat-label">Core Services</div></div>
-        <div class="stat-card"><div class="stat-num">PH</div><div class="stat-label">Philippines-based</div></div>
-        <div class="stat-card"><div class="stat-num">BSIT</div><div class="stat-label">Graduate</div></div>
-        <div class="stat-card"><div class="stat-num">∞</div><div class="stat-label">Creative Drive</div></div>
+    </section>
 
-      <div class="tools-heading">Tools I Use</div>
-      <div class="tools-marquee reveal reveal-delay-2">
-        <div class="tools-track" id="toolsTrack"></div>
-      </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section class="services" id="services">
-    <p class="s-eyebrow reveal">What I Do</p>
-    <h2 class="s-title reveal">Services</h2>
-    <div class="services-grid">
-      <div class="service-card reveal">
-        <div class="service-num">01</div>
-        <div class="service-icon"><svg width="22" height="22" fill="none" stroke="#c9a84c" stroke-width="1.8" viewBox="0 0 24 24"><path d="M15 10l4.553-2.668A1 1 0 0121 8.268v7.464a1 1 0 01-1.447.894L15 14"/><rect x="2" y="6" width="13" height="12" rx="2"/></svg></div>
-        <div class="service-name">Video Editing</div>
-        <div class="service-desc">Professional cuts, smooth transitions, color grading, and motion graphics. From short-form reels to long-form productions — clean and compelling every time.</div>
-      </div>
-      <div class="service-card reveal reveal-delay-1">
-        <div class="service-num">02</div>
-        <div class="service-icon"><svg width="22" height="22" fill="none" stroke="#c9a84c" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg></div>
-        <div class="service-name">Graphic Design</div>
-        <div class="service-desc">Visual assets, social media content, branding materials, and digital layouts. Tailored to your identity, designed to stand out in any feed.</div>
-      </div>
-      <div class="service-card reveal reveal-delay-2">
-        <div class="service-num">03</div>
-        <div class="service-icon"><svg width="22" height="22" fill="none" stroke="#c9a84c" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <div class="service-name">Product Posters</div>
-        <div class="service-desc">Eye-catching promotional posters and product advertisements designed to grab attention, communicate value, and drive real results.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WORK -->
-  <section class="work" id="work">
-    <p class="s-eyebrow reveal">Portfolio</p>
-    <h2 class="s-title reveal">My Work</h2>
-    <div id="workContainer"></div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <div class="contact-inner">
-      <div class="reveal">
-        <p class="s-eyebrow">Get in Touch</p>
-        <h2 class="s-title" style="margin-bottom:24px;">Let's work<br>together</h2>
-        <div class="contact-text">
-          <p>Looking for a freelance video editor or graphic designer? I'm open to projects big and small — let's talk about what you need.</p>
-          <p>I'll get back to you within 24 hours.</p>
-        </div>
-        <div style="margin-top:32px;"><a class="btn btn-gold" href="mailto:brixallandaveo07@gmail.com">Send Me an Email</a></div>
-      </div>
-      <div class="contact-cards reveal reveal-delay-2">
-        <div class="contact-card">
-          <div class="c-icon"><svg width="20" height="20" fill="none" stroke="#c9a84c" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div><div class="c-label">Email</div><div class="c-val"><a href="mailto:brixallandaveo07@gmail.com">brixallandaveo07@gmail.com</a></div></div>
-        </div>
-        <div class="contact-card">
-          <div class="c-icon"><svg width="20" height="20" fill="none" stroke="#c9a84c" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14z"/></svg></div>
-          <div><div class="c-label">Phone</div><div class="c-val"><a href="tel:09455313866">0945 531 3866</a></div></div>
-        </div>
-        <div class="contact-card">
-          <div class="c-icon"><svg width="20" height="20" fill="none" stroke="#c9a84c" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-          <div><div class="c-label">Location</div><div class="c-val">Ilocos Sur, Philippines</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  <span>© 2026 Brix</span>
-  <span>Video Editor &amp; Graphic Designer</span>
-</footer>
-
-<div class="country-panel" id="countryPanel">
-  <div class="country-panel-title">🌍 Visitors by Country</div>
-  <div class="country-panel-list" id="countryPanelList">
-    <div class="country-panel-empty">Loading...</div>
-  </div>
-</div>
-
-<div class="visitor-counter" id="visitorCounter">
-  <div class="visitor-counter-icon">
-    <svg width="16" height="16" fill="none" stroke="#c9a84c" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-  </div>
-  <div class="visitor-counter-text">
-    <span class="visitor-counter-num" id="visitorCounterNum">0</span>
-    <span class="visitor-counter-label">Visitors</span>
-  </div>
-  <div class="visitor-counter-chevron">
-    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
-  </div>
-</div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox-overlay" id="lightbox" onclick="lbBgClick(event)">
-  <button class="lb-close" onclick="closeLightbox()" title="Close (Esc)">
-    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
-  </button>
-  <button class="lb-arrow lb-prev" onclick="lbNav(-1)" title="Previous">
-    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-  </button>
-  <button class="lb-arrow lb-next" onclick="lbNav(1)" title="Next">
-    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-  </button>
-  <div class="lightbox-inner" id="lbInner"></div>
-  <div class="lb-counter" id="lbCounter">1 / 1</div>
-</div>
-
-<script>
-// ═══════════════════════════════════════════════════════
-//  YOUR WORKS — edit this array to add/remove items
-// ═══════════════════════════════════════════════════════
-const WORKS = [
-
-  // ── VIDEO EDITING ──────────────────────────────────
-  {
-    category: 'video',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/RUW_7e6cpBQ/hqdefault.jpg',
-    media:    'RUW_7e6cpBQ',
-    cat:      'Video Editing',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  // ── AI CREATIVES ────────────────────────────────────
-{
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/WA4s5PUvHxA/hqdefault.jpg',
-    media:    'WA4s5PUvHxA',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/sG_rrRoaroo/hqdefault.jpg',
-    media:    'sG_rrRoaroo',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/L8A35RO6uX4/hqdefault.jpg',
-    media:    'L8A35RO6uX4',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/odMvFs9X6Bw/hqdefault.jpg',
-    media:    'odMvFs9X6Bw',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/gwoxU_mjmRc/hqdefault.jpg',
-    media:    'gwoxU_mjmRc',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-    {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/r1YOo0jmUhI/hqdefault.jpg',
-    media:    'r1YOo0jmUhI',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/cZd-4XwCfl4/hqdefault.jpg',
-    media:    'cZd-4XwCfl4',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/P9yNcy-9N6g/hqdefault.jpg',
-    media:    'P9yNcy-9N6g',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/SzvHUkWb4tc/hqdefault.jpg',
-    media:    'SzvHUkWb4tc',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/sa_gY8AqlWo/hqdefault.jpg',
-    media:    'sa_gY8AqlWo',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/cVtREW3naVU/hqdefault.jpg',
-    media:    'cVtREW3naVU',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/B1I1StHxQTA/hqdefault.jpg',
-    media:    'B1I1StHxQTA',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/WodrD-Y30TA/hqdefault.jpg',
-    media:    'WodrD-Y30TA',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-  // ── UGC Ads ────────────────────────────────────
-  {
-    category: 'ugc',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/xFpjU0ZrEhk/hqdefault.jpg',
-    media:    'xFpjU0ZrEhk',
-    cat:      'UGC Ads',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-    {
-    category: 'ugc',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/02YKYbcY_OE/hqdefault.jpg',
-    media:    '02YKYbcY_OE',
-    cat:      'UGC Ads',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-    {
-    category: 'ugc',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/SkmKW3NP0vw/hqdefault.jpg',
-    media:    'SkmKW3NP0vw',
-    cat:      'UGC Ads',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-    {
-    category: 'ugc',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/eri5FQMr1yc/hqdefault.jpg',
-    media:    'eri5FQMr1yc',
-    cat:      'UGC Ads',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-  // ── GRAPHIC DESIGN / MOTION GRAPHICS ───────────────
-  {
-    category: 'graphic',
-    type:     'image',
-    thumb:    'images/graphic-1.jpg',
-    media:    'images/graphic-1.jpg',
-    cat:      'Graphic Design',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'graphic',
-    type:     'image',
-    thumb:    'images/graphic-2.jpg',
-    media:    'images/graphic-2.jpg',
-    cat:      'Graphic Design',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'graphic',
-    type:     'image',
-    thumb:    'images/graphic-3.jpg',
-    media:    'images/graphic-3.jpg',
-    cat:      'Graphic Design',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'graphic',
-    type:     'image',
-    thumb:    'images/graphic-4.jpg',
-    media:    'images/graphic-4.jpg',
-    cat:      'Graphic Design',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-
-  // ── PRODUCT POSTERS ────────────────────────────────
-    {
-    category: 'poster',
-    type:     'image',
-    thumb:    'workimages/work1.jpg',
-    media:    'workimages/work1.jpg',
-    cat:      'Product Poster',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'poster',
-    type:     'image',
-    thumb:    'workimages/work2.jpg',
-    media:    'workimages/work2.jpg',
-    cat:      'Product Poster',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'poster',
-    type:     'image',
-    thumb:    'workimages/work3.jpg',
-    media:    'workimages/work3.jpg',
-    cat:      'Product Poster',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'poster',
-    type:     'image',
-    thumb:    'workimages/work4.jpg',
-    media:    'workimages/work4.jpg',
-    cat:      'Product Poster',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-
-];
-// ═══════════════════════════════════════════════════════
-
-// ── BUILD CARDS ──────────────────────────────────────
-const CATEGORY_ORDER  = ['ai', 'ugc', 'video', 'poster',];
-const CATEGORY_LABELS = { video: 'Short form/Reels',  ugc: 'UGC Ads', ai: 'AI Creatives', graphic: 'Motion Graphics', poster: 'Product Poster' };
-// A section shows every item up to ITEMS_PER_PAGE with no "Load more"
-// button at all. The button only appears once a section has MORE than
-// ITEMS_PER_PAGE items, and each click reveals another ITEMS_PER_PAGE.
-// ITEMS_PER_PAGE is not a fixed number: it's however many cards make up
-// ROWS_PER_PAGE full rows of the .work-grid CSS grid as it is *actually*
-// rendering right now (5 cols on a wide desktop, 2 on a small phone,
-// etc.), so "Load more" always appears after the same number of complete
-// rows no matter the device or window width.
-const ROWS_PER_PAGE = 2;
-
-// Reads how many columns the CSS grid is currently laying out, straight
-// from the computed grid-template-columns (one token per column) — this
-// is content-independent, so it works even on an empty grid.
-function getGridColumns(gridEl) {
-  const value = window.getComputedStyle(gridEl).gridTemplateColumns;
-  const cols = value.split(' ').filter(Boolean);
-  return cols.length || 1;
-}
-
-// Tracks the column count last used to build the page, so a resize/
-// rotation only triggers a rebuild when it actually crosses a breakpoint
-// (not on every pixel of dragging).
-let lastGridColumns = null;
-
-function buildCards() {
-  const container = document.getElementById('workContainer');
-  container.innerHTML = '';
-
-  // First pass: create every section with its (still empty) grid and
-  // attach them all to the page. Attaching before measuring means the
-  // grid's real, breakpoint-aware column count is available to read.
-  const sections = CATEGORY_ORDER.map(cat => {
-    const items = WORKS.filter(w => w.category === cat);
-    if (!items.length) return null;
-
-    const section = document.createElement('div');
-    section.className = 'work-category';
-    section.dataset.category = cat;
-    section.innerHTML = `
-      <h3 class="work-category-title reveal">${CATEGORY_LABELS[cat] || cat}</h3>
-      <div class="work-grid"></div>
-      <div class="work-load-more-wrap"></div>`;
-    const grid = section.querySelector('.work-grid');
-    const loadMoreWrap = section.querySelector('.work-load-more-wrap');
-
-    // Attach the section to the page BEFORE the first render, so the
-    // scroll-reveal observer (which queries document.querySelectorAll)
-    // can actually find and observe this section's cards. Rendering
-    // into a still-detached section silently skips them until some
-    // later render (e.g. clicking Load more elsewhere) re-queries the
-    // whole document — which is why Product Poster only appeared after
-    // clicking Load more on AI Creatives.
-    container.appendChild(section);
-
-    return { cat, items, section, grid, loadMoreWrap };
-  }).filter(Boolean);
-
-  if (!sections.length) return;
-
-  // All .work-grid elements share the same CSS rules, so one measurement
-  // (from the first section already in the DOM) tells us the column
-  // count for all of them.
-  const columns = getGridColumns(sections[0].grid);
-  lastGridColumns = columns;
-  const ITEMS_PER_PAGE = columns * ROWS_PER_PAGE;
-
-  sections.forEach(({ items, section, grid, loadMoreWrap }) => {
-    let visibleCount = 0;
-
-    // Appends the next `count` items to the grid (never re-renders
-    // existing cards — that would tear down and reload every YouTube
-    // iframe/video already on screen). Pass animate=true to have the
-    // newly-added cards fade + slide in with a staggered delay.
-    function appendCards(count, animate) {
-      const start = visibleCount;
-      const end = Math.min(visibleCount + count, items.length);
-      for (let i = start; i < end; i++) {
-        const card = buildCard(items[i], i, /* useRevealClass */ !animate);
-        if (animate) {
-          card.classList.add('card-enter');
-          card.style.transitionDelay = ((i - start) * 60) + 'ms';
-          grid.appendChild(card);
-          // Force layout, then release to the visible state so the
-          // transition actually runs on next frame.
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              card.classList.remove('card-enter');
-              setTimeout(() => { card.style.transitionDelay = ''; }, 450);
-            });
-          });
-        } else {
-          grid.appendChild(card);
-        }
-      }
-      visibleCount = end;
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-      renderControls();
-    }
-
-    // Fades out and removes every card past the first ITEMS_PER_PAGE,
-    // then resets to the collapsed state — the "unload"/Show less action.
-    function collapseCards() {
-      const cards = [...grid.children];
-      const extra = cards.slice(ITEMS_PER_PAGE);
-      if (!extra.length) return;
-      extra.forEach((card, i) => {
-        card.style.transitionDelay = (i * 40) + 'ms';
-        card.classList.add('card-exit');
-      });
-      setTimeout(() => {
-        extra.forEach(card => card.remove());
-        visibleCount = ITEMS_PER_PAGE;
-        renderControls();
-        section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 380);
-    }
-
-    function renderControls() {
-      loadMoreWrap.innerHTML = '';
-      // If the whole category fits within ITEMS_PER_PAGE, there is
-      // nothing more to load and nothing expanded to collapse — no
-      // button is ever shown for that section.
-      if (items.length <= ITEMS_PER_PAGE) return;
-
-      const hasMore = visibleCount < items.length;
-      const isExpanded = visibleCount > ITEMS_PER_PAGE;
-
-      if (hasMore) {
-        const btn = document.createElement('button');
-        btn.className = 'work-load-more';
-        btn.type = 'button';
-        btn.innerHTML = `Load more <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>`;
-        btn.addEventListener('click', () => appendCards(ITEMS_PER_PAGE, true));
-        loadMoreWrap.appendChild(btn);
-      }
-      if (isExpanded) {
-        const btn = document.createElement('button');
-        btn.className = 'work-load-more work-load-less';
-        btn.type = 'button';
-        btn.innerHTML = `Show less <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>`;
-        btn.addEventListener('click', collapseCards);
-        loadMoreWrap.appendChild(btn);
-      }
-    }
-
-    appendCards(Math.min(ITEMS_PER_PAGE, items.length), false);
-  });
-}
-
-function buildCard(w, i, useRevealClass) {
-  const card = document.createElement('div');
-
-  const revealPart = useRevealClass
-    ? ' reveal' + (i % 3 === 1 ? ' reveal-delay-1' : i % 3 === 2 ? ' reveal-delay-2' : '')
-    : '';
-  card.className = 'work-card' + revealPart;
-  card.dataset.category  = w.category;
-  card.dataset.media     = w.media;
-  card.dataset.mediaType = w.type;
-  card.dataset.title     = w.title;
-  card.dataset.cat       = w.cat;
-  card.dataset.desc      = w.desc;
-  card.setAttribute('onclick', 'openLightbox(this)');
-
-  let previewHtml;
-
-  if (w.category === 'video' || w.category === 'ai' || w.category === 'ugc') {
-    if (w.type === 'youtube') {
-      previewHtml = `
-        <div class="video-preview-frame">
-          <div class="phone-mockup">
-            <iframe
-              src="https://www.youtube.com/embed/${w.media}?autoplay=1&mute=1&controls=0&loop=1&playlist=${w.media}&playsinline=1&modestbranding=1&rel=0&cc_load_policy=0&iv_load_policy=3"
-              allow="autoplay; encrypted-media"
-              referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <section class="work-section" id="work">
+      <div class="wrap">
+        <div class="work-panel">
+          <div class="work-head">
+            <h2>My Crafts.</h2>
+            <div class="filter-row" id="workFilters" role="group" aria-label="Filter projects"></div>
           </div>
-        </div>`;
-    } else if (w.type === 'video') {
-      previewHtml = `
-        <div class="video-preview-frame">
-          <div class="phone-mockup">
-            <video src="${w.media}" autoplay muted loop playsinline preload="metadata"></video>
+          <p class="work-caption">Drag to spin the project cylinder, select a card to open it, or use the arrows.</p>
+          <div class="deck-shell">
+            <button class="deck-arrow prev" id="prevProject" type="button" aria-label="Previous project">‹</button>
+            <div class="deck-stage" id="projectDeck" aria-live="polite"></div>
+            <button class="deck-arrow next" id="nextProject" type="button" aria-label="Next project">›</button>
           </div>
-        </div>`;
-    } else {
-      previewHtml = `
-        <div class="video-preview-frame">
-          <div class="phone-mockup">
-            <img src="${w.thumb}" alt="${w.title}" />
-          </div>
-        </div>`;
-    }
-  } else if (w.category === 'graphic') {
-    previewHtml = `
-      <div class="video-preview-frame">
-        <div class="phone-mockup">
-          <img src="${w.thumb}" alt="${w.title}" />
-        </div>
-      </div>`;
-  } else if (w.category === 'poster') {
-    previewHtml = `
-      <div class="poster-preview-frame">
-        <div class="poster-frame">
-          <div class="poster-frame-inner">
-            <img src="${w.thumb}" alt="${w.title}" />
+          <div class="work-info">
+            <div>
+              <span class="work-count" id="workCount">PROJECT 01 / 26</span>
+              <h3 id="workTitle">Project 01</h3>
+              <p id="workDescription">Browse my video and design work.</p>
+            </div>
+            <button class="watch-button" id="watchProject" type="button">Watch project ↗</button>
           </div>
         </div>
-      </div>`;
-  } else {
-    previewHtml = `<img class="work-thumb" src="${w.thumb}" alt="${w.title}" />`;
-  }
-
-  card.innerHTML = `
-    <div class="work-thumb-wrap">
-      ${previewHtml}
-      <div class="work-overlay">
-        <svg width="28" height="28" fill="none" stroke="#c9a84c" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-        <span>View Full</span>
       </div>
-    </div>`;
-  return card;
-}
+    </section>
+    <dialog class="work-dialog" id="workDialog" aria-label="Selected portfolio project">
+      <div class="dialog-head"><span id="dialogTitle">Portfolio project</span><button class="dialog-close" id="closeDialog" type="button" aria-label="Close project viewer">×</button></div>
+      <div class="dialog-content" id="dialogContent"></div>
+    </dialog>
 
-// ── THEME (dark / light) ─────────────────────────────
-const THEME_KEY = 'brix-portfolio-theme';
-const DARK_VIGNETTE  = 'rgba(8,13,26,0.55)';
-const LIGHT_VIGNETTE = 'rgba(230,225,210,0.5)';
-let vignetteColor = DARK_VIGNETTE;
+    <section class="process-section" id="process">
+      <div class="wrap">
+        <div class="process-heading">
+          <div><p class="section-kicker">01 — THE PROCESS</p><h2>Good creative starts<br>with a clear plan.</h2></div>
+          <p class="process-summary">From understanding your brief to preparing the final edit, each step keeps the work focused on your audience and goal.</p>
+        </div>
+        <div class="process-layout">
+          <div class="process-tabs" role="tablist" aria-label="Creative process">
+            <button class="process-tab" role="tab" id="step-0" aria-selected="true" aria-controls="step-panel" data-step="0"><span>01</span> Understand</button>
+            <button class="process-tab" role="tab" id="step-1" aria-selected="false" aria-controls="step-panel" data-step="1"><span>02</span> Plan</button>
+            <button class="process-tab" role="tab" id="step-2" aria-selected="false" aria-controls="step-panel" data-step="2"><span>03</span> Create</button>
+            <button class="process-tab" role="tab" id="step-3" aria-selected="false" aria-controls="step-panel" data-step="3"><span>04</span> Refine &amp; deliver</button>
+          </div>
+          <article class="process-card" id="step-panel" role="tabpanel" aria-labelledby="step-0">
+            <div><span class="step-no" id="stepNo">01 / 04</span><h3 id="stepTitle">I learn the offer before I start editing.</h3><p id="stepDescription">We align on your product, audience, brand voice, and the message the video needs to land.</p></div>
+            <aside class="playbook"><p class="playbook-label">Creative checklist</p><h4 id="boardTitle">Start with the essentials.</h4><ul id="boardList"><li>Offer and key message</li><li>Audience and platform</li><li>References and deliverables</li></ul><p class="playbook-foot">BRIEF → DIRECTION → FINAL CUT</p></aside>
+          </article>
+        </div>
+      </div>
+    </section>
 
-const BG_COLORS = {
-  dark:  { gold: '201,168,76', blue: '80,140,220', alphaBoost: 1    },
-  light: { gold: '138,100,18', blue: '20,72,158',  alphaBoost: 1.9  }
-};
-let bgColors = BG_COLORS.dark;
+    <section class="about-section" id="about">
+      <div class="wrap about-grid">
+        <div class="about-heading"><p class="section-kicker">02 — ABOUT ME</p><h2>Creative thinking.<br>AI possibilities.</h2></div>
+        <div class="about-copy">
+          <p>I’m Brix, a video editor and graphic designer based in Ilocos Sur, Philippines. I enjoy exploring how AI tools can support visual storytelling and product-focused content.</p>
+          <p>My work includes AI ad creatives, UGC-style videos, short-form editing, and social visuals. I aim to make each piece feel clear, intentional, and right for its platform.</p>
+          <div class="skill-list"><span class="skill">AI ad creatives</span><span class="skill">UGC-style ads</span><span class="skill">Video editing</span><span class="skill">Visual storytelling</span><span class="skill">Short-form content</span></div>
+        </div>
+      </div>
+    </section>
 
-function applyTheme(theme) {
-  const isLight = theme === 'light';
-  document.body.classList.toggle('light-mode', isLight);
-  vignetteColor = isLight ? LIGHT_VIGNETTE : DARK_VIGNETTE;
-  bgColors = isLight ? BG_COLORS.light : BG_COLORS.dark;
-  const toggleBtn = document.getElementById('themeToggle');
-  if (toggleBtn) toggleBtn.setAttribute('aria-pressed', String(isLight));
-}
+    <section class="tools-section">
+      <div class="wrap">
+        <div class="tools-heading"><div><p class="section-kicker">THE STACK</p><h2>Tools I work with</h2></div><span class="mono">Creative tools</span></div>
+        <div class="tools"><span class="tool">CapCut</span><span class="tool">Alight Motion</span><span class="tool">Canva</span><span class="tool">Higgsfield</span><span class="tool">Google Flow</span><span class="tool">Kling</span><span class="tool">HeyGen</span><span class="tool">ElevenLabs</span></div>
+      </div>
+    </section>
 
-function getPreferredTheme() {
-  try {
-    const saved = localStorage.getItem(THEME_KEY);
-    if (saved === 'light' || saved === 'dark') return saved;
-  } catch (e) { /* localStorage unavailable — fall through */ }
-  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
-}
+    <section class="contact-section" id="contact">
+      <div class="wrap"><div class="contact-panel"><div><p class="section-kicker">LET’S COLLABORATE</p><h2>Tell me about the project.</h2><p>Share the offer, audience, and what you need created. I’m open to remote projects and freelance opportunities.</p></div><div class="contact-action"><a class="pill" href="mailto:brixallandaveo07@gmail.com">Email me <span aria-hidden="true">↗</span></a></div></div></div>
+    </section>
+  </main>
+  <footer><div class="wrap footer"><span>© <span id="year"></span> Brix Allan Dave Olegario · Ilocos Sur, Philippines</span><a href="#home">Back to top ↑</a></div></footer>
 
-applyTheme(getPreferredTheme());
-
-const themeToggle = document.getElementById('themeToggle');
-if (themeToggle) {
-  themeToggle.addEventListener('click', () => {
-    const nowLight = !document.body.classList.contains('light-mode');
-    applyTheme(nowLight ? 'light' : 'dark');
-    try { localStorage.setItem(THEME_KEY, nowLight ? 'light' : 'dark'); } catch (e) { /* ignore */ }
-  });
-}
-
-// ── SCROLL REVEAL ────────────────────────────────────
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// Build cards — runs before the animated background so a canvas/WebGL
-// issue in this browser (blocked by a privacy extension, GPU disabled,
-// etc.) can never prevent the Work section from rendering.
-buildCards();
-
-// If resizing/rotating changes how many columns the .work-grid actually
-// renders (5→4→3→2 at this page's breakpoints), the Load-more threshold
-// (columns × ROWS_PER_PAGE) changes too, so rebuild to match. Debounced,
-// and only rebuilds when the column count truly changed — not on every
-// resize tick — since a rebuild briefly reloads visible video embeds.
-let columnsResizeTimer = null;
-window.addEventListener('resize', () => {
-  clearTimeout(columnsResizeTimer);
-  columnsResizeTimer = setTimeout(() => {
-    const grid = document.querySelector('.work-grid');
-    if (!grid) return;
-    if (getGridColumns(grid) !== lastGridColumns) buildCards();
-  }, 200);
-});
-
-// ── ANIMATED BACKGROUND ──────────────────────────────
-const canvas = document.getElementById('bgCanvas');
-const ctx = canvas ? canvas.getContext('2d') : null;
-let W, H, lines, particles, mouse = {x: -999, y: -999};
-
-function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-
-function makeLine() {
-  const horiz = Math.random() > 0.5;
-  return { horiz, pos: horiz ? Math.random() * H : Math.random() * W, speed: (Math.random() * 0.3 + 0.1) * (Math.random() > 0.5 ? 1 : -1), len: Math.random() * 300 + 120, offset: horiz ? Math.random() * W : Math.random() * H, alpha: Math.random() * 0.5 + 0.15, width: Math.random() * 1.2 + 0.3, hue: Math.random() > 0.7 ? 200 : 43 };
-}
-
-function makeParticle() {
-  return { x: Math.random() * (W || 1200), y: Math.random() * (H || 800), r: Math.random() * 1.4 + 0.3, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3, alpha: Math.random() * 0.6 + 0.1 };
-}
-
-function init() { resize(); lines = Array.from({length: 18}, makeLine); particles = Array.from({length: 60}, makeParticle); }
-
-function drawLines() {
-  lines.forEach(l => {
-    l.offset += l.speed;
-    if (l.horiz) { if (l.offset > W + l.len) l.offset = -l.len; if (l.offset < -l.len) l.offset = W + l.len; }
-    else { if (l.offset > H + l.len) l.offset = -l.len; if (l.offset < -l.len) l.offset = H + l.len; }
-    const isGold = l.hue === 43;
-    const rgb = isGold ? bgColors.gold : bgColors.blue;
-    const alpha = Math.min(l.alpha * bgColors.alphaBoost, 0.95);
-    const grad = l.horiz ? ctx.createLinearGradient(l.offset - l.len/2, l.pos, l.offset + l.len/2, l.pos) : ctx.createLinearGradient(l.pos, l.offset - l.len/2, l.pos, l.offset + l.len/2);
-    grad.addColorStop(0, `rgba(${rgb},0)`); grad.addColorStop(0.5, `rgba(${rgb},${alpha})`); grad.addColorStop(1, `rgba(${rgb},0)`);
-    ctx.save(); ctx.strokeStyle = grad; ctx.lineWidth = l.width; ctx.shadowBlur = 12;
-    ctx.shadowColor = `rgba(${rgb},0.4)`;
-    ctx.beginPath();
-    if (l.horiz) { ctx.moveTo(l.offset - l.len/2, l.pos); ctx.lineTo(l.offset + l.len/2, l.pos); }
-    else { ctx.moveTo(l.pos, l.offset - l.len/2); ctx.lineTo(l.pos, l.offset + l.len/2); }
-    ctx.stroke(); ctx.restore();
-  });
-}
-
-function drawParticles() {
-  particles.forEach(p => {
-    p.x += p.vx; p.y += p.vy;
-    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0; if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-    const dx = p.x - mouse.x, dy = p.y - mouse.y, dist = Math.sqrt(dx*dx + dy*dy);
-    if (dist < 100) { p.x += dx / dist * 0.6; p.y += dy / dist * 0.6; }
-    const rgb = bgColors.gold;
-    const alpha = Math.min(p.alpha * bgColors.alphaBoost, 0.95);
-    ctx.save(); ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${rgb},${alpha})`; ctx.shadowBlur = 6;
-    ctx.shadowColor = `rgba(${rgb},0.5)`; ctx.fill(); ctx.restore();
-  });
-}
-
-function drawVignette() {
-  const grad = ctx.createRadialGradient(W/2, H/2, H*0.3, W/2, H/2, H*0.9);
-  grad.addColorStop(0, 'transparent'); grad.addColorStop(1, vignetteColor);
-  ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
-}
-
-function animate() {
-  if (!ctx) return;
-  ctx.clearRect(0, 0, W, H); drawLines(); drawParticles(); drawVignette();
-  requestAnimationFrame(animate);
-}
-
-window.addEventListener('resize', resize);
-window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-if (ctx) { init(); animate(); }
-
-// ── DISABLE PINCH / DOUBLE-TAP ZOOM ──────────────────
-document.addEventListener('gesturestart', e => e.preventDefault());
-document.addEventListener('gesturechange', e => e.preventDefault());
-document.addEventListener('gestureend', e => e.preventDefault());
-let lastTouchEnd = 0;
-document.addEventListener('touchend', e => {
-  const now = Date.now();
-  if (now - lastTouchEnd <= 300) e.preventDefault();
-  lastTouchEnd = now;
-}, { passive: false });
-
-// ── MOBILE NAV (hamburger) ───────────────────────────
-const navToggle = document.getElementById('navToggle');
-const mobileNav = document.getElementById('mobileNav');
-if (navToggle && mobileNav) {
-  navToggle.addEventListener('click', () => {
-    const isActive = navToggle.classList.toggle('active');
-    mobileNav.classList.toggle('active', isActive);
-    navToggle.setAttribute('aria-expanded', String(isActive));
-  });
-  mobileNav.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      navToggle.classList.remove('active');
-      mobileNav.classList.remove('active');
-      navToggle.setAttribute('aria-expanded', 'false');
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.addEventListener('click', () => {
+      const open = menuToggle.getAttribute('aria-expanded') === 'true';
+      menuToggle.setAttribute('aria-expanded', String(!open));
+      menuToggle.setAttribute('aria-label', open ? 'Open navigation menu' : 'Close navigation menu');
+      navLinks.classList.toggle('open', !open);
     });
-  });
-}
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      menuToggle.setAttribute('aria-expanded','false');
+      menuToggle.setAttribute('aria-label','Open navigation menu');
+      navLinks.classList.remove('open');
+    }));
 
-// ── TOOLS CAROUSEL ────────────────────────────────────
-const TOOLS = [
-  { name: 'CapCut',            logo: 'tools/capcut.jpg' },
-  { name: 'Alight Motion',     logo: 'tools/alight-motion.png' },
-  { name: 'Canva',              logo: 'tools/canva.jpg' },
-  { name: 'Higgsfield',         logo: 'tools/hf.png' },
-  { name: 'Google Flow (Veo)', logo: 'tools/google-flow.png' },
-  { name: 'Elevenlabs',         logo: 'tools/EL.jpeg' },
-  { name: 'Claude',             logo: 'tools/claude.jpg' },
-  { name: 'Gemini',             logo: 'tools/gemini.jpg' },
-  { name: 'Github',             logo: 'tools/github.jpg' },
-];
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      const dark = document.body.classList.toggle('dark');
+      themeToggle.setAttribute('aria-pressed', String(dark));
+      themeToggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+      themeToggle.querySelector('.theme-text').textContent = dark ? 'Light mode' : 'Dark mode';
+    });
 
-function buildToolsMarquee() {
-  const track = document.getElementById('toolsTrack');
-  if (!track) return;
-  const chips = [...TOOLS, ...TOOLS]
-    .map(t => {
-      const hasLogo = !!t.logo;
-      return `<span class="tool-chip${hasLogo ? '' : ' no-logo'}">${
-        hasLogo ? `<img src="${t.logo}" alt="${t.name}" draggable="false" onerror="this.style.display='none'" />` : ''
-      }${t.name}</span>`;
-    })
-    .join('');
-  track.innerHTML = chips;
-  initToolsCarousel();
-}
+    const WORKS = [{"category":"video","type":"youtube","thumb":"https://img.youtube.com/vi/RUW_7e6cpBQ/hqdefault.jpg","media":"RUW_7e6cpBQ","cat":"Video Editing","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"ai","type":"youtube","thumb":"https://img.youtube.com/vi/WA4s5PUvHxA/hqdefault.jpg","media":"WA4s5PUvHxA","cat":"AI Creatives","title":"Project Title","desc":"Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc."},{"category":"ai","type":"youtube","thumb":"https://img.youtube.com/vi/sG_rrRoaroo/hqdefault.jpg","media":"sG_rrRoaroo","cat":"AI Creatives","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"ai","type":"youtube","thumb":"https://img.youtube.com/vi/L8A35RO6uX4/hqdefault.jpg","media":"L8A35RO6uX4","cat":"AI Creatives","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"ai","type":"youtube","thumb":"https://img.youtube.com/vi/odMvFs9X6Bw/hqdefault.jpg","media":"odMvFs9X6Bw","cat":"AI Creatives","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"ai","type":"youtube","thumb":"https://img.youtube.com/vi/gwoxU_mjmRc/hqdefault.jpg","media":"gwoxU_mjmRc","cat":"AI Creatives","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"ai","type":"youtube","thumb":"https://img.youtube.com/vi/r1YOo0jmUhI/hqdefault.jpg","media":"r1YOo0jmUhI","cat":"AI Creatives","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"ai","type":"youtube","thumb":"https://img.youtube.com/vi/cZd-4XwCfl4/hqdefault.jpg","media":"cZd-4XwCfl4","cat":"AI Creatives","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"ai","type":"youtube","thumb":"https://img.youtube.com/vi/P9yNcy-9N6g/hqdefault.jpg","media":"P9yNcy-9N6g","cat":"AI Creatives","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"ai","type":"youtube","thumb":"https://img.youtube.com/vi/SzvHUkWb4tc/hqdefault.jpg","media":"SzvHUkWb4tc","cat":"AI Creatives","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"ai","type":"youtube","thumb":"https://img.youtube.com/vi/sa_gY8AqlWo/hqdefault.jpg","media":"sa_gY8AqlWo","cat":"AI Creatives","title":"Project Title","desc":"Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc."},{"category":"ai","type":"youtube","thumb":"https://img.youtube.com/vi/cVtREW3naVU/hqdefault.jpg","media":"cVtREW3naVU","cat":"AI Creatives","title":"Project Title","desc":"Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc."},{"category":"ai","type":"youtube","thumb":"https://img.youtube.com/vi/B1I1StHxQTA/hqdefault.jpg","media":"B1I1StHxQTA","cat":"AI Creatives","title":"Project Title","desc":"Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc."},{"category":"ai","type":"youtube","thumb":"https://img.youtube.com/vi/WodrD-Y30TA/hqdefault.jpg","media":"WodrD-Y30TA","cat":"AI Creatives","title":"Project Title","desc":"Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc."},{"category":"ugc","type":"youtube","thumb":"https://img.youtube.com/vi/xFpjU0ZrEhk/hqdefault.jpg","media":"xFpjU0ZrEhk","cat":"UGC Ads","title":"Project Title","desc":"Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc."},{"category":"ugc","type":"youtube","thumb":"https://img.youtube.com/vi/02YKYbcY_OE/hqdefault.jpg","media":"02YKYbcY_OE","cat":"UGC Ads","title":"Project Title","desc":"Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc."},{"category":"ugc","type":"youtube","thumb":"https://img.youtube.com/vi/SkmKW3NP0vw/hqdefault.jpg","media":"SkmKW3NP0vw","cat":"UGC Ads","title":"Project Title","desc":"Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc."},{"category":"ugc","type":"youtube","thumb":"https://img.youtube.com/vi/eri5FQMr1yc/hqdefault.jpg","media":"eri5FQMr1yc","cat":"UGC Ads","title":"Project Title","desc":"Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc."},{"category":"graphic","type":"image","thumb":"images/graphic-1.jpg","media":"images/graphic-1.jpg","cat":"Graphic Design","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"graphic","type":"image","thumb":"images/graphic-2.jpg","media":"images/graphic-2.jpg","cat":"Graphic Design","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"graphic","type":"image","thumb":"images/graphic-3.jpg","media":"images/graphic-3.jpg","cat":"Graphic Design","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"graphic","type":"image","thumb":"images/graphic-4.jpg","media":"images/graphic-4.jpg","cat":"Graphic Design","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"poster","type":"image","thumb":"workimages/work1.jpg","media":"workimages/work1.jpg","cat":"Product Poster","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"poster","type":"image","thumb":"workimages/work2.jpg","media":"workimages/work2.jpg","cat":"Product Poster","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"poster","type":"image","thumb":"workimages/work3.jpg","media":"workimages/work3.jpg","cat":"Product Poster","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."},{"category":"poster","type":"image","thumb":"workimages/work4.jpg","media":"workimages/work4.jpg","cat":"Product Poster","title":"Project Title","desc":"Brief description — what it was for, tools used, etc."}];
+    const CATEGORY_LABELS = { video:'Short-form / Reels', ugc:'UGC Ads', ai:'AI Creatives', graphic:'Graphic Design', poster:'Product Posters' };
+    const categoryOrder = ['ai','ugc','video','graphic','poster'];
+    const workFilters = document.getElementById('workFilters');
+    const projectDeck = document.getElementById('projectDeck');
+    const workDialog = document.getElementById('workDialog');
+    const dialogContent = document.getElementById('dialogContent');
+    let selectedCategory = 'all';
+    let selectedIndex = 0;
+    const visibleWorks = () => selectedCategory === 'all' ? WORKS : WORKS.filter(work => work.category === selectedCategory);
+    const sourceProjectNumber = work => String(WORKS.indexOf(work) + 1).padStart(2,'0');
+    const projectTitle = work => work.title && work.title !== 'Project Title' ? work.title : `Project ${sourceProjectNumber(work)}`;
+    const categoryName = work => CATEGORY_LABELS[work.category] || work.cat || 'Creative project';
 
-function initToolsCarousel() {
-  const marquee = document.querySelector('.tools-marquee');
-  const track = document.getElementById('toolsTrack');
-  if (!marquee || !track) return;
-
-  const AUTO_SPEED = 0.45;
-
-  let pos = 1;
-  let isDragging = false;
-  let lastX = 0;
-
-  function halfWidth() {
-    return track.scrollWidth / 2;
-  }
-
-  function normalize() {
-    const half = halfWidth();
-    if (half > 0) pos = ((pos % half) + half) % half;
-  }
-
-  function applyPos() {
-    normalize();
-    marquee.scrollLeft = pos;
-  }
-
-  function frame() {
-    pos += AUTO_SPEED;
-    applyPos();
-    requestAnimationFrame(frame);
-  }
-
-  marquee.addEventListener('pointerdown', e => {
-    isDragging = true;
-    marquee.classList.add('dragging');
-    lastX = e.clientX;
-    marquee.setPointerCapture(e.pointerId);
-  });
-
-  marquee.addEventListener('pointermove', e => {
-    if (!isDragging) return;
-    const dx = e.clientX - lastX;
-    lastX = e.clientX;
-    pos -= dx;
-    applyPos();
-  });
-
-  function endDrag() {
-    isDragging = false;
-    marquee.classList.remove('dragging');
-  }
-  marquee.addEventListener('pointerup', endDrag);
-  marquee.addEventListener('pointercancel', endDrag);
-  marquee.addEventListener('pointerleave', () => { if (isDragging) endDrag(); });
-
-  marquee.addEventListener('wheel', e => {
-    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-      pos += e.deltaX;
-      applyPos();
+    function renderFilters() {
+      const available = categoryOrder.filter(category => WORKS.some(work => work.category === category));
+      const filters = [{key:'all',label:'All Work'}, ...available.map(key => ({key,label:CATEGORY_LABELS[key]}))];
+      workFilters.replaceChildren();
+      filters.forEach(filter => {
+        const button = document.createElement('button');
+        button.type = 'button'; button.className = 'filter-pill'; button.textContent = filter.label;
+        button.setAttribute('aria-pressed', String(selectedCategory === filter.key));
+        button.addEventListener('click', () => { selectedCategory = filter.key; selectedIndex = 0; renderFilters(); renderWork(); });
+        workFilters.append(button);
+      });
     }
-  }, { passive: true });
-
-  requestAnimationFrame(frame);
-}
-buildToolsMarquee();
-
-// ── LIGHTBOX ─────────────────────────────────────────
-let lbCards = [], lbIndex = 0;
-
-function getVisibleCards() {
-  return [...document.querySelectorAll('.work-card')].filter(c => c.style.display !== 'none');
-}
-
-function openLightbox(el) {
-  const card = el.closest('.work-card') || el;
-  lbCards = getVisibleCards();
-  lbIndex = lbCards.indexOf(card);
-  if (lbIndex === -1) lbIndex = 0;
-  renderLightbox();
-  document.getElementById('lightbox').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeLightbox() {
-  const lb = document.getElementById('lightbox');
-  lb.classList.remove('active');
-  document.body.style.overflow = '';
-  const vid = lb.querySelector('video');
-  if (vid) vid.pause();
-  const inner = document.getElementById('lbInner');
-  const frame = inner.querySelector('iframe');
-  if (frame) inner.innerHTML = '';
-}
-
-function lbBgClick(e) {
-  if (e.target === document.getElementById('lightbox')) closeLightbox();
-}
-
-function lbNav(dir) {
-  lbCards = getVisibleCards();
-  lbIndex = (lbIndex + dir + lbCards.length) % lbCards.length;
-  const vid = document.getElementById('lbInner').querySelector('video');
-  if (vid) vid.pause();
-  renderLightbox();
-}
-
-function renderLightbox() {
-  const card      = lbCards[lbIndex];
-  const d         = card.dataset;
-  const inner     = document.getElementById('lbInner');
-  const counter   = document.getElementById('lbCounter');
-  const imgEl     = card.querySelector('img.work-thumb');
-  const mediaSrc  = d.media || (imgEl ? imgEl.getAttribute('src') : '');
-  const mediaType = d.mediaType || 'image';
-
-  if (mediaType === 'youtube') {
-    inner.innerHTML = `<iframe
-        style="border:none; border-radius:4px; box-shadow:0 32px 100px rgba(0,0,0,0.8); height:90vh; width:calc(90vh * 9 / 16); max-width:96vw;"
-        src="https://www.youtube.com/embed/${mediaSrc}?autoplay=1&rel=0&cc_load_policy=0&iv_load_policy=3"
-        allow="autoplay; encrypted-media; picture-in-picture"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen></iframe>`;
-  } else if (mediaType === 'video') {
-    inner.innerHTML = `<video class="lightbox-video" controls autoplay><source src="${mediaSrc}" type="video/mp4"></video>`;
-  } else {
-    inner.innerHTML = `<img class="lightbox-media" src="${mediaSrc}" alt="${d.title || ''}" />`;
-  }
-
-  counter.textContent = `${lbIndex + 1} / ${lbCards.length}`;
-  document.querySelector('.lb-prev').style.display = lbCards.length > 1 ? '' : 'none';
-  document.querySelector('.lb-next').style.display = lbCards.length > 1 ? '' : 'none';
-}
-
-document.addEventListener('keydown', e => {
-  const lb = document.getElementById('lightbox');
-  if (!lb.classList.contains('active')) return;
-  if (e.key === 'Escape')     closeLightbox();
-  if (e.key === 'ArrowLeft')  lbNav(-1);
-  if (e.key === 'ArrowRight') lbNav(1);
-});
-
-// ── VISITOR COUNTER (animated) ───────────────────────
-function animateVisitorCount(target) {
-  const el = document.getElementById('visitorCounterNum');
-  if (!el) return;
-  const duration = 1200;
-  const start = performance.now();
-  function tick(now) {
-    const progress = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.round(eased * target).toLocaleString();
-    if (progress < 1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-}
-function abacusVisitorCallback(res) {
-  animateVisitorCount(res.value);
-}
-
-// ── VISITORS BY COUNTRY ───────────────────────────────
-// Predefined country list we track (keeps API calls reasonable).
-// Add/remove entries here anytime.
-const TRACKED_COUNTRIES = [
-  { code: 'PH', name: 'Philippines' },
-  { code: 'US', name: 'United States' },
-  { code: 'GB', name: 'United Kingdom' },
-  { code: 'CA', name: 'Canada' },
-  { code: 'AU', name: 'Australia' },
-  { code: 'SG', name: 'Singapore' },
-  { code: 'JP', name: 'Japan' },
-  { code: 'KR', name: 'South Korea' },
-  { code: 'IN', name: 'India' },
-  { code: 'DE', name: 'Germany' },
-  { code: 'FR', name: 'France' },
-  { code: 'ES', name: 'Spain' },
-  { code: 'IT', name: 'Italy' },
-  { code: 'NL', name: 'Netherlands' },
-  { code: 'BR', name: 'Brazil' },
-  { code: 'MX', name: 'Mexico' },
-  { code: 'ID', name: 'Indonesia' },
-  { code: 'MY', name: 'Malaysia' },
-  { code: 'TH', name: 'Thailand' },
-  { code: 'VN', name: 'Vietnam' },
-  { code: 'AE', name: 'UAE' },
-  { code: 'SA', name: 'Saudi Arabia' },
-  { code: 'CN', name: 'China' },
-  { code: 'RU', name: 'Russia' },
-  { code: 'ZA', name: 'South Africa' }
-];
-const COUNTRY_NAMESPACE = 'brix-portfolio-vigan-country';
-
-function flagEmoji(code) {
-  return code.toUpperCase().replace(/./g, ch => String.fromCodePoint(127397 + ch.charCodeAt(0)));
-}
-
-// Records the current visitor's country by incrementing that country's
-// counter. Runs once per page load.
-async function recordVisitorCountry() {
-  try {
-    const geoRes = await fetch('https://ipwho.is/');
-    const geo = await geoRes.json();
-    const code = (geo && geo.country_code) ? geo.country_code.toUpperCase() : null;
-    if (!code) return;
-    await fetch(`https://abacus.jasoncameron.dev/hit/${COUNTRY_NAMESPACE}/${code}`);
-  } catch (e) {
-    // Silently ignore — geolocation or counting failure shouldn't break the page.
-  }
-}
-
-// Fetches current counts for every tracked country and renders the list.
-async function loadCountryPanel() {
-  const listEl = document.getElementById('countryPanelList');
-  if (!listEl) return;
-  try {
-    const results = await Promise.all(
-      TRACKED_COUNTRIES.map(c =>
-        fetch(`https://abacus.jasoncameron.dev/get/${COUNTRY_NAMESPACE}/${c.code}`)
-          .then(r => r.json())
-          .then(data => ({ ...c, count: data.value || 0 }))
-          .catch(() => ({ ...c, count: 0 }))
-      )
-    );
-    const withVisits = results.filter(r => r.count > 0).sort((a, b) => b.count - a.count);
-    if (!withVisits.length) {
-      listEl.innerHTML = '<div class="country-panel-empty">No visits recorded yet.</div>';
-      return;
+    function renderWork() {
+      const items = visibleWorks();
+      projectDeck.replaceChildren();
+      if (!items.length) { projectDeck.innerHTML = '<p class="work-empty">No projects in this category yet.</p>'; return; }
+      selectedIndex = (selectedIndex + items.length) % items.length;
+      const offsets = [0,-1,1,-2,2];
+      const used = new Set();
+      const cards = offsets.map(offset => {
+        const index = (selectedIndex + offset + items.length) % items.length;
+        if (used.has(index)) return null;
+        used.add(index); return {offset,index,work:items[index]};
+      }).filter(Boolean).sort((a,b) => a.offset - b.offset);
+      const radius = window.innerWidth < 440 ? 142 : window.innerWidth < 720 ? 166 : window.innerWidth < 1000 ? 194 : 220;
+      projectDeck.style.setProperty('--radius', `${radius}px`);
+      cards.forEach(({offset,index,work}) => {
+        const card = document.createElement('button');
+        card.type = 'button'; card.className = 'project-card';
+        card.dataset.offset = String(offset);
+        card.style.animationDelay = `${Math.abs(offset) * 24}ms`;
+        card.setAttribute('aria-pressed', String(index === selectedIndex));
+        card.setAttribute('aria-label', `Select ${projectTitle(work)}, ${categoryName(work)}`);
+        const distance = Math.abs(offset);
+        card.style.setProperty('--angle', `${offset * 72}deg`);
+        card.style.setProperty('--scale', String(1 - distance * .055));
+        card.style.setProperty('--z', String(10 - distance));
+        const art = document.createElement('span'); art.className = 'card-art';
+        const image = document.createElement('img'); image.src = work.thumb; image.alt = '';
+        image.loading = 'lazy'; image.onerror = () => { image.remove(); card.classList.add('missing'); };
+        art.append(image);
+        const shade = document.createElement('span'); shade.className = 'card-shade';
+        const number = document.createElement('span'); number.className = 'card-top'; number.textContent = `PROJECT ${sourceProjectNumber(work)}`;
+        const play = document.createElement('span'); play.className = 'card-play'; play.setAttribute('aria-hidden','true'); play.innerHTML = work.type === 'youtube' ? '▶' : '↗';
+        const title = document.createElement('span'); title.className = 'card-title'; title.textContent = projectTitle(work);
+        const category = document.createElement('span'); category.className = 'card-category'; category.textContent = categoryName(work);
+        title.append(category); card.append(art,shade,number,play,title);
+        card.addEventListener('click', () => { if (Date.now() < suppressCardClickUntil) return; projectDeck.style.setProperty('--turn', `${offset * 72}deg`); selectedIndex = index; renderWork(); });
+        projectDeck.append(card);
+      });
+      const work = items[selectedIndex];
+      const index = WORKS.indexOf(work) + 1;
+      document.getElementById('workCount').textContent = `PROJECT ${String(selectedIndex + 1).padStart(2,'0')} / ${String(items.length).padStart(2,'0')} · ${selectedCategory === 'all' ? 'ALL WORK' : categoryName(work).toUpperCase()}`;
+      document.getElementById('workTitle').textContent = projectTitle(work);
+      document.getElementById('workDescription').textContent = `${categoryName(work)} · ${work.type === 'youtube' ? 'Video project' : 'Visual design'}`;
+      const watchButton = document.getElementById('watchProject');
+      watchButton.textContent = work.type === 'youtube' ? 'Watch video ↗' : 'View design ↗';
+      watchButton.setAttribute('aria-label', `${work.type === 'youtube' ? 'Watch' : 'View'} ${projectTitle(work)}`);
+      watchButton.dataset.workIndex = String(index - 1);
     }
-    listEl.innerHTML = withVisits.map(r => `
-      <div class="country-row">
-        <span class="country-row-name"><span class="country-row-flag">${flagEmoji(r.code)}</span>${r.name}</span>
-        <span class="country-row-count">${r.count.toLocaleString()}</span>
-      </div>
-    `).join('');
-  } catch (e) {
-    listEl.innerHTML = '<div class="country-panel-empty">Couldn\'t load right now.</div>';
-  }
-}
-
-recordVisitorCountry();
-
-const visitorCounterEl = document.getElementById('visitorCounter');
-const countryPanelEl = document.getElementById('countryPanel');
-let countryPanelLoaded = false;
-if (visitorCounterEl && countryPanelEl) {
-  visitorCounterEl.addEventListener('click', () => {
-    const isOpen = countryPanelEl.classList.toggle('open');
-    visitorCounterEl.classList.toggle('open', isOpen);
-    if (isOpen && !countryPanelLoaded) {
-      countryPanelLoaded = true;
-      loadCountryPanel();
+    function moveProject(direction) {
+      const items = visibleWorks();
+      if (!items.length) return;
+      selectedIndex = (selectedIndex + direction + items.length) % items.length;
+      projectDeck.style.setProperty('--turn', `${direction * 72}deg`);
+      renderWork();
     }
-  });
-  document.addEventListener('click', e => {
-    if (!countryPanelEl.contains(e.target) && !visitorCounterEl.contains(e.target)) {
-      countryPanelEl.classList.remove('open');
-      visitorCounterEl.classList.remove('open');
-    }
-  });
-}
-</script>
-<script async src="https://abacus.jasoncameron.dev/hit/brix-portfolio-vigan/visits?callback=abacusVisitorCallback"></script>
+    let dragStartX = 0;
+    let dragPointerId = null;
+    let isDraggingDeck = false;
+    let suppressCardClickUntil = 0;
+    projectDeck.addEventListener('pointerdown', event => {
+      if (event.button !== 0 || !event.target.closest('.project-card')) return;
+      dragStartX = event.clientX;
+      dragPointerId = event.pointerId;
+      isDraggingDeck = false;
+    });
+    window.addEventListener('pointermove', event => {
+      if (event.pointerId !== dragPointerId) return;
+      const distance = event.clientX - dragStartX;
+      if (!isDraggingDeck && Math.abs(distance) > 8) {
+        isDraggingDeck = true;
+        projectDeck.classList.add('is-dragging');
+      }
+      if (isDraggingDeck) {
+        const dragTurn = Math.max(-150, Math.min(150, distance * .55));
+        projectDeck.style.setProperty('--drag-turn', `${dragTurn}deg`);
+        event.preventDefault();
+      }
+    }, {passive:false});
+    window.addEventListener('pointerup', event => {
+      if (event.pointerId !== dragPointerId) return;
+      const distance = event.clientX - dragStartX;
+      dragPointerId = null;
+      projectDeck.classList.remove('is-dragging');
+      projectDeck.style.setProperty('--drag-turn', '0deg');
+      if (isDraggingDeck) {
+        suppressCardClickUntil = Date.now() + 350;
+        if (Math.abs(distance) > 55) moveProject(distance < 0 ? 1 : -1);
+      }
+      isDraggingDeck = false;
+    });
+    window.addEventListener('pointercancel', event => {
+      if (event.pointerId !== dragPointerId) return;
+      dragPointerId = null;
+      isDraggingDeck = false;
+      projectDeck.classList.remove('is-dragging');
+      projectDeck.style.setProperty('--drag-turn', '0deg');
+    });
+    document.getElementById('prevProject').addEventListener('click', () => moveProject(-1));
+    document.getElementById('nextProject').addEventListener('click', () => moveProject(1));
+    projectDeck.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft') { event.preventDefault(); moveProject(-1); }
+      if (event.key === 'ArrowRight') { event.preventDefault(); moveProject(1); }
+    });
+    document.getElementById('watchProject').addEventListener('click', event => {
+      const work = WORKS[Number(event.currentTarget.dataset.workIndex)];
+      if (!work) return;
+      document.getElementById('dialogTitle').textContent = `${projectTitle(work)} · ${categoryName(work)}`;
+      dialogContent.replaceChildren();
+      if (work.type === 'youtube') {
+        const frame = document.createElement('iframe');
+        frame.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(work.media)}?autoplay=1&rel=0`;
+        frame.title = `${projectTitle(work)} portfolio video`;
+        frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        frame.referrerPolicy = 'strict-origin-when-cross-origin'; frame.allowFullscreen = true;
+        dialogContent.append(frame);
+      } else {
+        const image = document.createElement('img'); image.src = work.media; image.alt = projectTitle(work);
+        image.onerror = () => { image.remove(); dialogContent.textContent = 'This image file is not included with the HTML upload.'; };
+        dialogContent.append(image);
+      }
+      workDialog.showModal();
+    });
+    document.getElementById('closeDialog').addEventListener('click', () => workDialog.close());
+    workDialog.addEventListener('click', event => { if (event.target === workDialog) workDialog.close(); });
+    renderFilters();
+    renderWork();
+    window.addEventListener('resize', () => renderWork(), {passive:true});
+
+    const processSteps = [
+      { title:'I learn the offer before I start editing.', description:'We align on your product, audience, brand voice, and the message the video needs to land.', board:'Start with the essentials.', list:['Offer and key message','Audience and platform','References and deliverables'] },
+      { title:'I map out the creative direction.', description:'I organize the script or brief into a visual plan so the pacing and scenes support the message.', board:'Set a clear direction.', list:['Hook and story beats','Visual references','Format and pacing'] },
+      { title:'I build the video and supporting visuals.', description:'I edit or generate the required scenes, then shape them into a cohesive piece for the chosen platform.', board:'Make every part count.', list:['Edit and assemble','Sound and visual polish','Platform-ready framing'] },
+      { title:'We review, refine, and prepare delivery.', description:'I apply the agreed changes and prepare the final export in the format discussed for the project.', board:'Finish with care.', list:['Review the cut','Refine agreed details','Export final deliverables'] }
+    ];
+    document.querySelectorAll('.process-tab').forEach(tab => tab.addEventListener('click', () => {
+      document.querySelectorAll('.process-tab').forEach(item => item.setAttribute('aria-selected','false'));
+      tab.setAttribute('aria-selected','true');
+      const i = Number(tab.dataset.step), step = processSteps[i];
+      document.getElementById('step-panel').setAttribute('aria-labelledby',tab.id);
+      document.getElementById('stepNo').textContent = `0${i+1} / 0${processSteps.length}`;
+      document.getElementById('stepTitle').textContent = step.title;
+      document.getElementById('stepDescription').textContent = step.description;
+      document.getElementById('boardTitle').textContent = step.board;
+      document.getElementById('boardList').innerHTML = step.list.map(item => `<li>${item}</li>`).join('');
+    }));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

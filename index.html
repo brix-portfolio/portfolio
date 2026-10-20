@@ -362,7 +362,7 @@ html[data-theme=dark] #particle-canvas{opacity:.58}
     <section class="work wrap" id="work" aria-labelledby="work-title">
       <div class="work-top"><div><span class="eyebrow">Selected projects</span><h2 id="work-title">My Work<span>.</span></h2></div>
         <div class="filters" aria-label="Project categories">
-          <button data-filter="ai" aria-pressed="false">AI Creatives</button>
+          <button data-filter="ai" class="active" aria-pressed="true">AI Creatives</button>
           <button data-filter="ugc" aria-pressed="false">UGC Ads</button>
           <button data-filter="video" aria-pressed="false">Video Editing</button>
           <button data-filter="graphic" aria-pressed="false">Graphic Design</button>
@@ -446,9 +446,9 @@ html[data-theme=dark] #particle-canvas{opacity:.58}
     {category:'poster',type:'image',media:'workimages/work4.jpg',title:'Product Poster 04',description:'A product poster sample from my portfolio.'}
   ];
   const LABELS={ai:'AI Creatives',ugc:'UGC Ads',video:'Video Editing',graphic:'Graphic Design',poster:'Product Posters'};
-  let active='all',current=0,entries=[],cards=[];
+  let active='ai',current=0,entries=[],cards=[];
   const stage=document.querySelector('#cards');let suppressCardClick=false;
-  function filtered(){return active==='all'?PROJECTS:PROJECTS.filter(p=>p.category===active)}
+  function filtered(){return PROJECTS.filter(p=>p.category===active)}
   function startCardPreview(card,p){if(p.type!=='youtube'||card.querySelector('.card-preview-video'))return;const frame=document.createElement('iframe');frame.className='card-preview-video';frame.title=`Muted preview: ${p.title}`;frame.allow='autoplay; encrypted-media; picture-in-picture';frame.loading='eager';frame.referrerPolicy='strict-origin-when-cross-origin';frame.src=`https://www.youtube-nocookie.com/embed/${p.media}?autoplay=1&mute=1&controls=0&loop=1&playlist=${p.media}&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3`;card.append(frame)}
   function changeFilter(category,button){active=category;current=0;document.querySelectorAll('[data-filter]').forEach(b=>{const yes=b===button;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',String(yes))});render()}
   document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>changeFilter(b.dataset.filter,b)));

@@ -1,1768 +1,457 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="referrer" content="strict-origin-when-cross-origin" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Brix — Video Editor & Graphic Designer</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-0X0H0HGM8Z"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-0X0H0HGM8Z');
-</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffcb05">
+  <meta name="description" content="Brix Olegario — video editor and AI creative. Explore short-form edits, UGC ads, AI videos, and graphic design.">
+  <title>Brix Olegario · Video Editor &amp; AI Creative</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Nunito:wght@700;800;900;1000&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --navy:     #080d1a;
-      --navy2:    #0c1223;
-      --navy3:    #121a30;
-      --navy4:    #1a2440;
-      --gold:     #c9a84c;
-      --gold-dim: rgba(201,168,76,0.12);
-      --border:   rgba(201,168,76,0.14);
-      --border-md:rgba(201,168,76,0.30);
-      --text:     #e8eaf2;
-      --muted:    rgba(232,234,242,0.50);
-      --dim:      rgba(232,234,242,0.28);
-      --heading:  #ffffff;
-      --font-d:   'Playfair Display', Georgia, serif;
-      --font-b:   'DM Sans', system-ui, sans-serif;
+:root{--yellow:#ffcb05;--ink:#171811;--muted:#73746c;--paper:#faf9f5;--line:#e6e5de}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}body{margin:0;color:var(--ink);background:white;font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.5}button,a{-webkit-tap-highlight-color:transparent}button,input{font:inherit}button,a{touch-action:manipulation}button{cursor:pointer}a{color:inherit;text-decoration:none}button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid #3d54ce;outline-offset:5px}h1,h2,h3,h4,p,figure{margin:0}h1,h2,h3,h4,.brand{font-family:'Nunito',sans-serif;font-weight:1000;line-height:1.08;letter-spacing:-.035em}h2 span,h3 span{color:var(--yellow)}.wrap{width:min(1280px,calc(100% - 80px));margin-inline:auto}.header{padding:27px 0 23px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:25px}.brand{font-size:18px;letter-spacing:.025em;line-height:1.1}.brand span{display:block;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.22em;margin-top:5px;color:var(--muted)}nav{display:flex;align-items:center;gap:32px;font-size:14px;font-weight:600}.pill{display:inline-flex;justify-content:center;align-items:center;min-height:48px;padding:12px 25px;border-radius:999px;border:1px solid transparent;font-weight:700;font-size:14px;transition:transform .2s,background .2s}.pill:hover{transform:translateY(-2px)}.yellow{background:var(--yellow)}.black{background:var(--ink);color:white}.outline{border-color:var(--ink);background:white}.hero{display:grid;grid-template-columns:1.36fr .86fr 1fr;gap:26px;padding-block:36px 42px;align-items:center}.eyebrow{font-size:12px;font-weight:700;letter-spacing:.13em;display:inline-block}.outlined{font-size:13px;letter-spacing:0;border:1px solid var(--ink);padding:6px 13px;border-radius:999px}.hero h1{font-size:clamp(36px,3.55vw,53px);margin-top:18px}.hero h1 span{position:relative;background:linear-gradient(transparent 75%,var(--yellow) 75%,var(--yellow) 93%,transparent 93%)}.lead{font-size:17px;font-weight:500;line-height:1.5}.hero .lead{margin-block:19px 12px}.muted{color:var(--muted);font-size:15px;line-height:1.65}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.name-card{border:1px solid var(--ink);border-radius:16px;padding:20px 18px;box-shadow:5px 6px 0 #f0f0ee}.name-card strong{display:block;font-family:'Nunito',sans-serif;font-size:20px;font-weight:1000;line-height:1.2}.name-card span{font-size:13px;color:var(--muted);display:block;margin-top:5px}.intro h2{font-size:22px;margin-block:20px 13px}.service-chip{display:flex;gap:12px;align-items:center;background:var(--yellow);border-radius:999px;margin-top:10px;padding:9px 12px;font-size:13px;font-weight:700;box-shadow:0 5px 12px #17181109}.chip-icon{display:grid;place-items:center;border-radius:50%;width:31px;height:31px;background:var(--ink);color:var(--yellow);font-size:11px;flex-shrink:0}.hero-visual{height:350px;border-radius:24px;position:relative;overflow:hidden;background:var(--ink)}.hero-visual img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);opacity:.7}.hero-visual:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 20%,#000c)}figcaption{position:absolute;z-index:1;bottom:25px;left:24px;color:white}figcaption>span{font-size:10px;letter-spacing:.2em;color:var(--yellow)}figcaption strong{display:block;font-family:'Nunito';font-size:31px;font-weight:1000;line-height:1.08;margin-block:9px 14px}figcaption small{font-size:10px;color:#deded6}.work{background:var(--yellow);padding:26px;border-radius:23px}.work-top{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.work h2{font-size:28px}.work h2 span{color:white}.filters{display:flex;gap:8px;flex-wrap:wrap}.filters button{border:1px solid var(--ink);background:transparent;border-radius:999px;padding:6px 15px;font-size:13px;font-weight:700}.filters button.active{background:var(--ink);color:var(--yellow)}.section-note{font-size:10px;letter-spacing:.13em;margin-left:auto}.work-body{display:grid;grid-template-columns:1.8fr 1fr;gap:32px;margin-top:22px}.gallery{min-width:0;display:flex;flex-direction:column;justify-content:center}.cards{display:flex;align-items:center;justify-content:center;gap:14px;height:310px;overflow:hidden;padding:15px 5px}.project-card{position:relative;display:flex;flex-direction:column;justify-content:space-between;text-align:left;padding:22px 18px;width:180px;flex:0 0 180px;height:250px;border:1px solid #ffffff30;border-radius:15px;color:white;background:var(--ink);box-shadow:0 12px 20px #59470026;transition:transform .3s,opacity .3s}.project-card.current{height:290px;width:205px;flex-basis:205px;z-index:2}.project-card.side{opacity:.5;transform:scale(.93)}.project-card .card-no{font-size:11px;letter-spacing:.16em}.project-card .card-title{font-family:'Nunito';font-size:27px;font-weight:1000;line-height:1.02;letter-spacing:-.04em}.project-card .card-type{font-size:10px;letter-spacing:.13em}.project-card .card-circle{width:44px;height:44px;display:grid;place-items:center;border:1px solid #ffffff60;border-radius:50%;font-size:18px}.project-card.style-1{background:#203c37}.project-card.style-2{background:#464164}.project-card.style-3{background:#cd532e}.project-card.style-4{background:#253e66}.project-card.style-5{background:#703942}.gallery-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:12px}.round{width:40px;height:40px;border:1px solid var(--ink);background:transparent;border-radius:50%;display:grid;place-items:center;font-size:24px;line-height:1}.round:hover{background:var(--ink);color:white}#gallery-count{font-size:12px;letter-spacing:.15em}.project-detail{border-radius:18px;background:white;padding:25px;display:flex;flex-direction:column;align-items:flex-start;min-height:345px}.tag{background:#fff0ae;padding:6px 9px;border-radius:5px;letter-spacing:.06em;font-size:11px}.project-detail h3{font-size:26px;line-height:1.15;margin-block:15px 10px}.project-sub{font-size:13px;color:var(--muted)}.divider{width:100%;height:1px;background:var(--line);margin-block:16px}.project-detail>p:not(.project-sub){font-size:14px;color:var(--muted)}.project-meta{display:flex;justify-content:space-between;gap:20px;width:100%;font-size:10px;letter-spacing:.08em;margin-block:22px}.project-detail .pill{min-height:40px;padding:9px 18px;font-size:12px;margin-top:auto}.process{margin-top:48px;padding:62px 0 64px;background-color:var(--paper);background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px}.section-heading h2,.about h2{font-size:clamp(32px,3.4vw,48px);margin-block:16px}.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:34px}.steps button{border:1px solid #dcdcd4;border-radius:10px;background:var(--paper);padding:13px 10px;font-size:12px;font-weight:700;display:flex;gap:12px;justify-content:center;align-items:center}.steps button span{font-size:14px}.steps button[aria-selected=true]{background:var(--yellow);border-color:var(--ink)}.step-panel{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;padding-top:42px}.step-mark{background:var(--yellow);width:60px;height:60px;display:grid;place-items:center;border-radius:12px;font-family:'Nunito';font-size:28px;font-weight:1000;box-shadow:0 10px 20px #ffcb0530;display:inline-grid;margin-right:15px}.step-panel h3{font-size:30px;margin-block:25px 15px}.step-panel p{color:var(--muted);max-width:450px}.process-board{background:var(--yellow);padding:28px;border-radius:20px;transform:rotate(-1deg);box-shadow:8px 8px 0 #e9e7db}.board-top{display:flex;justify-content:space-between;gap:20px;font-size:10px;font-weight:700;letter-spacing:.1em}.process-board h4{font-size:34px;margin-top:35px}.process-board ul{padding:0;list-style:none;margin-block:23px}.process-board li{padding-block:10px;border-bottom:1px solid #17181125;font-weight:500}.board-foot{font-size:10px;letter-spacing:.17em;margin-top:24px}.about{padding-block:80px;display:grid;grid-template-columns:1fr 1fr;gap:80px}.about .muted{margin-top:16px}.skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:23px}.skills span{font-size:12px;border:1px solid var(--line);padding:7px 12px;border-radius:999px}.contact{background:var(--yellow);border-radius:23px;padding:48px;display:grid;grid-template-columns:1.3fr 1fr;gap:60px;align-items:center}.contact h2{font-size:clamp(36px,3.7vw,55px);margin-block:19px}.contact h2 span{color:var(--ink)}.contact p{font-size:15px}.contact-card{background:white;border-radius:17px;padding:30px}.contact-card h3{font-size:25px;margin-bottom:17px}.contact-card .muted{font-size:13px;margin-block:10px 22px}footer{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:35px}footer>span,footer>a:last-child{font-size:12px;color:var(--muted)}dialog{border:0;border-radius:22px;padding:40px;max-width:550px;width:calc(100% - 40px);box-shadow:0 20px 80px #0003;color:var(--ink)}dialog::backdrop{background:#17181190;backdrop-filter:blur(5px)}dialog h2{font-size:32px;margin-block:20px}dialog>p{color:var(--muted)}.dialog-close{position:absolute;right:16px;top:16px}.placeholder-notice{padding:20px;background:var(--paper);border:1px solid var(--line);border-radius:12px;margin-block:25px}.placeholder-notice p{font-size:14px;margin-top:8px;color:var(--muted)}.skip{position:fixed;top:-100px;background:var(--ink);color:white;padding:12px;z-index:100}.skip:focus{top:10px}
+@media(min-width:1500px){.hero{gap:40px}.hero-visual{height:380px}}
+@media(max-width:1050px){.wrap{width:calc(100% - 48px)}.hero{grid-template-columns:1.4fr 1fr;gap:30px}.hero-visual{display:none}.hero h1{font-size:48px}.work-body{gap:20px;grid-template-columns:1.4fr 1fr}.project-card{width:140px;flex-basis:140px}.project-card.current{width:175px;flex-basis:175px}.section-note{display:none}.step-panel,.about{gap:40px}.contact{gap:30px;padding:35px}}
+@media(max-width:700px){.wrap{width:calc(100% - 32px)}.header{padding-block:20px;align-items:flex-start}.brand{font-size:14px}.brand span{font-size:9px}nav{gap:14px;font-size:12px}nav .pill{display:none}.hero{grid-template-columns:1fr;gap:28px;padding-block:30px}.hero h1{font-size:44px}.hero .lead{font-size:16px}.intro{display:none}.hero-visual{display:block;height:220px}.hero-visual img{object-position:center 45%}figcaption strong{font-size:27px}.work{padding:20px}.work-top{gap:15px}.work h2{font-size:27px}.filters{gap:6px}.filters button{padding:6px 11px;font-size:12px}.work-body{grid-template-columns:1fr;gap:22px}.cards{height:285px;gap:8px}.project-card{width:110px;flex-basis:110px;height:215px;padding:18px 12px}.project-card.current{width:166px;flex-basis:166px;height:265px}.project-card .card-title{font-size:24px}.project-card.side .card-title{font-size:20px}.project-detail{min-height:310px;padding:23px}.process{padding-block:42px;margin-top:32px}.section-heading h2,.about h2{font-size:34px}.steps{gap:5px}.steps button{flex-direction:column;gap:6px;padding:12px 3px;font-size:10px}.steps button span{font-size:10px}.step-panel{grid-template-columns:1fr;gap:28px;padding-top:30px}.step-panel h3{font-size:28px}.process-board{padding:24px}.about{grid-template-columns:1fr;gap:20px;padding-block:48px}.contact{padding:28px;grid-template-columns:1fr;gap:30px}.contact h2{font-size:38px}.contact-card{padding:24px}footer{flex-wrap:wrap;padding-block:28px}footer .brand{width:100%}dialog{padding:35px 25px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
 
-      --panel:            rgba(18,26,48,0.65);
-      --panel-soft:       rgba(18,26,48,0.5);
-      --panel-strong:     rgba(18,26,48,0.9);
-      --panel-hero:       rgba(18,26,48,0.95);
-      --chip-bg:          rgba(12,18,35,0.6);
-      --nav-bg:           rgba(8,13,26,0.85);
-      --mobile-nav-bg:    rgba(8,13,26,0.98);
-      --work-overlay-bg:  rgba(8,13,26,0.5);
-      --lightbox-bg:      rgba(4,8,18,0.97);
-      --poster-grad-1:    #14192c;
-      --poster-grad-2:    #0c1020;
-      --icon-fill-soft:   rgba(255,255,255,0.06);
-      --vignette-color:   rgba(8,13,26,0.55);
-      --device-border:    #3a3a3e;
-      --device-ring:      #1c1c1e;
-      --device-shadow:    rgba(0,0,0,0.55);
-    }
+/* Theme, tools, and contact footer */
+:root{--surface:#fff;--text:#171811;--secondary:#73746c;--border:#e6e5de;--section:#faf9f5}
+html[data-theme=dark]{color-scheme:dark;--surface:#191a16;--text:#f5f3e9;--secondary:#b9bbb0;--border:#383a31;--section:#20221c}
+body{background:var(--surface);color:var(--text)}
+.header{border-color:var(--border)}.brand span,.muted,.name-card span,.project-sub{color:var(--secondary)}
+.outlined{border-color:var(--text)}.outline{color:var(--text);border-color:var(--text);background:var(--surface)}
+.name-card{border-color:var(--text);box-shadow:5px 6px 0 var(--section)}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:40px;padding:8px 13px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);font-size:12px;font-weight:700;white-space:nowrap}
+#theme-icon{font-size:20px;line-height:1}.theme-toggle:hover{border-color:var(--text)}
+.hero h1 span{color:var(--text)}html[data-theme=dark] .hero h1 span{background:linear-gradient(transparent 85%,var(--yellow) 85%,var(--yellow) 91%,transparent 91%)}
+.work{color:var(--ink)}.project-detail{background:var(--surface);color:var(--text)}.project-detail>p:not(.project-sub){color:var(--secondary)}.tag{color:var(--ink)}.divider{background:var(--border)}
+.work-top{align-items:flex-start}.work-top h2{white-space:nowrap}.filters{flex:1}.filters button{min-height:34px}
+.process{background-color:var(--section);background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px)}
+.steps button{background:var(--section);border-color:var(--border);color:var(--text)}.steps button[aria-selected=true]{color:var(--ink);background:var(--yellow);border-color:var(--ink)}.step-panel p{color:var(--secondary)}.process-board{color:var(--ink);box-shadow:8px 8px 0 var(--border)}.skills span{border-color:var(--border)}
+.tools{padding-block:0 65px}.tools>.eyebrow{color:var(--secondary)}.tools h2{font-size:36px;margin-block:12px 28px}.tools-scroll{overflow-x:auto;background:#fff;border-radius:18px;padding:8px 0 5px}.tools-art{min-width:820px;overflow:hidden}.tools-art img{display:block;width:100%;height:auto;margin-top:-8.5%}
+.contact-footer{display:block;width:100%;padding:0;background:#15160f;color:#f7f5ea}
+.footer-main{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:80px;padding-block:70px 55px}.contact-footer h2{font-size:60px;margin-bottom:18px}.contact-footer h2 span{color:#f7f5ea}.contact-footer p{font-size:16px;line-height:1.5}.footer-links{display:flex;flex-direction:column;gap:13px;align-items:stretch;max-width:500px;width:100%}.footer-links .pill{width:100%;color:var(--ink);min-height:56px}.footer-email{font-size:14px;overflow-wrap:anywhere}.footer-email:hover{text-decoration:underline}.footer-bottom{border-top:1px solid #ffffff1c;padding-block:22px;display:flex;justify-content:space-between;gap:25px;font-size:12px;color:#b9bbb0}.footer-bottom a{font-size:12px!important;color:#b9bbb0!important}
+dialog{background:var(--surface);color:var(--text)}dialog>p,.placeholder-notice p{color:var(--secondary)}.placeholder-notice{background:var(--section);border-color:var(--border)}dialog .round{border-color:var(--text);color:var(--text)}
+@media(max-width:1050px){nav{gap:18px}.theme-toggle{padding:8px 10px}.footer-main{gap:40px}.contact-footer h2{font-size:52px}}
+@media(max-width:700px){.header{flex-wrap:wrap;gap:18px}.header nav{width:100%;justify-content:space-between;gap:10px}.theme-toggle{font-size:12px}.work-top{gap:15px}.filters{flex-basis:100%;gap:7px}.filters button{font-size:12px;padding:7px 11px}.tools{padding-bottom:38px}.tools h2{font-size:30px}.tools-scroll{border-radius:12px}.footer-main{grid-template-columns:1fr;padding-block:42px 34px;gap:28px}.contact-footer h2{font-size:48px}.contact-footer p{font-size:15px}.footer-bottom{padding-block:20px;flex-wrap:wrap;gap:12px}}
+.filters button{color:var(--ink)}.filters button.active{color:var(--yellow)}
+html[data-theme=dark] .hero .black,html[data-theme=dark] .project-detail .black,html[data-theme=dark] dialog .black{background:var(--yellow);color:var(--ink)}
+.yellow,.service-chip,.step-mark{color:var(--ink)}
 
-    body.light-mode {
-      --navy:     #f6f3ec;
-      --gold:     #a9843a;
-      --gold-dim: rgba(169,132,58,0.12);
-      --border:   rgba(20,22,18,0.10);
-      --border-md:rgba(20,22,18,0.22);
-      --text:     #171a1f;
-      --muted:    rgba(23,26,31,0.60);
-      --dim:      rgba(23,26,31,0.35);
-      --heading:  #14171d;
+/* Layered portrait carousel: stable elements move between depth positions. */
+:root{--motion-ease:cubic-bezier(.22,.8,.26,1)}
+.work-body{grid-template-columns:1fr;gap:22px}.gallery{position:relative}.cards{position:relative;display:block;height:390px;overflow:hidden;padding:0;touch-action:pan-y;perspective:1000px}
+.project-card,.project-card.current,.project-card.side{position:absolute;left:50%;top:50%;width:202px;height:359px;flex:none;padding:24px 20px;opacity:1;border-radius:16px;transform:translate(calc(-50% + var(--slot)*56%),-50%) scale(var(--scale));transform-origin:center;transition:transform .52s var(--motion-ease),box-shadow .52s var(--motion-ease);box-shadow:0 12px 28px #59470030;overflow:hidden;will-change:transform}
+.project-card:after{content:'';position:absolute;inset:0;background:var(--yellow);opacity:var(--shade);pointer-events:none;transition:opacity .52s var(--motion-ease)}
+.project-card.current{box-shadow:0 22px 44px #59470055}.project-card .card-title{font-size:30px;line-height:1.02}.project-card .card-circle{width:50px;height:50px;background:#ffffff15;backdrop-filter:blur(8px);font-size:16px;transition:transform .3s var(--motion-ease),background .3s}.project-card.current:hover .card-circle{transform:scale(1.12);background:#ffffff30}.project-card .card-no,.project-card .card-title,.project-card .card-type,.project-card .card-circle{z-index:1}.project-card.teleport{transition:none!important}.craft-thumbnail{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}.project-card:has(.craft-thumbnail){background:#111}.project-card:has(.craft-thumbnail) .card-title{text-shadow:0 2px 12px #0009}
+.gallery-bottom{margin:0;position:absolute;inset:0;pointer-events:none}.gallery-bottom .round{pointer-events:auto;position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;background:var(--yellow);z-index:20}.gallery-bottom #prev{left:0}.gallery-bottom #next{right:0}.gallery-bottom .round:hover{background:var(--ink);color:var(--yellow)}#gallery-count{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-variant-numeric:tabular-nums}
+.project-detail{min-height:0;display:grid;grid-template-columns:1fr auto;gap:10px 24px;padding:24px 28px}.project-detail .tag,.project-detail h3,.project-detail .project-sub,.project-detail>p,.project-detail .project-meta{grid-column:1}.project-detail .tag{justify-self:start}.project-detail h3{margin:0;font-size:25px}.project-detail .divider{display:none}.project-detail .project-meta{justify-content:flex-start;margin:4px 0 0;gap:24px}.project-detail .pill{grid-column:2;grid-row:1/6;align-self:center;margin:0}.project-detail>p:not(.project-sub){max-width:850px}.project-sub{margin:0}
+.steps{position:relative;grid-template-columns:repeat(6,1fr);padding-bottom:14px}.steps:after{content:'';height:3px;position:absolute;bottom:0;left:0;width:calc(100% / 6);background:var(--yellow);border-radius:3px;transform:translateX(calc(var(--active-step)*100%));transition:transform .5s var(--motion-ease)}.steps button{transition:background .25s,color .25s,border-color .25s,transform .25s var(--motion-ease)}.steps button:hover{transform:translateY(-3px)}.step-panel{min-height:350px}.process-board{transform:none}
+/* Logo viewports preserve the supplied artwork without a white panel in dark mode. */
+.tools-row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:18px 10px;background:#fff;border-radius:18px;isolation:isolate}.tool-logo{width:calc(var(--logo-width)*1px);height:150px;overflow:hidden;position:relative;transition:transform .45s var(--motion-ease),filter .45s;mix-blend-mode:multiply}.logo-artwork{width:1293px;height:298px;background:url('assets/tools-stack.png') no-repeat;background-size:1293px 298px;position:absolute;top:-125px;left:calc(var(--logo-x)*-1px)}.tool-logo:hover{transform:translateY(-8px) scale(1.04)}
+html[data-theme=dark] .tools-row{background:#050505}html[data-theme=dark] .tool-logo{filter:invert(1) hue-rotate(180deg);mix-blend-mode:screen}
+.pill,.round,.filters button,.theme-toggle{transition:transform .28s var(--motion-ease),background-color .28s,color .28s,box-shadow .28s,border-color .28s}.pill:hover{transform:translateY(-3px);box-shadow:0 8px 20px #17181120}.pill:active,.filters button:active,.theme-toggle:active{transform:scale(.96)}.round:active{scale:.92}.filters button:hover{box-shadow:0 4px 12px #17181120;transform:translateY(-2px)}.filters button.active{box-shadow:0 3px 9px #17181122}.theme-toggle:hover{transform:translateY(-2px)}nav>a:not(.pill){position:relative}nav>a:not(.pill):after{content:'';height:2px;background:var(--yellow);position:absolute;bottom:-5px;left:0;right:0;transform:scaleX(0);transform-origin:left;transition:transform .3s var(--motion-ease)}nav>a:not(.pill):hover:after{transform:scaleX(1)}.hero-visual img{transition:transform .8s var(--motion-ease)}.hero-visual:hover img{transform:scale(1.05)}body,.name-card,.project-detail,.process,.theme-toggle{transition:background-color .35s,color .35s,border-color .35s}.hero-copy{animation:hero-in .7s var(--motion-ease) both}.intro{animation:hero-in .7s .1s var(--motion-ease) both}.hero-visual{animation:hero-in .8s .18s var(--motion-ease) both}@keyframes hero-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1050px){.cards{height:370px}.project-card,.project-card.current,.project-card.side{width:185px;height:329px}.steps button{gap:7px;font-size:11px}.steps button span{font-size:12px}.tool-logo{zoom:.85}}
+@media(max-width:700px){.cards{height:320px}.project-card,.project-card.current,.project-card.side{width:150px;height:267px;padding:20px 14px}.project-card .card-title,.project-card.side .card-title{font-size:24px}.gallery-bottom .round{width:36px;height:36px;top:auto;bottom:0;transform:none}.gallery-bottom #prev{left:12px}.gallery-bottom #next{right:12px}.project-detail{display:flex;padding:22px;gap:10px}.project-detail .pill{align-self:flex-start;margin-top:5px}.steps{gap:5px}.steps button{padding:12px 2px}.steps button span{font-size:10px}.step-panel{min-height:0}.tools-row{gap:8px;padding:18px 4px}.tool-logo{zoom:.72}.project-card .card-no{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.project-card{will-change:auto}}
+.gallery-bottom .round{color:var(--ink)}.gallery-bottom .round:hover{color:var(--yellow)}
+.tools-row{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:10px}.tool-logo{justify-self:center;zoom:.9}
+@media(max-width:1050px){.tool-logo{zoom:.72}}
+@media(max-width:700px){.tools-row{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 2px;padding:16px 4px}.tool-logo{zoom:.78}}
+.project-video{display:block;width:100%;max-height:60vh;border-radius:14px;margin-block:20px;background:#000}.placeholder-notice[hidden]{display:none}
+.gallery-bottom[hidden]{display:none}.cards[data-count="1"] .project-card{box-shadow:0 18px 38px #59470035}
 
-      --panel:            rgba(255,255,255,0.72);
-      --panel-soft:       rgba(255,255,255,0.55);
-      --panel-strong:     rgba(255,255,255,0.92);
-      --panel-hero:       rgba(255,255,255,0.95);
-      --chip-bg:          rgba(255,255,255,0.65);
-      --nav-bg:           rgba(246,243,236,0.85);
-      --mobile-nav-bg:    rgba(246,243,236,0.98);
-      --work-overlay-bg:  rgba(246,243,236,0.65);
-      --lightbox-bg:      rgba(246,243,236,0.97);
-      --poster-grad-1:    #ffffff;
-      --poster-grad-2:    #eae6db;
-      --icon-fill-soft:   rgba(0,0,0,0.05);
-      --vignette-color:   rgba(230,225,210,0.5);
-      --device-border:    #d8d2c2;
-      --device-ring:      #ffffff;
-      --device-shadow:    rgba(60,52,30,0.16);
-    }
+/* QA: readable controls and stable layouts at narrow widths. */
+nav>a:not(.pill){min-height:44px;display:inline-flex;align-items:center;white-space:nowrap}.theme-toggle,.filters button,.steps button{min-height:44px}.filters button,.steps button span{font-size:.875rem}.gallery-bottom .round{width:44px;height:44px}.header nav{flex-shrink:0}.header .brand{flex-shrink:0}
+@media(max-width:980px){.header{flex-wrap:wrap;gap:16px}.header nav{width:100%;justify-content:space-between;gap:12px}.header nav .pill{display:none}}
+@media(max-width:820px){.hero{grid-template-columns:1fr}.intro{display:none}.hero-visual{display:block;height:280px}.hero h1{font-size:clamp(2.25rem,7.5vw,3.25rem)}}
+.steps{align-items:stretch}.steps button{flex-wrap:wrap}.steps button span{overflow-wrap:anywhere}.project-detail{min-width:0}.project-detail h3,.project-detail p,.step-panel h3,.process-board h4{overflow-wrap:anywhere}.step-panel>div,.about>div,.footer-main>div{min-width:0}
+.tools-row{gap:10px}.tool-logo{zoom:.84}
+@media(max-width:1100px){.tools-row{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.tool-logo{zoom:.9}}
+@media(max-width:700px){.header nav{gap:8px}.theme-toggle{padding:8px 10px}.filters{gap:8px}.filters button{padding:8px 12px}.steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding-bottom:0}.steps:after{display:none}.steps button{flex-direction:row;gap:6px;padding:12px 5px}.steps button span{font-size:.875rem}.hero-visual{height:240px}.project-detail .pill{min-height:44px;font-size:.875rem}.gallery-bottom .round{width:44px;height:44px;bottom:0}.tool-logo{zoom:.78}.footer-bottom{line-height:1.7}.name-card span,.project-sub,.skills span{font-size:.875rem}}
+@media(max-width:360px){.header nav>a{font-size:.75rem}.theme-toggle{font-size:.75rem;padding-inline:8px}.tool-logo{zoom:.65}.steps button{flex-direction:column;gap:5px}.hero .actions .pill{padding-inline:18px}}
+dialog{max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain}body:has(dialog[open]){overflow:hidden}dialog[open]{margin:auto}dialog .dialog-close{width:44px;height:44px}.project-detail[hidden]{display:none}.gallery-empty{display:grid;place-items:center;height:100%;padding:30px;text-align:center;font-size:1rem;color:var(--ink)}
+/* Focus should not stay on overlapping cards behind the active craft. */
+.project-card:not(.current){cursor:pointer}
+/* Respect enlarged browser text for the content people read most. */
+.lead{font-size:1.0625rem}.muted,.step-panel p,.contact-footer p{font-size:1rem}.project-detail>p:not(.project-sub){font-size:1rem}.project-sub{font-size:.875rem}.pill,.theme-toggle,nav{font-size:.875rem}
+@media(max-width:700px){.hero h1{font-size:clamp(2.25rem,7.5vw,3.25rem)}.project-detail h3{font-size:1.5625rem}}
+.header nav{flex-wrap:wrap}.header .brand{max-width:100%;overflow-wrap:anywhere}:root{--secondary:#66695f}html[data-theme=dark]{--secondary:#b9bbb0}
+.project-card.style-3{background:#ad4123}.project-card.side:after{background:var(--ink)}
 
-    html { scroll-behavior: smooth; touch-action: manipulation; }
-    body { background: var(--navy); color: var(--text); font-family: var(--font-b); font-size: 15px; line-height: 1.7; overflow-x: hidden; transition: background-color 0.3s ease, color 0.3s ease; touch-action: manipulation; }
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-track { background: var(--navy); }
-    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 4px; }
+/* Collapsible navigation and the personal portrait slot. */
+.menu-toggle{display:none;align-items:center;justify-content:center;gap:10px;min-height:44px;padding:9px 14px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);font:700 .875rem 'DM Sans',sans-serif;cursor:pointer;transition:background .25s,transform .25s var(--motion-ease)}.menu-toggle:hover{border-color:var(--text)}.menu-toggle:active{transform:scale(.96)}.menu-icon{position:relative;display:block;width:18px;height:16px}.menu-icon span{position:absolute;left:0;width:18px;height:2px;border-radius:2px;background:currentColor;transition:transform .3s var(--motion-ease),opacity .2s,top .3s var(--motion-ease)}.menu-icon span:nth-child(1){top:1px}.menu-icon span:nth-child(2){top:7px}.menu-icon span:nth-child(3){top:13px}.menu-toggle[aria-expanded=true] .menu-icon span:nth-child(1){top:7px;transform:rotate(45deg)}.menu-toggle[aria-expanded=true] .menu-icon span:nth-child(2){opacity:0}.menu-toggle[aria-expanded=true] .menu-icon span:nth-child(3){top:7px;transform:rotate(-45deg)}
+.portrait-visual{background:var(--yellow);isolation:isolate}.portrait-visual:after{display:none}.portrait-placeholder{height:100%;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--ink);border:1px dashed #17181140;border-radius:inherit}.portrait-monogram{font-family:'Nunito',sans-serif;font-size:clamp(3rem,6vw,6rem);font-weight:1000;letter-spacing:-.06em;line-height:1;color:#17181126;margin-bottom:16px}.portrait-slot{font-size:1rem;font-weight:700}.portrait-note{font-size:.875rem;color:#55501e}.portrait-visual>img{height:100%;width:100%;object-fit:cover;object-position:center top;filter:none;opacity:1}.portrait-visual:hover>img{transform:none}
+@media(max-width:980px){.header{align-items:center;gap:12px}.header .brand{flex-shrink:1;max-width:calc(100% - 105px)}.header.menu-ready .menu-toggle{display:inline-flex;flex-shrink:0}.header.menu-ready[data-menu-open=false] nav{display:none}.header nav{flex-basis:100%;display:flex;flex-direction:column;align-items:stretch;gap:4px;padding:12px;border:1px solid var(--border);border-radius:16px;background:var(--section)}.header nav>a:not(.pill){padding:10px 12px;min-height:46px;border-radius:9px}.header nav>a:not(.pill):hover{background:var(--surface)}.header nav>a:not(.pill):after{display:none}.header nav .pill{display:inline-flex;margin-top:6px}.header nav .theme-toggle{margin-top:8px;align-self:flex-start}.header nav .theme-toggle:hover{transform:none}.portrait-monogram{font-size:4rem}}
+@media(max-width:360px){.header .brand{font-size:13px}.menu-toggle{padding-inline:11px;font-size:.8125rem}.header nav>a:not(.pill){font-size:.875rem}}
+@media(prefers-reduced-motion:reduce){.menu-icon span,.menu-toggle{transition:none}}
+.portrait-visual{height:380px}
+.portrait-art{background:#fff}.portrait-art>img{object-fit:cover;object-position:center top}
+@media(min-width:821px) and (max-width:1050px){.hero{grid-template-columns:1.35fr 1fr}.intro{display:none}.portrait-visual{display:block}}
+@media(max-width:820px){.portrait-visual{height:auto;aspect-ratio:4/5;min-height:320px;max-height:440px}}
 
-    #bgCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-    nav, main, footer { position: relative; z-index: 1; }
+/* Direct contact links and larger mobile video previews. */
+.contact-chip{font-size:.8125rem;min-height:49px;padding:9px 11px;gap:10px;transition:transform .3s var(--motion-ease),box-shadow .3s}.contact-chip>span:last-child{min-width:0;overflow-wrap:anywhere}.contact-chip .chip-icon{flex-shrink:0;width:32px;height:32px;font-size:9px}.chip-icon svg{width:18px;height:18px}.contact-chip:is(a):hover{transform:translateY(-3px);box-shadow:0 8px 16px #17181118}.contact-chip:is(a):active{transform:scale(.98)}.contact-pending{box-shadow:none}.footer-phone,.footer-olj{font-size:.875rem}.footer-phone:hover{text-decoration:underline}
+@media(min-width:821px) and (max-width:1050px){.contact-intro{display:block;grid-column:1/-1;grid-row:2;max-width:480px;width:100%}}
+@media(max-width:820px){.contact-intro{display:block;max-width:480px;width:100%}.contact-intro .name-card{display:none}.contact-intro h2{margin-top:0}.contact-chip{font-size:.875rem}}
+@media(max-width:1050px){.gallery{--craft-card-width:clamp(180px,52vw,225px)}.cards{height:calc(var(--craft-card-width)*16/9 + 36px)}.project-card,.project-card.current,.project-card.side{width:var(--craft-card-width);height:calc(var(--craft-card-width)*16/9);padding:24px 18px}.project-card .card-title,.project-card.side .card-title{font-size:27px}.gallery-bottom .round{top:calc(50% - 12px);bottom:auto;transform:translateY(-50%)}.gallery-bottom #prev{left:0}.gallery-bottom #next{right:0}.project-detail{margin-top:0}.contact-chip{font-size:.875rem}}
+@media(min-width:1051px){.hero{grid-template-columns:1.25fr 1.08fr 1.08fr}.hero .portrait-art{height:450px}}
+.footer-olj:hover{text-decoration:underline}
 
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 60px; height: 64px;
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      transition: background-color 0.3s ease, border-color 0.3s ease;
-    }
-    .nav-logo { font-family: var(--font-d); font-size: 20px; font-weight: 700; color: var(--text); text-decoration: none; }
-    .nav-logo span { color: var(--gold); }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--gold); }
-    .nav-cta { padding: 8px 20px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; background: transparent; color: var(--gold); border: 1px solid var(--border-md); border-radius: 4px; text-decoration: none; transition: all 0.2s; }
-    .nav-cta:hover { background: var(--gold-dim); }
+/* Real video thumbnails and responsive, on-demand YouTube players. */
+.project-card:has(.craft-thumbnail):before{content:'';position:absolute;inset:0;background:linear-gradient(#0005,transparent 36%,#000b 100%);z-index:1;pointer-events:none}
+.project-card:has(.craft-thumbnail) .card-no,.project-card:has(.craft-thumbnail) .card-title,.project-card:has(.craft-thumbnail) .card-type,.project-card:has(.craft-thumbnail) .card-circle{position:relative;z-index:2;color:#fff}
+.project-card:has(.craft-thumbnail) .card-title{font-size:1.375rem;line-height:1.12;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.wide-card .craft-thumbnail{object-fit:contain;background:#111}
+.project-card.style-5{background:#252632}
+dialog[data-orientation=landscape]{max-width:760px}
+dialog #dialog-title{font-size:1.625rem;margin:10px 32px 18px 0;overflow-wrap:anywhere}
+.youtube-player{position:relative;margin:0 auto 20px;background:#000;border-radius:14px;overflow:hidden}
+.youtube-player.portrait{width:min(100%,max(200px,calc(58dvh * 9 / 16)));aspect-ratio:9/16}
+.youtube-player.landscape{width:100%;aspect-ratio:16/9;min-height:200px}
+.youtube-player iframe{display:block;position:absolute;inset:0;width:100%;height:100%;border:0}
+.dialog-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.youtube-source[hidden]{display:none}
+@media(max-width:360px){dialog{padding:28px 20px}.dialog-actions .pill{width:100%}}
 
-    .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 34px; height: 34px; background: transparent; border: none; padding: 0; cursor: pointer; }
-    .nav-toggle span { display: block; width: 100%; height: 2px; background: var(--gold); transition: transform 0.25s ease, opacity 0.25s ease; }
-    .nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-toggle.active span:nth-child(2) { opacity: 0; }
-    .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+/* Google Flow shares the raised, glossy tile treatment of the tools artwork. */
+.tool-logo.flow-logo{mix-blend-mode:normal}
+.flow-artwork{position:absolute;top:13px;left:5px;width:100px;height:98px;border-radius:22px;background:linear-gradient(145deg,#525862 0%,#242831 36%,#101217 76%,#30343b 100%);border:1px solid #565b64;box-shadow:inset 0 2px 2px #ffffff75,inset 2px 0 3px #ffffff28,inset 0 -5px 5px #0009,0 5px 7px #0003;-webkit-box-reflect:below 3px linear-gradient(transparent 48%,#00000013)}
+.flow-artwork:before{content:'';position:absolute;inset:3px 4px auto;height:35%;border-radius:18px 18px 40% 40%;background:linear-gradient(#ffffff20,#fff0)}
+.flow-artwork>img{position:absolute;top:4px;left:4px;width:90px;height:88px;max-width:none;object-fit:contain;border-radius:18px}
+html[data-theme=dark] .tool-logo.flow-logo{filter:none;mix-blend-mode:normal}
+@media(min-width:1101px) and (max-width:1250px){.tool-logo{zoom:.76}}
+@media(max-width:1100px){.flow-logo{grid-column:2}}
 
-    .theme-toggle {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-      background: transparent; border: 1px solid var(--border-md);
-      color: var(--gold); cursor: pointer;
-      transition: background-color 0.2s ease, border-color 0.2s ease;
-    }
-    .theme-toggle:hover { background: var(--gold-dim); }
-    .theme-toggle .icon-moon { display: none; }
-    body.light-mode .theme-toggle .icon-sun { display: none; }
-    body.light-mode .theme-toggle .icon-moon { display: inline-flex; }
+/* Compact hero composition: contacts overlap the portrait, with actions below. */
+@media(max-width:820px){
+  .hero{grid-template-columns:1fr;gap:18px;padding-top:28px}
+  .hero-copy{display:contents}
+  .hero-copy>*{grid-column:1;min-width:0}
+  .hero-copy>.eyebrow{grid-row:1;justify-self:start}
+  .hero h1{grid-row:2;margin-top:0}
+  .hero .lead{grid-row:3;margin:0}
+  .hero-copy>.muted{grid-row:4}
+  .contact-intro{grid-column:1;grid-row:5;align-self:start;justify-self:start;width:75%;max-width:420px;z-index:2;animation:none}
+  .contact-intro .name-card{display:block;width:83%;padding:14px;background:var(--surface);box-shadow:4px 5px 0 #17181112}
+  .contact-intro .name-card strong{font-size:1rem}
+  .contact-intro .name-card span{font-size:.75rem}
+  .contact-intro h2{font-size:1.125rem;margin:15px 0 10px}
+  .contact-intro .contact-chip{font-size:.75rem;gap:8px;min-height:49px;padding:8px 10px}
+  .contact-intro .chip-icon{width:29px;height:29px}
+  .hero .portrait-art{grid-column:1;grid-row:5;justify-self:end;align-self:end;width:54%;height:clamp(270px,70vw,340px);min-height:0;max-height:none;aspect-ratio:auto;border-radius:0;z-index:1;animation:none}
+  .portrait-art>img{object-fit:cover;object-position:65% top}
+  .hero-copy>.actions{grid-row:6;display:flex;flex-direction:column;gap:10px;margin-top:0}
+  .hero .actions .pill{width:100%;min-height:52px}
+}
 
-    .mobile-nav {
-      position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
-      background: var(--mobile-nav-bg); backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      display: flex; flex-direction: column; padding: 8px 24px 22px;
-      transform: translateY(-10px); opacity: 0; pointer-events: none;
-      transition: transform 0.22s ease, opacity 0.22s ease, background-color 0.3s ease;
-    }
-    .mobile-nav.active { transform: translateY(0); opacity: 1; pointer-events: auto; }
-    .mobile-nav-link {
-      padding: 15px 2px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border);
-    }
-    .mobile-nav-cta { margin-top: 18px; text-align: center; justify-content: center; }
 
-    .hero {
-      min-height: 92vh;
-      display: grid; grid-template-columns: 1fr 420px;
-      align-items: center; gap: 60px;
-      padding: 80px 60px;
-      position: relative; overflow: hidden;
-    }
-    .hero-left { position: relative; z-index: 1; }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 12px;
-      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 28px;
-      opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
-    }
-    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
-    .hero-name {
-      font-family: var(--font-d); font-size: clamp(44px,5.5vw,76px); font-weight: 700;
-      line-height: 1.02; letter-spacing: -0.02em; color: var(--heading); margin-bottom: 20px;
-      opacity: 0; animation: fadeUp 0.8s 0.35s forwards;
-    }
-    .hero-name em { color: var(--gold); font-style: normal; }
-    .hero-role { font-size: 15px; color: var(--muted); margin-bottom: 6px; opacity: 0; animation: fadeUp 0.8s 0.5s forwards; }
-    .hero-role strong { color: var(--text); font-weight: 500; }
-    .hero-divider { width: 48px; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); margin: 28px 0; opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
-    .hero-bio { font-size: 15px; color: var(--muted); max-width: 480px; line-height: 1.8; margin-bottom: 40px; opacity: 0; animation: fadeUp 0.8s 0.7s forwards; }
-    .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.85s forwards; }
 
-    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; font-family: var(--font-b); font-weight: 500; text-decoration: none; border: none; border-radius: 4px; cursor: pointer; transition: all 0.22s; }
-    .btn-gold { background: var(--gold); color: #080d1a; }
-    .btn-gold:hover { background: #d4b35a; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
-    .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border-md); }
-    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+/* Keep the face clear of contact overlays on phones and tablets. */
+@media(max-width:820px){
+  .contact-intro .name-card{width:70%}
+  .contact-intro h2{margin:clamp(90px,20vw,110px) 0 10px;width:max-content;max-width:100%;padding:3px 6px 3px 0;background:var(--surface);border-radius:4px}
+  .hero .portrait-art{align-self:start}
+}
+/* Separate portrait and contacts on the narrowest phones. */
+@media(max-width:360px){
+  .hero .portrait-art{width:100%;height:300px;justify-self:center}
+  .contact-intro{grid-row:6;width:100%;max-width:none}
+  .contact-intro .name-card{width:100%}
+  .contact-intro h2{margin-top:15px}
+  .hero-copy>.actions{grid-row:7}
+}
 
-    .hero-photo-wrap { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; opacity: 0; animation: fadeIn 1s 0.6s forwards; }
-    .hero-photo-frame { position: relative; width: 360px; height: 460px; }
-    .hero-photo-frame::before { content: ''; position: absolute; top: -12px; left: -12px; width: 60px; height: 60px; border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); border-radius: 2px 0 0 0; animation: cornerGlow 3s ease-in-out infinite; }
-    .hero-photo-frame::after { content: ''; position: absolute; bottom: -12px; right: -12px; width: 60px; height: 60px; border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); border-radius: 0 0 2px 0; animation: cornerGlow 3s ease-in-out 1.5s infinite; }
-    @keyframes cornerGlow {
-      0%,100% { filter: drop-shadow(0 0 4px rgba(201,168,76,0.4)); }
-      50% { filter: drop-shadow(0 0 14px rgba(201,168,76,0.9)); }
-    }
-    .hero-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; display: block; border: 1px solid var(--border); }
-    .hero-badge {
-      position: absolute; bottom: 28px; left: -28px;
-      background: var(--panel-hero); border: 1px solid var(--border-md);
-      border-radius: 10px; padding: 14px 18px;
-      display: flex; align-items: center; gap: 12px;
-      backdrop-filter: blur(12px);
-      animation: float 4s ease-in-out infinite;
-      transition: background-color 0.3s ease;
-    }
-    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-    .hero-badge-icon { width: 36px; height: 36px; background: var(--gold-dim); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .hero-badge-label { font-size: 10px; color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
-    .hero-badge-value { font-size: 13px; font-weight: 600; color: var(--text); }
+/* ===== Motion layer (pairs with motion.js) ===== */
+html{scroll-padding-top:96px}
 
-    .scroll-hint { position: absolute; bottom: 32px; left: 60px; display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); opacity: 0; animation: fadeUp 1s 1.2s forwards; }
-    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
-    @keyframes scrollPulse { 0%,100% { opacity: 0.3; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.3); } }
+/* Sticky glass header that tucks away on scroll-down */
+.header{position:sticky;top:0;z-index:60;transition:translate .45s var(--motion-ease),padding .35s var(--motion-ease),border-color .35s}
+.header:before{content:'';position:absolute;inset:0 calc(50% - 50vw);z-index:-1;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px);opacity:0;transition:opacity .35s,box-shadow .35s}
+.header.is-scrolled:before{opacity:1;box-shadow:0 10px 30px #1718110f}
+.header.is-scrolled{border-color:transparent}
+.header.is-hidden{translate:0 -110%}
+nav>a.is-active:not(.pill):after{transform:scaleX(1)}
 
-    section { padding: 64px 60px; }
-    .s-eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-    .s-eyebrow::after { content: ''; flex: 0 0 32px; height: 1px; background: var(--gold); opacity: 0.5; }
-    .s-title { font-family: var(--font-d); font-size: clamp(30px,4vw,48px); font-weight: 700; letter-spacing: -0.02em; color: var(--heading); margin-bottom: 56px; line-height: 1.1; }
+/* Scroll progress + back-to-top */
+.scroll-progress{position:fixed;inset:0 0 auto;height:3px;z-index:80;background:var(--yellow);transform:scaleX(0);transform-origin:left;pointer-events:none}
+.back-top{position:fixed;right:22px;bottom:22px;z-index:70;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--yellow);font:900 20px 'Nunito',sans-serif;box-shadow:0 12px 30px #17181140;opacity:0;scale:.6;translate:0 20px;pointer-events:none;transition:opacity .4s,scale .5s cubic-bezier(.34,1.56,.64,1),translate .5s var(--motion-ease)}
+.back-top.is-visible{opacity:1;scale:1;translate:0 0;pointer-events:auto}
+.back-top:hover span{animation:nudge-up .7s ease infinite}
+.back-top svg{position:absolute;inset:0;width:100%;height:100%;rotate:-90deg}
+.back-top circle{fill:none;stroke-width:3}.back-top .track{stroke:#ffffff22}.back-top .meter{stroke:var(--yellow);stroke-linecap:round}
+html[data-theme=dark] .back-top{background:var(--yellow);color:var(--ink)}html[data-theme=dark] .back-top .meter{stroke:var(--ink)}html[data-theme=dark] .back-top .track{stroke:#17181122}
+@keyframes nudge-up{50%{translate:0 -4px}}
 
-    .work-category { margin-bottom: 64px; }
-    .work-category:last-child { margin-bottom: 0; }
-    .work-category-title {
-      font-family: var(--font-d); font-size: clamp(20px,2.4vw,26px); font-weight: 600;
-      color: var(--heading); margin-bottom: 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
-    }
-    .work-category-title::after { content: ''; flex: 1; min-width: 24px; height: 1px; background: linear-gradient(90deg, var(--gold), transparent); opacity: 0.5; order: 1; }
+/* Ripple + click burst */
+.has-ripple{overflow:hidden;isolation:isolate}
+.ripple{position:absolute;border-radius:50%;pointer-events:none;background:currentColor;mix-blend-mode:soft-light;z-index:3}
+.pill.yellow .ripple,.service-chip .ripple,.gallery-bottom .ripple,.steps button[aria-selected=true] .ripple{background:#fff;mix-blend-mode:normal;opacity:.5}
+.project-card .ripple{background:var(--yellow);mix-blend-mode:normal}
+.click-ring,.click-spark{position:fixed;z-index:9999;pointer-events:none;border-radius:50%}
+.click-ring{width:56px;height:56px;border:2px solid var(--yellow)}
+.click-spark{box-shadow:0 0 0 1px #ffffff40}
 
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
+/* Cursor follower (desktop pointers only — added by JS) */
+.cursor-ring,.cursor-dot{position:fixed;left:0;top:0;z-index:9998;pointer-events:none;border-radius:50%;opacity:0;transition:opacity .3s}
+body.cursor-on .cursor-ring,body.cursor-on .cursor-dot{opacity:1}
+.cursor-dot{width:6px;height:6px;margin:-3px 0 0 -3px;background:var(--yellow);box-shadow:0 0 0 1.5px var(--ink)}
+.cursor-ring{width:38px;height:38px;margin:-19px 0 0 -19px;border:1.5px solid var(--ink);display:grid;place-items:center;transition:opacity .3s,width .35s var(--motion-ease),height .35s var(--motion-ease),margin .35s var(--motion-ease),background .3s,border-color .3s}
+html[data-theme=dark] .cursor-ring{border-color:var(--yellow)}
+.cursor-ring.is-hover{width:58px;height:58px;margin:-29px 0 0 -29px;background:#ffcb0526;border-color:var(--yellow)}
+.cursor-ring.is-play{width:84px;height:84px;margin:-42px 0 0 -42px;background:var(--yellow);border-color:var(--yellow)}
+.cursor-ring.is-down{width:28px;height:28px;margin:-14px 0 0 -14px}
+.cursor-label{font:800 12px 'DM Sans',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);opacity:0;transition:opacity .2s}
+.cursor-ring.is-play .cursor-label{opacity:1}
+.cursor-ring.is-play~.cursor-dot{opacity:0}
 
-    .about { background: transparent; }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    .about-text p { color: var(--muted); margin-bottom: 18px; font-size: 15px; line-height: 1.85; }
-    .about-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
-    .skill-tag { padding: 5px 14px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--border); border-radius: 100px; color: var(--muted); background: var(--chip-bg); transition: all 0.2s; }
-    .skill-tag:hover { border-color: var(--gold); color: var(--gold); }
-    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .stat-card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 24px 20px; position: relative; overflow: hidden; backdrop-filter: blur(10px); transition: border-color 0.3s, transform 0.3s, background-color 0.3s; }
-    .stat-card:hover { border-color: var(--border-md); transform: translateY(-3px); }
-    .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); }
-    .stat-num { font-family: var(--font-d); font-size: 36px; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
-    .stat-label { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
+/* Hero headline word reveal */
+.hero h1.split .w{display:inline-block;background:none!important;animation:word-in .9s calc(.15s + var(--i)*.075s) cubic-bezier(.22,1,.36,1) both}
+.hero h1 > span{display:inline-block}
+@keyframes word-in{from{opacity:0;transform:translateY(.55em) rotate(4deg);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+.hero h1.split > span{background-repeat:no-repeat;animation:mark-in .8s 1s cubic-bezier(.65,0,.35,1) both}
+@keyframes mark-in{from{background-size:0% 100%}to{background-size:100% 100%}}
 
-    .tools-marquee {
-      grid-column: 1 / -1;
-      position: relative; overflow-x: auto; overflow-y: hidden;
-      border-radius: 10px; border: 1px solid var(--border);
-      background: var(--panel-soft); backdrop-filter: blur(10px);
-      padding: 26px 0;
-      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      cursor: grab;
-      touch-action: none;
-      user-select: none;
-      transition: background-color 0.3s ease;
-    }
-    .tools-marquee::-webkit-scrollbar { display: none; }
-    .tools-marquee.dragging { cursor: grabbing; }
-    .tools-heading {
-      grid-column: 1 / -1;
-      font-family: var(--font-d);
-      font-size: clamp(16px, 1.8vw, 20px);
-      font-weight: 600;
-      color: var(--heading);
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 6px;
-    }
-    .tools-heading::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, var(--gold), transparent);
-      opacity: 0.5;
-    }
-    .tools-track {
-      display: flex; align-items: center; gap: 16px; width: max-content;
-    }
-    .tool-chip {
-      display: inline-flex; align-items: center; gap: 12px;
-      padding: 12px 26px 12px 12px; font-size: 14px; font-weight: 500; letter-spacing: 0.04em;
-      color: var(--text); white-space: nowrap;
-      border: 1px solid var(--border); border-radius: 100px;
-      background: var(--chip-bg);
-      transition: background-color 0.3s ease;
-    }
-    .tool-chip img {
-      width: 30px; height: 30px; border-radius: 7px; object-fit: contain;
-      background: var(--icon-fill-soft); flex-shrink: 0;
-      -webkit-user-drag: none;
-    }
-    .tool-chip.no-logo::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
 
-    .services { background: transparent; }
-    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-    .service-card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 32px 28px; position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s, background-color 0.3s; backdrop-filter: blur(10px); }
-    .service-card:hover { transform: translateY(-6px); border-color: var(--border-md); }
-    .service-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity 0.3s; }
-    .service-card:hover::after { opacity: 1; }
-    .service-num { font-family: var(--font-d); font-size: 52px; font-weight: 700; color: rgba(201,168,76,0.07); line-height: 1; position: absolute; top: 16px; right: 20px; }
-    .service-icon { width: 48px; height: 48px; background: var(--gold-dim); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-    .service-name { font-size: 17px; font-weight: 600; color: var(--heading); margin-bottom: 10px; }
-    .service-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+/* Tilt + glare surfaces */
+.glare{position:relative}
+.glare:before{content:'';position:absolute;inset:0;z-index:3;border-radius:inherit;pointer-events:none;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),#ffffff55,transparent 55%);opacity:0;transition:opacity .4s;mix-blend-mode:overlay}
+.glare.is-tilting:before{opacity:1}
+.portrait-art{perspective:900px}.portrait-art>img{transition:transform .2s ease-out}
+.process-board{transition:transform .2s ease-out,box-shadow .4s;transform-style:preserve-3d}
+.process-board.is-tilting{box-shadow:16px 18px 0 var(--border)}
 
-    .work { background: transparent; }
-    .work-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; }
-    .work-card { background: transparent; border: none; border-radius: 10px; overflow: visible; transition: transform 0.3s, opacity 0.4s ease; cursor: pointer; }
-    .work-card:hover { transform: translateY(-6px); }
-    .work-card:hover .work-overlay { opacity: 1; }
-    .work-thumb-wrap { position: relative; }
-    .work-thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; border-radius: 10px; }
+/* Active carousel card: lift + light that follows the pointer */
+.project-card.current:hover{box-shadow:0 30px 60px #5947006b}
+.project-card.current:after{background:radial-gradient(circle at var(--gx,50%) var(--gy,30%),#ffffff40,transparent 60%);opacity:0;mix-blend-mode:overlay;transition:opacity .4s}
+.project-card.current:hover:after{opacity:1}
+.project-card.current .card-circle{animation:pulse-ring 2.2s ease-out infinite}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 #ffcb0599}70%{box-shadow:0 0 0 16px #ffcb0500}100%{box-shadow:0 0 0 0 #ffcb0500}}
+.craft-thumbnail{transition:scale .7s var(--motion-ease)}
+.project-card.current:hover .craft-thumbnail{scale:1.07}
 
-    /* Load more / Show less enter+exit animation. .card-enter is the
-       "before" state applied right when a new card is appended; removing
-       it on the next frame lets the transition above animate it in. */
-    .work-card.card-enter { opacity: 0; transform: translateY(18px) scale(0.97); }
-    .work-card.card-exit { opacity: 0 !important; transform: translateY(-10px) scale(0.97) !important; transition: transform 0.3s ease, opacity 0.3s ease; pointer-events: none; }
-    .work-card.card-exit:hover { transform: translateY(-10px) scale(0.97) !important; }
+/* Small details */
+.name-card{transition:transform .4s var(--motion-ease),box-shadow .4s}.name-card:hover{transform:translate(-3px,-3px);box-shadow:9px 10px 0 var(--yellow)}
+.skills span{transition:background .25s,color .25s,border-color .25s,transform .3s var(--motion-ease)}.skills span:hover{background:var(--yellow);color:var(--ink);border-color:var(--yellow);transform:translateY(-3px) rotate(-2deg)}
+.step-mark{transition:transform .4s cubic-bezier(.34,1.56,.64,1)}.step-panel:hover .step-mark{transform:rotate(-8deg) scale(1.08)}
+.footer-links a:not(.pill){transition:color .25s,translate .3s var(--motion-ease)}.footer-links a:not(.pill):hover{color:var(--yellow);translate:6px 0}
+.contact-footer h2 span{display:inline-block;color:var(--yellow)!important}
+.contact-footer h2:hover span{animation:bounce .6s cubic-bezier(.34,1.56,.64,1)}
+@keyframes bounce{40%{transform:translateY(-18px)}}
+dialog::backdrop{animation:fade-in .35s ease both}
+dialog.is-closing::backdrop{animation:fade-out .26s ease both}
+@keyframes fade-in{from{opacity:0}}@keyframes fade-out{to{opacity:0}}
 
-    .work-load-more-wrap { display: flex; justify-content: center; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
-    .work-load-more {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 30px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
-      font-family: var(--font-b); font-weight: 500;
-      background: var(--panel); color: var(--gold);
-      border: 1px solid var(--border-md); border-radius: 100px;
-      cursor: pointer; transition: all 0.22s;
-      backdrop-filter: blur(10px);
-    }
-    .work-load-more:hover { background: var(--gold-dim); border-color: var(--gold); transform: translateY(-2px); }
-    .work-load-more svg { transition: transform 0.22s; }
-    .work-load-more:hover svg { transform: translateY(2px); }
-    .work-load-less { color: var(--muted); border-color: var(--border); }
-    .work-load-less:hover { background: var(--panel-soft); border-color: var(--border-md); color: var(--text); }
-    .work-load-less:hover svg { transform: translateY(-2px); }
+/* Theme wipe (View Transitions) */
+.theme-wipe::view-transition-old(root),.theme-wipe::view-transition-new(root){animation:none;mix-blend-mode:normal}
+.theme-wipe::view-transition-new(root){z-index:2}
+#theme-icon{display:inline-block;transition:rotate .6s cubic-bezier(.34,1.56,.64,1)}
+html[data-theme=dark] #theme-icon{rotate:360deg}
 
-    .video-preview-frame {
-      width: 100%; aspect-ratio: 3/4; position: relative; overflow: visible;
-      display: flex; align-items: center; justify-content: center;
-      background: transparent;
-    }
-    .phone-mockup {
-      position: relative; height: 96%; aspect-ratio: 715 / 1467;
-      background: #000; border-radius: 12% / 5.8%;
-      border: 3px solid var(--device-border);
-      box-shadow:
-        0 0 0 1.5px rgba(201,168,76,0.35),
-        0 0 0 4.5px var(--device-ring);
-      overflow: hidden;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .phone-mockup::before {
-      content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-      width: 40%; height: 3.3%; background: #000;
-      border-radius: 0 0 999px 999px; z-index: 3;
-    }
-    .phone-mockup::after {
-      content: ''; position: absolute; inset: 0; border-radius: 12% / 5.8%; z-index: 4;
-      pointer-events: none;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
-    }
-    .phone-mockup video {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; border: none; pointer-events: none; background: #000;
-    }
-    .phone-mockup iframe {
-      position: absolute; top: 50%; left: 50%;
-      height: 100%; width: auto; aspect-ratio: 9 / 16;
-      min-width: 100%;
-      transform: translate(-50%, -50%);
-      border: none; pointer-events: none; background: #000;
-    }
-    .phone-mockup img {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; border: none; pointer-events: none; background: #000;
-    }
+@media(max-width:700px){.back-top{right:14px;bottom:14px;width:48px;height:48px}}
+@media(prefers-reduced-motion:reduce){
+  .project-card.current .card-circle,.hero h1 > span{animation:none!important}
+  .header.is-hidden{translate:none}
+  .cursor-ring,.cursor-dot{display:none}
+}
 
-    .poster-preview-frame {
-      width: 100%; aspect-ratio: 3/4; position: relative; overflow: visible;
-      display: flex; align-items: center; justify-content: center;
-      background: transparent;
-    }
-    .poster-frame {
-      position: relative; width: 92%; height: 96%;
-      background: linear-gradient(155deg, var(--poster-grad-1), var(--poster-grad-2));
-      border: 1px solid var(--border-md);
-      border-radius: 3px;
-      padding: 2%;
-      box-sizing: border-box;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.3s ease;
-    }
-    .poster-frame::before {
-      content: ''; position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-      width: 46%; height: 20px;
-      border: 1px solid rgba(201,168,76,0.35);
-      border-bottom: none;
-      border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-      opacity: 0.6;
-    }
-    .poster-frame-inner {
-      position: relative; width: 100%; height: 100%;
-      overflow: hidden; border-radius: 1px;
-    }
-    .poster-frame-inner img {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; pointer-events: none;
-    }
-
-    .work-overlay { position: absolute; inset: 0; background: var(--work-overlay-bg); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px; opacity: 0; transition: opacity 0.3s, background-color 0.3s; border-radius: 10px; }
-    .work-overlay span { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); opacity: 0; transition: opacity 0.3s 0.05s; }
-    .work-card:hover .work-overlay span { opacity: 1; }
-    .work-body { padding: 20px; }
-    .work-cat { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 7px; }
-    .work-title { font-size: 16px; font-weight: 600; color: var(--heading); margin-bottom: 7px; }
-    .work-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
-
-    .lightbox-overlay {
-      display: none; position: fixed; inset: 0; z-index: 999;
-      background: var(--lightbox-bg);
-      backdrop-filter: blur(20px);
-      align-items: center; justify-content: center;
-      transition: background-color 0.3s ease;
-    }
-    .lightbox-overlay.active { display: flex; animation: lbFadeIn 0.25s ease; }
-    @keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    .lightbox-inner {
-      display: flex; align-items: center; justify-content: center;
-      width: 100vw; height: 100vh;
-      animation: lbSlideUp 0.28s ease;
-    }
-    @keyframes lbSlideUp { from { opacity: 0; transform: scale(0.97); } to { opacity: 1; transform: scale(1); } }
-
-    .lightbox-media {
-      max-width: 96vw;
-      max-height: 96vh;
-      object-fit: contain;
-      display: block;
-      border-radius: 4px;
-      box-shadow: 0 32px 100px rgba(0,0,0,0.8);
-    }
-    .lightbox-video {
-      max-width: 96vw;
-      max-height: 96vh;
-      width: 960px;
-      border-radius: 4px;
-      box-shadow: 0 32px 100px rgba(0,0,0,0.8);
-    }
-
-    .lb-close {
-      position: fixed; top: 20px; right: 24px;
-      width: 44px; height: 44px; border-radius: 50%;
-      background: var(--panel-strong); border: 1px solid var(--border-md);
-      color: var(--text); cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s; z-index: 1001;
-    }
-    .lb-close:hover { background: var(--gold-dim); color: var(--gold); border-color: var(--gold); }
-
-    .lb-arrow {
-      position: fixed; top: 50%; transform: translateY(-50%);
-      width: 48px; height: 48px; border-radius: 50%;
-      background: var(--panel-strong); border: 1px solid var(--border-md);
-      color: var(--text); cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s; z-index: 1001;
-    }
-    .lb-arrow:hover { background: var(--gold-dim); color: var(--gold); border-color: var(--gold); }
-    .lb-prev { left: 20px; }
-    .lb-next { right: 20px; }
-    .lb-arrow svg { pointer-events: none; }
-
-    .lb-counter {
-      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-      font-size: 11px; letter-spacing: 0.12em; color: var(--dim);
-      background: var(--panel); padding: 5px 14px;
-      border-radius: 100px; border: 1px solid var(--border);
-      z-index: 1001;
-    }
-
-    .contact { background: transparent; }
-    .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-    .contact-text p { color: var(--muted); line-height: 1.85; margin-bottom: 16px; }
-    .contact-cards { display: flex; flex-direction: column; gap: 14px; }
-    .contact-card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 20px 22px; display: flex; align-items: center; gap: 16px; transition: border-color 0.2s, transform 0.2s, background-color 0.3s; backdrop-filter: blur(10px); }
-    .contact-card:hover { border-color: var(--border-md); transform: translateX(4px); }
-    .c-icon { width: 44px; height: 44px; flex-shrink: 0; background: var(--gold-dim); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
-    .c-label { font-size: 10px; color: var(--dim); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 3px; }
-    .c-val { font-size: 14px; font-weight: 500; color: var(--text); }
-    .c-val a { color: inherit; text-decoration: none; }
-    .c-val a:hover { color: var(--gold); }
-
-    footer { padding: 30px 60px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--dim); flex-wrap: wrap; gap: 12px; }
-    footer span:last-child { color: var(--gold); opacity: 0.7; }
-
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    .visitor-counter {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 16px;
-      background: var(--panel-strong);
-      border: 1px solid var(--border-md);
-      border-radius: 100px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-      opacity: 0;
-      transform: translateY(10px);
-      animation: visitorFadeIn 0.6s 1s forwards;
-      transition: background-color 0.3s ease, border-color 0.3s ease;
-    }
-    @keyframes visitorFadeIn { to { opacity: 1; transform: translateY(0); } }
-    .visitor-counter-icon {
-      width: 28px; height: 28px;
-      background: var(--gold-dim);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .visitor-counter-text { display: flex; flex-direction: column; line-height: 1.15; }
-    .visitor-counter-num {
-      font-family: var(--font-d);
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--gold);
-    }
-    .visitor-counter-label {
-      font-size: 9px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .visitor-counter { cursor: pointer; }
-    .visitor-counter-chevron {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gold);
-      opacity: 0.7;
-      margin-left: 2px;
-      transition: transform 0.25s ease;
-      animation: chevronPulse 2.2s ease-in-out infinite;
-    }
-    .visitor-counter.open .visitor-counter-chevron { transform: rotate(180deg); }
-    @keyframes chevronPulse {
-      0%, 100% { transform: translateY(0); opacity: 0.5; }
-      50% { transform: translateY(-2px); opacity: 1; }
-    }
-    .visitor-counter.open .visitor-counter-chevron { animation: none; }
-
-    @media (max-width: 900px) {
-      .visitor-counter { bottom: 16px; right: 16px; padding: 8px 12px; }
-    }
-
-    .country-panel {
-      position: fixed;
-      bottom: 74px;
-      right: 20px;
-      z-index: 51;
-      width: 240px;
-      max-height: 320px;
-      overflow-y: auto;
-      background: var(--panel-strong);
-      border: 1px solid var(--border-md);
-      border-radius: 14px;
-      backdrop-filter: blur(14px);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
-      padding: 14px;
-      opacity: 0;
-      transform: translateY(10px) scale(0.97);
-      pointer-events: none;
-      transition: opacity 0.22s ease, transform 0.22s ease, background-color 0.3s ease, border-color 0.3s ease;
-    }
-    .country-panel.open {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      pointer-events: auto;
-    }
-    .country-panel-title {
-      font-family: var(--font-d);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--heading);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .country-panel-list { display: flex; flex-direction: column; gap: 2px; }
-    .country-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 7px 4px;
-      font-size: 12.5px;
-      color: var(--text);
-      border-bottom: 1px solid var(--border);
-    }
-    .country-row:last-child { border-bottom: none; }
-    .country-row-name { display: flex; align-items: center; gap: 8px; }
-    .country-row-flag { font-size: 15px; line-height: 1; }
-    .country-row-count { color: var(--gold); font-weight: 600; font-family: var(--font-d); }
-    .country-panel-empty { font-size: 12px; color: var(--muted); padding: 6px 4px; }
-
-    @media (max-width: 900px) {
-      .country-panel { bottom: 68px; right: 16px; width: 210px; }
-    }
-
-    @media (max-width: 1200px) {
-      .work-grid { grid-template-columns: repeat(4, 1fr); }
-    }
-
-    @media (max-width: 900px) {
-      nav { padding: 0 24px; }
-      .nav-links, .nav-cta { display: none; }
-      .nav-toggle { display: flex; }
-      .hero { grid-template-columns: 1fr; padding: 60px 24px; min-height: auto; gap: 48px; }
-      .hero-photo-frame { width: 100%; max-width: 320px; height: 380px; margin: 0 auto; }
-      .hero-badge { left: 0; }
-      .scroll-hint { left: 24px; }
-      section { padding: 44px 24px; }
-      .about-grid, .services-grid, .contact-inner { grid-template-columns: 1fr; gap: 36px; }
-      .work-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
-      .video-preview-frame { aspect-ratio: 3/5; }
-      footer { padding: 24px; flex-direction: column; align-items: flex-start; }
-    }
-
-    @media (max-width: 480px) {
-      .work-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .video-preview-frame { aspect-ratio: 2/3; }
-    }
+/* Brix-specific content styling, keeping the reference site's warm yellow portfolio language. */
+.services-redesign{padding-block:52px 72px}
+.services-redesign .section-heading{margin-bottom:28px}
+.service-grid-redesign{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.service-card-redesign{position:relative;min-height:220px;padding:26px 24px;background:var(--section);border:1px solid var(--border);border-radius:18px;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s}
+.service-card-redesign:hover{transform:translateY(-5px);border-color:var(--ink);box-shadow:0 14px 28px #17181112}
+.service-card-redesign>span{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:var(--yellow);font-weight:900;margin-bottom:24px}
+.service-card-redesign h3{font-size:22px;margin-bottom:9px}
+.service-card-redesign p{max-width:340px;color:var(--muted);font-size:14px;line-height:1.6}
+:root{--paper:#faf9f5}
+.hero-copy .lead,.hero-copy .muted{max-width:510px}
+.hero-copy .lead{font-size:1.12rem}
+.hero .portrait-art{height:450px;max-height:450px}
+.hero .portrait-art>img{object-position:center 24%}
+.portrait-art{border-radius:22px!important;overflow:hidden}
+.portrait-art:before{content:"BRIX";position:absolute;z-index:0;left:50%;top:50%;transform:translate(-50%,-50%);font:1000 clamp(5rem,13vw,10rem)/1 'Nunito',sans-serif;color:#17181118;letter-spacing:-.08em}
+.portrait-art>img{position:relative;z-index:1}
+.contact-intro .name-card strong{font-family:'Nunito',sans-serif;font-size:1.2rem;font-weight:1000}
+.tools-row{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:10px;padding:20px 0;background:transparent}
+.tool-chip{display:inline-flex;align-items:center;gap:9px;padding:10px 15px;border:1px solid var(--border);border-radius:999px;background:var(--section);font-weight:800;font-size:.9rem;color:var(--ink);white-space:nowrap;transition:transform .25s,background .25s}
+.tool-chip:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--yellow);box-shadow:0 0 0 3px color-mix(in srgb,var(--yellow) 22%,transparent)}
+.tool-chip:hover{transform:translateY(-3px);background:var(--yellow)}
+.about-grid{align-items:center}
+.about-grid>.about-copy{max-width:720px}
+.about-grid>.about-copy .skills{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+.about-grid>.about-copy .skills span{border:1px solid var(--border);border-radius:999px;padding:7px 13px;font-size:.85rem;font-weight:700}
+.about-grid>.about-stats{display:none}
+.about-visual{min-height:320px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;padding:32px;border-radius:22px;background:var(--yellow);color:var(--ink);overflow:hidden;position:relative}
+.about-visual:after{content:"";position:absolute;width:220px;height:220px;border:1px solid #17181122;border-radius:50%;right:-55px;top:-60px;box-shadow:0 0 0 24px #17181108,0 0 0 48px #17181106}
+.about-stamp{font:1000 clamp(3rem,7vw,6rem)/.9 "Nunito",sans-serif;letter-spacing:-.08em}
+.about-stamp small{font:800 11px/1.4 "DM Sans",sans-serif;letter-spacing:.16em}
+.about-visual p{font:900 clamp(1.3rem,2.8vw,2rem)/1.15 "Nunito",sans-serif;max-width:420px;position:relative;z-index:1}
+.contact-footer .footer-main{align-items:center}
+.project-card .card-title{overflow-wrap:anywhere}
+dialog .dialog-video{display:block;border:0;border-radius:14px;margin:16px auto;background:#000}
+dialog .dialog-video.landscape{width:100%;aspect-ratio:16/9;min-height:200px}
+dialog .dialog-video.portrait{width:min(100%,calc(76dvh * 9 / 16));aspect-ratio:9/16}
+dialog .dialog-image{display:block;max-width:100%;max-height:70vh;margin:16px auto;border-radius:14px}
+.project-detail{background:var(--section)}
+.project-detail .tag{background:var(--yellow);color:var(--ink)}
+.process .section-heading h2,.tools h2,.about h2{font-family:'Nunito',sans-serif;font-weight:1000}
+@media(max-width:700px){.service-grid-redesign{grid-template-columns:1fr}.service-card-redesign{min-height:0}.services-redesign{padding-block:38px 50px}}
+@media(max-width:820px){.hero .portrait-art{height:auto;max-height:none;aspect-ratio:4/5}.hero .portrait-art>img{object-position:center 22%}.tools-row{gap:8px}.tool-chip{font-size:.82rem;padding:9px 12px}}
   </style>
 </head>
 <body>
-
-<canvas id="bgCanvas"></canvas>
-
-<nav>
-  <a class="nav-logo" href="#"><span>Portfolio</span></a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <div style="display:flex; align-items:center; gap:14px;">
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode" aria-pressed="false" title="Toggle light/dark mode">
-      <svg class="icon-sun" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-      <svg class="icon-moon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-    </button>
-    <a class="nav-cta" href="#contact">Hire Me</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<div class="mobile-nav" id="mobileNav">
-  <a class="mobile-nav-link" href="#about">About</a>
-  <a class="mobile-nav-link" href="#services">Services</a>
-  <a class="mobile-nav-link" href="#work">Work</a>
-  <a class="mobile-nav-link" href="#contact">Contact</a>
-  <a class="btn btn-gold mobile-nav-cta" href="#contact">Hire Me</a>
-</div>
-
-<main>
-
-  <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="hero-left">
-      <div class="hero-eyebrow">Visual Creative</div>
-      <h1 class="hero-name">Hi!<br>I'm <em>Brix</em></h1>
-      <p class="hero-role"><strong>Video Editor &amp; Graphic Designer</strong></p>
-      <p class="hero-role" style="margin-top:-4px;">BSIT Graduate &nbsp;·&nbsp;Ilocos Sur, Philippines</p>
-      <div class="hero-divider"></div>
-      <p class="hero-bio">I craft compelling visual content — from cinematic video edits to polished graphic designs and product posters. Every frame, every pixel, intentional.</p>
-      <div class="hero-cta">
-        <a class="btn btn-gold" href="#work">View My Work</a>
-        <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <header class="header wrap" data-menu-open="false">
+    <a class="brand" href="#home">BRIX OLEGARIO<span>VIDEO EDITOR · AI CREATIVE</span></a>
+    <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-navigation" aria-label="Open navigation menu"><span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span><span id="menu-label">Menu</span></button>
+    <nav id="site-navigation" aria-label="Main navigation">
+      <a href="#home" class="is-active">Home</a><a href="#work">My Work</a><a href="#process">Process</a><a href="#services">Services</a><a href="#about">About</a>
+      <a class="pill yellow" href="#contact">Let’s collaborate</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false"><span id="theme-icon">☾</span><span id="theme-label">Dark mode</span></button>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="hero wrap" id="home">
+      <div class="hero-copy">
+        <span class="eyebrow outlined">Video Editor · AI Creative</span>
+        <h1>Your vision.<br>My next great <span class="highlight">creation.</span></h1>
+        <p class="lead">I create scroll-stopping videos and visual content that help brands make their message clear and memorable.</p>
+        <p class="muted">From short-form edits and UGC ads to AI-generated creatives and product visuals — built with story, pacing, and purpose.</p>
+        <div class="actions"><a class="pill black" href="#work">Explore my work</a><a class="pill outline" href="#contact">Start a project</a></div>
       </div>
-    </div>
+      <div class="intro contact-intro">
+        <div class="name-card"><strong>Brix Olegario</strong><span>Video Editor &amp; AI Creative</span></div>
+        <h2>Let’s work together<span>.</span></h2>
+        <a class="service-chip contact-chip" href="mailto:brixallandaveo07@gmail.com"><span class="chip-icon" aria-hidden="true">✉</span><span>brixallandaveo07@gmail.com</span></a>
+        <a class="service-chip contact-chip" href="tel:+639455313866"><span class="chip-icon" aria-hidden="true">☎</span><span>+63 945 531 3866</span></a>
+        <a class="service-chip contact-chip" href="#contact"><span class="chip-icon" aria-hidden="true">PH</span><span>Ilocos Sur, Philippines</span></a>
+      </div>
+      <figure class="hero-visual portrait-visual portrait-art glare"><img src="myphoto.jpg" alt="Brix Olegario" fetchpriority="high"></figure>
+    </section>
 
-    <div class="hero-photo-wrap">
-      <div class="hero-photo-frame">
-        <img class="hero-photo" src="myphoto.jpg" alt="Brix Allan Dave Olegario" />
-        <div class="hero-badge">
-          <div class="hero-badge-icon">
-            <svg width="18" height="18" fill="none" stroke="#c9a84c" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </div>
-          <div>
-            <div class="hero-badge-label">Available for</div>
-            <div class="hero-badge-value">Full-time/Part-time Work</div>
-          </div>
+    <section class="work wrap" id="work" aria-labelledby="work-title">
+      <div class="work-top"><div><span class="eyebrow">Selected projects</span><h2 id="work-title">My Work<span>.</span></h2></div>
+        <div class="filters" aria-label="Project categories">
+          <button class="active" data-filter="all" aria-pressed="true">All Work</button>
+          <button data-filter="ai" aria-pressed="false">AI Creatives</button>
+          <button data-filter="ugc" aria-pressed="false">UGC Ads</button>
+          <button data-filter="video" aria-pressed="false">Video Editing</button>
+          <button data-filter="graphic" aria-pressed="false">Graphic Design</button>
+          <button data-filter="poster" aria-pressed="false">Product Posters</button>
         </div>
       </div>
-    </div>
-
-    <div class="scroll-hint">
-      <div class="scroll-line"></div>
-      <span>Scroll</span>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="about" id="about">
-    <div class="about-grid">
-      <div class="reveal">
-        <p class="s-eyebrow">About Me</p>
-        <h2 class="s-title">Crafting visuals<br>that leave a mark</h2>
-        <div class="about-text">
-          <p>I'm a freelance Video Editor and Graphic Designer based in Ilocos Sur, Philippines. As a BSIT graduate, I bring both technical precision and a sharp creative eye to every project I take on.</p>
-          <p>Whether it's a cinematic video edit, a brand-defining graphic, or a product poster that makes people stop scrolling — I put care into every output.</p>
+      <div class="work-body">
+        <div class="gallery" aria-label="Project carousel">
+          <div class="cards" id="cards" aria-label="Swipe or use arrow keys to browse projects"></div>
+          <div class="gallery-bottom"><button class="round" id="prev" aria-label="Previous project">←</button><span id="gallery-count">01 / 01</span><button class="round" id="next" aria-label="Next project">→</button></div>
         </div>
-        <div class="about-skills">
-          <span class="skill-tag">Video Editing</span>
-          <span class="skill-tag">Graphic Design</span>
-          <span class="skill-tag">Product Posters</span>
-          <span class="skill-tag">Color Grading</span>
-          <span class="skill-tag">Motion Graphics</span>
-          <span class="skill-tag">Brand Visuals</span>
-        </div>
+        <article class="project-detail">
+          <span class="tag" id="project-category">AI Creative</span><h3 id="project-title">Project</h3><p class="project-sub" id="project-sub">Portfolio sample</p><p id="project-description">Selected video and visual projects.</p>
+          <div class="project-meta"><span id="project-format">VIDEO PROJECT</span></div>
+          <button class="pill black" id="view-project">Watch project</button>
+        </article>
       </div>
-      <div class="about-stats reveal reveal-delay-2">
-        <div class="stat-card"><div class="stat-num">3+</div><div class="stat-label">Core Services</div></div>
-        <div class="stat-card"><div class="stat-num">PH</div><div class="stat-label">Philippines-based</div></div>
-        <div class="stat-card"><div class="stat-num">BSIT</div><div class="stat-label">Graduate</div></div>
-        <div class="stat-card"><div class="stat-num">∞</div><div class="stat-label">Creative Drive</div></div>
+    </section>
 
-      <div class="tools-heading">Tools I Use</div>
-      <div class="tools-marquee reveal reveal-delay-2">
-        <div class="tools-track" id="toolsTrack"></div>
+    <section class="process wrap" id="process" aria-labelledby="process-title">
+      <div class="section-heading"><span class="eyebrow">01 — How I work</span><h2 id="process-title">From brief to finished creative<span>.</span></h2><p class="muted">A clear process keeps every video aligned with the message, the audience, and the platform.</p></div>
+      <div class="steps" role="tablist" aria-label="Creative process"></div>
+      <div class="step-panel" id="step-panel" role="tabpanel" aria-labelledby="step-0">
+        <div><span class="step-mark" id="step-number">01</span><span class="eyebrow" id="step-label">PLAN</span><h3 id="step-title">Understand the brief.</h3><p id="step-description">I align on your goal, audience, offer, and key message before building the creative.</p></div>
+        <div class="process-board"><div class="board-top"><span>THE CREATIVE PLAYBOOK</span><span id="board-number">01 / 06</span></div><h4 id="board-title">Get clear on the message.</h4><ul id="board-list"><li>Offer and audience</li><li>Core message and proof</li><li>Platform and deliverables</li></ul><div class="board-foot">IDEA → STORY → EDIT</div></div>
       </div>
-      </div>
+    </section>
+
+    <section class="services-redesign wrap" id="services" aria-labelledby="services-title">
+    <div class="section-heading"><span class="eyebrow">What I do</span><h2 id="services-title">Creative services<span>.</span></h2><p class="muted">Flexible creative support for brands, creators, and product campaigns.</p></div>
+    <div class="service-grid-redesign">
+      <article class="service-card-redesign"><span>01</span><h3>Video Editing</h3><p>Short-form reels and longer edits with clean pacing, transitions, color, and sound.</p></article>
+      <article class="service-card-redesign"><span>02</span><h3>AI Ad Creatives</h3><p>AI-assisted product ads and UGC-style videos built around a clear script and visual story.</p></article>
+      <article class="service-card-redesign"><span>03</span><h3>Graphic Design</h3><p>Social content, brand visuals, and product posters designed to stand out in the feed.</p></article>
     </div>
   </section>
 
-  <!-- SERVICES -->
-  <section class="services" id="services">
-    <p class="s-eyebrow reveal">What I Do</p>
-    <h2 class="s-title reveal">Services</h2>
-    <div class="services-grid">
-      <div class="service-card reveal">
-        <div class="service-num">01</div>
-        <div class="service-icon"><svg width="22" height="22" fill="none" stroke="#c9a84c" stroke-width="1.8" viewBox="0 0 24 24"><path d="M15 10l4.553-2.668A1 1 0 0121 8.268v7.464a1 1 0 01-1.447.894L15 14"/><rect x="2" y="6" width="13" height="12" rx="2"/></svg></div>
-        <div class="service-name">Video Editing</div>
-        <div class="service-desc">Professional cuts, smooth transitions, color grading, and motion graphics. From short-form reels to long-form productions — clean and compelling every time.</div>
+  <section class="about wrap" id="about">
+      <div class="about-copy"><span class="eyebrow">02 — About me</span><h2>Creative thinking.<br>Visual storytelling<span>.</span></h2>
+        <p class="lead">I’m Brix, a video editor and AI creative based in Ilocos Sur, Philippines.</p>
+        <p class="muted">As a BSIT graduate, I bring technical precision and a sharp creative eye to video edits, AI-generated product ads, graphic design, and social media content. I put care into every frame and every visual.</p>
+        <div class="skills"><span>Video Editing</span><span>AI Video Creation</span><span>UGC Ads</span><span>Graphic Design</span><span>Product Posters</span><span>Motion Graphics</span></div>
       </div>
-      <div class="service-card reveal reveal-delay-1">
-        <div class="service-num">02</div>
-        <div class="service-icon"><svg width="22" height="22" fill="none" stroke="#c9a84c" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg></div>
-        <div class="service-name">Graphic Design</div>
-        <div class="service-desc">Visual assets, social media content, branding materials, and digital layouts. Tailored to your identity, designed to stand out in any feed.</div>
-      </div>
-      <div class="service-card reveal reveal-delay-2">
-        <div class="service-num">03</div>
-        <div class="service-icon"><svg width="22" height="22" fill="none" stroke="#c9a84c" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <div class="service-name">Product Posters</div>
-        <div class="service-desc">Eye-catching promotional posters and product advertisements designed to grab attention, communicate value, and drive real results.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WORK -->
-  <section class="work" id="work">
-    <p class="s-eyebrow reveal">Portfolio</p>
-    <h2 class="s-title reveal">My Work</h2>
-    <div id="workContainer"></div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
-    <div class="contact-inner">
-      <div class="reveal">
-        <p class="s-eyebrow">Get in Touch</p>
-        <h2 class="s-title" style="margin-bottom:24px;">Let's work<br>together</h2>
-        <div class="contact-text">
-          <p>Looking for a freelance video editor or graphic designer? I'm open to projects big and small — let's talk about what you need.</p>
-          <p>I'll get back to you within 24 hours.</p>
-        </div>
-        <div style="margin-top:32px;"><a class="btn btn-gold" href="mailto:brixallandaveo07@gmail.com">Send Me an Email</a></div>
-      </div>
-      <div class="contact-cards reveal reveal-delay-2">
-        <div class="contact-card">
-          <div class="c-icon"><svg width="20" height="20" fill="none" stroke="#c9a84c" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div><div class="c-label">Email</div><div class="c-val"><a href="mailto:brixallandaveo07@gmail.com">brixallandaveo07@gmail.com</a></div></div>
-        </div>
-        <div class="contact-card">
-          <div class="c-icon"><svg width="20" height="20" fill="none" stroke="#c9a84c" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.06 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14z"/></svg></div>
-          <div><div class="c-label">Phone</div><div class="c-val"><a href="tel:09455313866">0945 531 3866</a></div></div>
-        </div>
-        <div class="contact-card">
-          <div class="c-icon"><svg width="20" height="20" fill="none" stroke="#c9a84c" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-          <div><div class="c-label">Location</div><div class="c-val">Ilocos Sur, Philippines</div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer>
-  <span>© 2026 Brix</span>
-  <span>Video Editor &amp; Graphic Designer</span>
-</footer>
-
-<div class="country-panel" id="countryPanel">
-  <div class="country-panel-title">🌍 Visitors by Country</div>
-  <div class="country-panel-list" id="countryPanelList">
-    <div class="country-panel-empty">Loading...</div>
-  </div>
-</div>
-
-<div class="visitor-counter" id="visitorCounter">
-  <div class="visitor-counter-icon">
-    <svg width="16" height="16" fill="none" stroke="#c9a84c" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-  </div>
-  <div class="visitor-counter-text">
-    <span class="visitor-counter-num" id="visitorCounterNum">0</span>
-    <span class="visitor-counter-label">Visitors</span>
-  </div>
-  <div class="visitor-counter-chevron">
-    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
-  </div>
-</div>
-
-<!-- LIGHTBOX -->
-<div class="lightbox-overlay" id="lightbox" onclick="lbBgClick(event)">
-  <button class="lb-close" onclick="closeLightbox()" title="Close (Esc)">
-    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
-  </button>
-  <button class="lb-arrow lb-prev" onclick="lbNav(-1)" title="Previous">
-    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-  </button>
-  <button class="lb-arrow lb-next" onclick="lbNav(1)" title="Next">
-    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-  </button>
-  <div class="lightbox-inner" id="lbInner"></div>
-  <div class="lb-counter" id="lbCounter">1 / 1</div>
-</div>
-
-<script>
-// ═══════════════════════════════════════════════════════
-//  YOUR WORKS — edit this array to add/remove items
-// ═══════════════════════════════════════════════════════
-const WORKS = [
-
-  // ── VIDEO EDITING ──────────────────────────────────
-  {
-    category: 'video',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/RUW_7e6cpBQ/hqdefault.jpg',
-    media:    'RUW_7e6cpBQ',
-    cat:      'Video Editing',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  // ── AI CREATIVES ────────────────────────────────────
-{
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/WA4s5PUvHxA/hqdefault.jpg',
-    media:    'WA4s5PUvHxA',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/sG_rrRoaroo/hqdefault.jpg',
-    media:    'sG_rrRoaroo',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/L8A35RO6uX4/hqdefault.jpg',
-    media:    'L8A35RO6uX4',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/odMvFs9X6Bw/hqdefault.jpg',
-    media:    'odMvFs9X6Bw',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/gwoxU_mjmRc/hqdefault.jpg',
-    media:    'gwoxU_mjmRc',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-    {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/r1YOo0jmUhI/hqdefault.jpg',
-    media:    'r1YOo0jmUhI',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/cZd-4XwCfl4/hqdefault.jpg',
-    media:    'cZd-4XwCfl4',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/P9yNcy-9N6g/hqdefault.jpg',
-    media:    'P9yNcy-9N6g',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/SzvHUkWb4tc/hqdefault.jpg',
-    media:    'SzvHUkWb4tc',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/sa_gY8AqlWo/hqdefault.jpg',
-    media:    'sa_gY8AqlWo',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/cVtREW3naVU/hqdefault.jpg',
-    media:    'cVtREW3naVU',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/B1I1StHxQTA/hqdefault.jpg',
-    media:    'B1I1StHxQTA',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-  {
-    category: 'ai',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/WodrD-Y30TA/hqdefault.jpg',
-    media:    'WodrD-Y30TA',
-    cat:      'AI Creatives',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-  // ── UGC Ads ────────────────────────────────────
-  {
-    category: 'ugc',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/xFpjU0ZrEhk/hqdefault.jpg',
-    media:    'xFpjU0ZrEhk',
-    cat:      'UGC Ads',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-    {
-    category: 'ugc',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/02YKYbcY_OE/hqdefault.jpg',
-    media:    '02YKYbcY_OE',
-    cat:      'UGC Ads',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-    {
-    category: 'ugc',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/SkmKW3NP0vw/hqdefault.jpg',
-    media:    'SkmKW3NP0vw',
-    cat:      'UGC Ads',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-    {
-    category: 'ugc',
-    type:     'youtube',
-    thumb:    'https://img.youtube.com/vi/eri5FQMr1yc/hqdefault.jpg',
-    media:    'eri5FQMr1yc',
-    cat:      'UGC Ads',
-    title:    'Project Title',
-    desc:     'Brief description — tool used (e.g. Sora, Runway, Midjourney), prompt idea, etc.'
-  },
-  // ── GRAPHIC DESIGN / MOTION GRAPHICS ───────────────
-  {
-    category: 'graphic',
-    type:     'image',
-    thumb:    'images/graphic-1.jpg',
-    media:    'images/graphic-1.jpg',
-    cat:      'Graphic Design',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'graphic',
-    type:     'image',
-    thumb:    'images/graphic-2.jpg',
-    media:    'images/graphic-2.jpg',
-    cat:      'Graphic Design',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'graphic',
-    type:     'image',
-    thumb:    'images/graphic-3.jpg',
-    media:    'images/graphic-3.jpg',
-    cat:      'Graphic Design',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'graphic',
-    type:     'image',
-    thumb:    'images/graphic-4.jpg',
-    media:    'images/graphic-4.jpg',
-    cat:      'Graphic Design',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-
-  // ── PRODUCT POSTERS ────────────────────────────────
-    {
-    category: 'poster',
-    type:     'image',
-    thumb:    'workimages/work1.jpg',
-    media:    'workimages/work1.jpg',
-    cat:      'Product Poster',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'poster',
-    type:     'image',
-    thumb:    'workimages/work2.jpg',
-    media:    'workimages/work2.jpg',
-    cat:      'Product Poster',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'poster',
-    type:     'image',
-    thumb:    'workimages/work3.jpg',
-    media:    'workimages/work3.jpg',
-    cat:      'Product Poster',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-  {
-    category: 'poster',
-    type:     'image',
-    thumb:    'workimages/work4.jpg',
-    media:    'workimages/work4.jpg',
-    cat:      'Product Poster',
-    title:    'Project Title',
-    desc:     'Brief description — what it was for, tools used, etc.'
-  },
-
-];
-// ═══════════════════════════════════════════════════════
-
-// ── BUILD CARDS ──────────────────────────────────────
-const CATEGORY_ORDER  = ['ai', 'ugc', 'video', 'poster',];
-const CATEGORY_LABELS = { video: 'Short form/Reels',  ugc: 'UGC Ads', ai: 'AI Creatives', graphic: 'Motion Graphics', poster: 'Product Poster' };
-// A section shows every item up to ITEMS_PER_PAGE with no "Load more"
-// button at all. The button only appears once a section has MORE than
-// ITEMS_PER_PAGE items, and each click reveals another ITEMS_PER_PAGE.
-// ITEMS_PER_PAGE is not a fixed number: it's however many cards make up
-// ROWS_PER_PAGE full rows of the .work-grid CSS grid as it is *actually*
-// rendering right now (5 cols on a wide desktop, 2 on a small phone,
-// etc.), so "Load more" always appears after the same number of complete
-// rows no matter the device or window width.
-const ROWS_PER_PAGE = 2;
-
-// Reads how many columns the CSS grid is currently laying out, straight
-// from the computed grid-template-columns (one token per column) — this
-// is content-independent, so it works even on an empty grid.
-function getGridColumns(gridEl) {
-  const value = window.getComputedStyle(gridEl).gridTemplateColumns;
-  const cols = value.split(' ').filter(Boolean);
-  return cols.length || 1;
-}
-
-// Tracks the column count last used to build the page, so a resize/
-// rotation only triggers a rebuild when it actually crosses a breakpoint
-// (not on every pixel of dragging).
-let lastGridColumns = null;
-
-function buildCards() {
-  const container = document.getElementById('workContainer');
-  container.innerHTML = '';
-
-  // First pass: create every section with its (still empty) grid and
-  // attach them all to the page. Attaching before measuring means the
-  // grid's real, breakpoint-aware column count is available to read.
-  const sections = CATEGORY_ORDER.map(cat => {
-    const items = WORKS.filter(w => w.category === cat);
-    if (!items.length) return null;
-
-    const section = document.createElement('div');
-    section.className = 'work-category';
-    section.dataset.category = cat;
-    section.innerHTML = `
-      <h3 class="work-category-title reveal">${CATEGORY_LABELS[cat] || cat}</h3>
-      <div class="work-grid"></div>
-      <div class="work-load-more-wrap"></div>`;
-    const grid = section.querySelector('.work-grid');
-    const loadMoreWrap = section.querySelector('.work-load-more-wrap');
-
-    // Attach the section to the page BEFORE the first render, so the
-    // scroll-reveal observer (which queries document.querySelectorAll)
-    // can actually find and observe this section's cards. Rendering
-    // into a still-detached section silently skips them until some
-    // later render (e.g. clicking Load more elsewhere) re-queries the
-    // whole document — which is why Product Poster only appeared after
-    // clicking Load more on AI Creatives.
-    container.appendChild(section);
-
-    return { cat, items, section, grid, loadMoreWrap };
-  }).filter(Boolean);
-
-  if (!sections.length) return;
-
-  // All .work-grid elements share the same CSS rules, so one measurement
-  // (from the first section already in the DOM) tells us the column
-  // count for all of them.
-  const columns = getGridColumns(sections[0].grid);
-  lastGridColumns = columns;
-  const ITEMS_PER_PAGE = columns * ROWS_PER_PAGE;
-
-  sections.forEach(({ items, section, grid, loadMoreWrap }) => {
-    let visibleCount = 0;
-
-    // Appends the next `count` items to the grid (never re-renders
-    // existing cards — that would tear down and reload every YouTube
-    // iframe/video already on screen). Pass animate=true to have the
-    // newly-added cards fade + slide in with a staggered delay.
-    function appendCards(count, animate) {
-      const start = visibleCount;
-      const end = Math.min(visibleCount + count, items.length);
-      for (let i = start; i < end; i++) {
-        const card = buildCard(items[i], i, /* useRevealClass */ !animate);
-        if (animate) {
-          card.classList.add('card-enter');
-          card.style.transitionDelay = ((i - start) * 60) + 'ms';
-          grid.appendChild(card);
-          // Force layout, then release to the visible state so the
-          // transition actually runs on next frame.
-          requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              card.classList.remove('card-enter');
-              setTimeout(() => { card.style.transitionDelay = ''; }, 450);
-            });
-          });
-        } else {
-          grid.appendChild(card);
-        }
-      }
-      visibleCount = end;
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-      renderControls();
-    }
-
-    // Fades out and removes every card past the first ITEMS_PER_PAGE,
-    // then resets to the collapsed state — the "unload"/Show less action.
-    function collapseCards() {
-      const cards = [...grid.children];
-      const extra = cards.slice(ITEMS_PER_PAGE);
-      if (!extra.length) return;
-      extra.forEach((card, i) => {
-        card.style.transitionDelay = (i * 40) + 'ms';
-        card.classList.add('card-exit');
-      });
-      setTimeout(() => {
-        extra.forEach(card => card.remove());
-        visibleCount = ITEMS_PER_PAGE;
-        renderControls();
-        section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 380);
-    }
-
-    function renderControls() {
-      loadMoreWrap.innerHTML = '';
-      // If the whole category fits within ITEMS_PER_PAGE, there is
-      // nothing more to load and nothing expanded to collapse — no
-      // button is ever shown for that section.
-      if (items.length <= ITEMS_PER_PAGE) return;
-
-      const hasMore = visibleCount < items.length;
-      const isExpanded = visibleCount > ITEMS_PER_PAGE;
-
-      if (hasMore) {
-        const btn = document.createElement('button');
-        btn.className = 'work-load-more';
-        btn.type = 'button';
-        btn.innerHTML = `Load more <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>`;
-        btn.addEventListener('click', () => appendCards(ITEMS_PER_PAGE, true));
-        loadMoreWrap.appendChild(btn);
-      }
-      if (isExpanded) {
-        const btn = document.createElement('button');
-        btn.className = 'work-load-more work-load-less';
-        btn.type = 'button';
-        btn.innerHTML = `Show less <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>`;
-        btn.addEventListener('click', collapseCards);
-        loadMoreWrap.appendChild(btn);
-      }
-    }
-
-    appendCards(Math.min(ITEMS_PER_PAGE, items.length), false);
-  });
-}
-
-function buildCard(w, i, useRevealClass) {
-  const card = document.createElement('div');
-
-  const revealPart = useRevealClass
-    ? ' reveal' + (i % 3 === 1 ? ' reveal-delay-1' : i % 3 === 2 ? ' reveal-delay-2' : '')
-    : '';
-  card.className = 'work-card' + revealPart;
-  card.dataset.category  = w.category;
-  card.dataset.media     = w.media;
-  card.dataset.mediaType = w.type;
-  card.dataset.title     = w.title;
-  card.dataset.cat       = w.cat;
-  card.dataset.desc      = w.desc;
-  card.setAttribute('onclick', 'openLightbox(this)');
-
-  let previewHtml;
-
-  if (w.category === 'video' || w.category === 'ai' || w.category === 'ugc') {
-    if (w.type === 'youtube') {
-      previewHtml = `
-        <div class="video-preview-frame">
-          <div class="phone-mockup">
-            <iframe
-              src="https://www.youtube.com/embed/${w.media}?autoplay=1&mute=1&controls=0&loop=1&playlist=${w.media}&playsinline=1&modestbranding=1&rel=0&cc_load_policy=0&iv_load_policy=3"
-              allow="autoplay; encrypted-media"
-              referrerpolicy="strict-origin-when-cross-origin"></iframe>
-          </div>
-        </div>`;
-    } else if (w.type === 'video') {
-      previewHtml = `
-        <div class="video-preview-frame">
-          <div class="phone-mockup">
-            <video src="${w.media}" autoplay muted loop playsinline preload="metadata"></video>
-          </div>
-        </div>`;
-    } else {
-      previewHtml = `
-        <div class="video-preview-frame">
-          <div class="phone-mockup">
-            <img src="${w.thumb}" alt="${w.title}" />
-          </div>
-        </div>`;
-    }
-  } else if (w.category === 'graphic') {
-    previewHtml = `
-      <div class="video-preview-frame">
-        <div class="phone-mockup">
-          <img src="${w.thumb}" alt="${w.title}" />
-        </div>
-      </div>`;
-  } else if (w.category === 'poster') {
-    previewHtml = `
-      <div class="poster-preview-frame">
-        <div class="poster-frame">
-          <div class="poster-frame-inner">
-            <img src="${w.thumb}" alt="${w.title}" />
-          </div>
-        </div>
-      </div>`;
-  } else {
-    previewHtml = `<img class="work-thumb" src="${w.thumb}" alt="${w.title}" />`;
-  }
-
-  card.innerHTML = `
-    <div class="work-thumb-wrap">
-      ${previewHtml}
-      <div class="work-overlay">
-        <svg width="28" height="28" fill="none" stroke="#c9a84c" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-        <span>View Full</span>
-      </div>
-    </div>`;
-  return card;
-}
-
-// ── THEME (dark / light) ─────────────────────────────
-const THEME_KEY = 'brix-portfolio-theme';
-const DARK_VIGNETTE  = 'rgba(8,13,26,0.55)';
-const LIGHT_VIGNETTE = 'rgba(230,225,210,0.5)';
-let vignetteColor = DARK_VIGNETTE;
-
-const BG_COLORS = {
-  dark:  { gold: '201,168,76', blue: '80,140,220', alphaBoost: 1    },
-  light: { gold: '138,100,18', blue: '20,72,158',  alphaBoost: 1.9  }
-};
-let bgColors = BG_COLORS.dark;
-
-function applyTheme(theme) {
-  const isLight = theme === 'light';
-  document.body.classList.toggle('light-mode', isLight);
-  vignetteColor = isLight ? LIGHT_VIGNETTE : DARK_VIGNETTE;
-  bgColors = isLight ? BG_COLORS.light : BG_COLORS.dark;
-  const toggleBtn = document.getElementById('themeToggle');
-  if (toggleBtn) toggleBtn.setAttribute('aria-pressed', String(isLight));
-}
-
-function getPreferredTheme() {
-  try {
-    const saved = localStorage.getItem(THEME_KEY);
-    if (saved === 'light' || saved === 'dark') return saved;
-  } catch (e) { /* localStorage unavailable — fall through */ }
-  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
-}
-
-applyTheme(getPreferredTheme());
-
-const themeToggle = document.getElementById('themeToggle');
-if (themeToggle) {
-  themeToggle.addEventListener('click', () => {
-    const nowLight = !document.body.classList.contains('light-mode');
-    applyTheme(nowLight ? 'light' : 'dark');
-    try { localStorage.setItem(THEME_KEY, nowLight ? 'light' : 'dark'); } catch (e) { /* ignore */ }
-  });
-}
-
-// ── SCROLL REVEAL ────────────────────────────────────
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// Build cards — runs before the animated background so a canvas/WebGL
-// issue in this browser (blocked by a privacy extension, GPU disabled,
-// etc.) can never prevent the Work section from rendering.
-buildCards();
-
-// If resizing/rotating changes how many columns the .work-grid actually
-// renders (5→4→3→2 at this page's breakpoints), the Load-more threshold
-// (columns × ROWS_PER_PAGE) changes too, so rebuild to match. Debounced,
-// and only rebuilds when the column count truly changed — not on every
-// resize tick — since a rebuild briefly reloads visible video embeds.
-let columnsResizeTimer = null;
-window.addEventListener('resize', () => {
-  clearTimeout(columnsResizeTimer);
-  columnsResizeTimer = setTimeout(() => {
-    const grid = document.querySelector('.work-grid');
-    if (!grid) return;
-    if (getGridColumns(grid) !== lastGridColumns) buildCards();
-  }, 200);
-});
-
-// ── ANIMATED BACKGROUND ──────────────────────────────
-const canvas = document.getElementById('bgCanvas');
-const ctx = canvas ? canvas.getContext('2d') : null;
-let W, H, lines, particles, mouse = {x: -999, y: -999};
-
-function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-
-function makeLine() {
-  const horiz = Math.random() > 0.5;
-  return { horiz, pos: horiz ? Math.random() * H : Math.random() * W, speed: (Math.random() * 0.3 + 0.1) * (Math.random() > 0.5 ? 1 : -1), len: Math.random() * 300 + 120, offset: horiz ? Math.random() * W : Math.random() * H, alpha: Math.random() * 0.5 + 0.15, width: Math.random() * 1.2 + 0.3, hue: Math.random() > 0.7 ? 200 : 43 };
-}
-
-function makeParticle() {
-  return { x: Math.random() * (W || 1200), y: Math.random() * (H || 800), r: Math.random() * 1.4 + 0.3, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3, alpha: Math.random() * 0.6 + 0.1 };
-}
-
-function init() { resize(); lines = Array.from({length: 18}, makeLine); particles = Array.from({length: 60}, makeParticle); }
-
-function drawLines() {
-  lines.forEach(l => {
-    l.offset += l.speed;
-    if (l.horiz) { if (l.offset > W + l.len) l.offset = -l.len; if (l.offset < -l.len) l.offset = W + l.len; }
-    else { if (l.offset > H + l.len) l.offset = -l.len; if (l.offset < -l.len) l.offset = H + l.len; }
-    const isGold = l.hue === 43;
-    const rgb = isGold ? bgColors.gold : bgColors.blue;
-    const alpha = Math.min(l.alpha * bgColors.alphaBoost, 0.95);
-    const grad = l.horiz ? ctx.createLinearGradient(l.offset - l.len/2, l.pos, l.offset + l.len/2, l.pos) : ctx.createLinearGradient(l.pos, l.offset - l.len/2, l.pos, l.offset + l.len/2);
-    grad.addColorStop(0, `rgba(${rgb},0)`); grad.addColorStop(0.5, `rgba(${rgb},${alpha})`); grad.addColorStop(1, `rgba(${rgb},0)`);
-    ctx.save(); ctx.strokeStyle = grad; ctx.lineWidth = l.width; ctx.shadowBlur = 12;
-    ctx.shadowColor = `rgba(${rgb},0.4)`;
-    ctx.beginPath();
-    if (l.horiz) { ctx.moveTo(l.offset - l.len/2, l.pos); ctx.lineTo(l.offset + l.len/2, l.pos); }
-    else { ctx.moveTo(l.pos, l.offset - l.len/2); ctx.lineTo(l.pos, l.offset + l.len/2); }
-    ctx.stroke(); ctx.restore();
-  });
-}
-
-function drawParticles() {
-  particles.forEach(p => {
-    p.x += p.vx; p.y += p.vy;
-    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0; if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-    const dx = p.x - mouse.x, dy = p.y - mouse.y, dist = Math.sqrt(dx*dx + dy*dy);
-    if (dist < 100) { p.x += dx / dist * 0.6; p.y += dy / dist * 0.6; }
-    const rgb = bgColors.gold;
-    const alpha = Math.min(p.alpha * bgColors.alphaBoost, 0.95);
-    ctx.save(); ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${rgb},${alpha})`; ctx.shadowBlur = 6;
-    ctx.shadowColor = `rgba(${rgb},0.5)`; ctx.fill(); ctx.restore();
-  });
-}
-
-function drawVignette() {
-  const grad = ctx.createRadialGradient(W/2, H/2, H*0.3, W/2, H/2, H*0.9);
-  grad.addColorStop(0, 'transparent'); grad.addColorStop(1, vignetteColor);
-  ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
-}
-
-function animate() {
-  if (!ctx) return;
-  ctx.clearRect(0, 0, W, H); drawLines(); drawParticles(); drawVignette();
-  requestAnimationFrame(animate);
-}
-
-window.addEventListener('resize', resize);
-window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-if (ctx) { init(); animate(); }
-
-// ── DISABLE PINCH / DOUBLE-TAP ZOOM ──────────────────
-document.addEventListener('gesturestart', e => e.preventDefault());
-document.addEventListener('gesturechange', e => e.preventDefault());
-document.addEventListener('gestureend', e => e.preventDefault());
-let lastTouchEnd = 0;
-document.addEventListener('touchend', e => {
-  const now = Date.now();
-  if (now - lastTouchEnd <= 300) e.preventDefault();
-  lastTouchEnd = now;
-}, { passive: false });
-
-// ── MOBILE NAV (hamburger) ───────────────────────────
-const navToggle = document.getElementById('navToggle');
-const mobileNav = document.getElementById('mobileNav');
-if (navToggle && mobileNav) {
-  navToggle.addEventListener('click', () => {
-    const isActive = navToggle.classList.toggle('active');
-    mobileNav.classList.toggle('active', isActive);
-    navToggle.setAttribute('aria-expanded', String(isActive));
-  });
-  mobileNav.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      navToggle.classList.remove('active');
-      mobileNav.classList.remove('active');
-      navToggle.setAttribute('aria-expanded', 'false');
-    });
-  });
-}
-
-// ── TOOLS CAROUSEL ────────────────────────────────────
-const TOOLS = [
-  { name: 'CapCut',            logo: 'tools/capcut.jpg' },
-  { name: 'Alight Motion',     logo: 'tools/alight-motion.png' },
-  { name: 'Canva',              logo: 'tools/canva.jpg' },
-  { name: 'Higgsfield',         logo: 'tools/hf.png' },
-  { name: 'Google Flow (Veo)', logo: 'tools/google-flow.png' },
-  { name: 'Elevenlabs',         logo: 'tools/EL.jpeg' },
-  { name: 'Claude',             logo: 'tools/claude.jpg' },
-  { name: 'Gemini',             logo: 'tools/gemini.jpg' },
-  { name: 'Github',             logo: 'tools/github.jpg' },
-];
-
-function buildToolsMarquee() {
-  const track = document.getElementById('toolsTrack');
-  if (!track) return;
-  const chips = [...TOOLS, ...TOOLS]
-    .map(t => {
-      const hasLogo = !!t.logo;
-      return `<span class="tool-chip${hasLogo ? '' : ' no-logo'}">${
-        hasLogo ? `<img src="${t.logo}" alt="${t.name}" draggable="false" onerror="this.style.display='none'" />` : ''
-      }${t.name}</span>`;
-    })
-    .join('');
-  track.innerHTML = chips;
-  initToolsCarousel();
-}
-
-function initToolsCarousel() {
-  const marquee = document.querySelector('.tools-marquee');
-  const track = document.getElementById('toolsTrack');
-  if (!marquee || !track) return;
-
-  const AUTO_SPEED = 0.45;
-
-  let pos = 1;
-  let isDragging = false;
-  let lastX = 0;
-
-  function halfWidth() {
-    return track.scrollWidth / 2;
-  }
-
-  function normalize() {
-    const half = halfWidth();
-    if (half > 0) pos = ((pos % half) + half) % half;
-  }
-
-  function applyPos() {
-    normalize();
-    marquee.scrollLeft = pos;
-  }
-
-  function frame() {
-    pos += AUTO_SPEED;
-    applyPos();
-    requestAnimationFrame(frame);
-  }
-
-  marquee.addEventListener('pointerdown', e => {
-    isDragging = true;
-    marquee.classList.add('dragging');
-    lastX = e.clientX;
-    marquee.setPointerCapture(e.pointerId);
-  });
-
-  marquee.addEventListener('pointermove', e => {
-    if (!isDragging) return;
-    const dx = e.clientX - lastX;
-    lastX = e.clientX;
-    pos -= dx;
-    applyPos();
-  });
-
-  function endDrag() {
-    isDragging = false;
-    marquee.classList.remove('dragging');
-  }
-  marquee.addEventListener('pointerup', endDrag);
-  marquee.addEventListener('pointercancel', endDrag);
-  marquee.addEventListener('pointerleave', () => { if (isDragging) endDrag(); });
-
-  marquee.addEventListener('wheel', e => {
-    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-      pos += e.deltaX;
-      applyPos();
-    }
-  }, { passive: true });
-
-  requestAnimationFrame(frame);
-}
-buildToolsMarquee();
-
-// ── LIGHTBOX ─────────────────────────────────────────
-let lbCards = [], lbIndex = 0;
-
-function getVisibleCards() {
-  return [...document.querySelectorAll('.work-card')].filter(c => c.style.display !== 'none');
-}
-
-function openLightbox(el) {
-  const card = el.closest('.work-card') || el;
-  lbCards = getVisibleCards();
-  lbIndex = lbCards.indexOf(card);
-  if (lbIndex === -1) lbIndex = 0;
-  renderLightbox();
-  document.getElementById('lightbox').classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeLightbox() {
-  const lb = document.getElementById('lightbox');
-  lb.classList.remove('active');
-  document.body.style.overflow = '';
-  const vid = lb.querySelector('video');
-  if (vid) vid.pause();
-  const inner = document.getElementById('lbInner');
-  const frame = inner.querySelector('iframe');
-  if (frame) inner.innerHTML = '';
-}
-
-function lbBgClick(e) {
-  if (e.target === document.getElementById('lightbox')) closeLightbox();
-}
-
-function lbNav(dir) {
-  lbCards = getVisibleCards();
-  lbIndex = (lbIndex + dir + lbCards.length) % lbCards.length;
-  const vid = document.getElementById('lbInner').querySelector('video');
-  if (vid) vid.pause();
-  renderLightbox();
-}
-
-function renderLightbox() {
-  const card      = lbCards[lbIndex];
-  const d         = card.dataset;
-  const inner     = document.getElementById('lbInner');
-  const counter   = document.getElementById('lbCounter');
-  const imgEl     = card.querySelector('img.work-thumb');
-  const mediaSrc  = d.media || (imgEl ? imgEl.getAttribute('src') : '');
-  const mediaType = d.mediaType || 'image';
-
-  if (mediaType === 'youtube') {
-    inner.innerHTML = `<iframe
-        style="border:none; border-radius:4px; box-shadow:0 32px 100px rgba(0,0,0,0.8); height:90vh; width:calc(90vh * 9 / 16); max-width:96vw;"
-        src="https://www.youtube.com/embed/${mediaSrc}?autoplay=1&rel=0&cc_load_policy=0&iv_load_policy=3"
-        allow="autoplay; encrypted-media; picture-in-picture"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen></iframe>`;
-  } else if (mediaType === 'video') {
-    inner.innerHTML = `<video class="lightbox-video" controls autoplay><source src="${mediaSrc}" type="video/mp4"></video>`;
-  } else {
-    inner.innerHTML = `<img class="lightbox-media" src="${mediaSrc}" alt="${d.title || ''}" />`;
-  }
-
-  counter.textContent = `${lbIndex + 1} / ${lbCards.length}`;
-  document.querySelector('.lb-prev').style.display = lbCards.length > 1 ? '' : 'none';
-  document.querySelector('.lb-next').style.display = lbCards.length > 1 ? '' : 'none';
-}
-
-document.addEventListener('keydown', e => {
-  const lb = document.getElementById('lightbox');
-  if (!lb.classList.contains('active')) return;
-  if (e.key === 'Escape')     closeLightbox();
-  if (e.key === 'ArrowLeft')  lbNav(-1);
-  if (e.key === 'ArrowRight') lbNav(1);
-});
-
-// ── VISITOR COUNTER (animated) ───────────────────────
-function animateVisitorCount(target) {
-  const el = document.getElementById('visitorCounterNum');
-  if (!el) return;
-  const duration = 1200;
-  const start = performance.now();
-  function tick(now) {
-    const progress = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.round(eased * target).toLocaleString();
-    if (progress < 1) requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-}
-function abacusVisitorCallback(res) {
-  animateVisitorCount(res.value);
-}
-
-// ── VISITORS BY COUNTRY ───────────────────────────────
-// Predefined country list we track (keeps API calls reasonable).
-// Add/remove entries here anytime.
-const TRACKED_COUNTRIES = [
-  { code: 'PH', name: 'Philippines' },
-  { code: 'US', name: 'United States' },
-  { code: 'GB', name: 'United Kingdom' },
-  { code: 'CA', name: 'Canada' },
-  { code: 'AU', name: 'Australia' },
-  { code: 'SG', name: 'Singapore' },
-  { code: 'JP', name: 'Japan' },
-  { code: 'KR', name: 'South Korea' },
-  { code: 'IN', name: 'India' },
-  { code: 'DE', name: 'Germany' },
-  { code: 'FR', name: 'France' },
-  { code: 'ES', name: 'Spain' },
-  { code: 'IT', name: 'Italy' },
-  { code: 'NL', name: 'Netherlands' },
-  { code: 'BR', name: 'Brazil' },
-  { code: 'MX', name: 'Mexico' },
-  { code: 'ID', name: 'Indonesia' },
-  { code: 'MY', name: 'Malaysia' },
-  { code: 'TH', name: 'Thailand' },
-  { code: 'VN', name: 'Vietnam' },
-  { code: 'AE', name: 'UAE' },
-  { code: 'SA', name: 'Saudi Arabia' },
-  { code: 'CN', name: 'China' },
-  { code: 'RU', name: 'Russia' },
-  { code: 'ZA', name: 'South Africa' }
-];
-const COUNTRY_NAMESPACE = 'brix-portfolio-vigan-country';
-
-function flagEmoji(code) {
-  return code.toUpperCase().replace(/./g, ch => String.fromCodePoint(127397 + ch.charCodeAt(0)));
-}
-
-// Records the current visitor's country by incrementing that country's
-// counter. Runs once per page load.
-async function recordVisitorCountry() {
-  try {
-    const geoRes = await fetch('https://ipwho.is/');
-    const geo = await geoRes.json();
-    const code = (geo && geo.country_code) ? geo.country_code.toUpperCase() : null;
-    if (!code) return;
-    await fetch(`https://abacus.jasoncameron.dev/hit/${COUNTRY_NAMESPACE}/${code}`);
-  } catch (e) {
-    // Silently ignore — geolocation or counting failure shouldn't break the page.
-  }
-}
-
-// Fetches current counts for every tracked country and renders the list.
-async function loadCountryPanel() {
-  const listEl = document.getElementById('countryPanelList');
-  if (!listEl) return;
-  try {
-    const results = await Promise.all(
-      TRACKED_COUNTRIES.map(c =>
-        fetch(`https://abacus.jasoncameron.dev/get/${COUNTRY_NAMESPACE}/${c.code}`)
-          .then(r => r.json())
-          .then(data => ({ ...c, count: data.value || 0 }))
-          .catch(() => ({ ...c, count: 0 }))
-      )
-    );
-    const withVisits = results.filter(r => r.count > 0).sort((a, b) => b.count - a.count);
-    if (!withVisits.length) {
-      listEl.innerHTML = '<div class="country-panel-empty">No visits recorded yet.</div>';
-      return;
-    }
-    listEl.innerHTML = withVisits.map(r => `
-      <div class="country-row">
-        <span class="country-row-name"><span class="country-row-flag">${flagEmoji(r.code)}</span>${r.name}</span>
-        <span class="country-row-count">${r.count.toLocaleString()}</span>
-      </div>
-    `).join('');
-  } catch (e) {
-    listEl.innerHTML = '<div class="country-panel-empty">Couldn\'t load right now.</div>';
-  }
-}
-
-recordVisitorCountry();
-
-const visitorCounterEl = document.getElementById('visitorCounter');
-const countryPanelEl = document.getElementById('countryPanel');
-let countryPanelLoaded = false;
-if (visitorCounterEl && countryPanelEl) {
-  visitorCounterEl.addEventListener('click', () => {
-    const isOpen = countryPanelEl.classList.toggle('open');
-    visitorCounterEl.classList.toggle('open', isOpen);
-    if (isOpen && !countryPanelLoaded) {
-      countryPanelLoaded = true;
-      loadCountryPanel();
-    }
-  });
-  document.addEventListener('click', e => {
-    if (!countryPanelEl.contains(e.target) && !visitorCounterEl.contains(e.target)) {
-      countryPanelEl.classList.remove('open');
-      visitorCounterEl.classList.remove('open');
-    }
-  });
-}
-</script>
-<script async src="https://abacus.jasoncameron.dev/hit/brix-portfolio-vigan/visits?callback=abacusVisitorCallback"></script>
+      <div class="about-visual"><div class="about-stamp">BRIX<br><small>VIDEO · DESIGN · AI</small></div><p>Good creative gets attention.<br>Thoughtful editing keeps it.</p></div>
+    </section>
+
+    <section class="tools wrap" aria-labelledby="tools-title"><span class="eyebrow">The stack</span><h2 id="tools-title">Tools I use</h2><div class="tools-row" aria-label="Creative tools">
+      <span class="tool-chip">CapCut</span><span class="tool-chip">Alight Motion</span><span class="tool-chip">Canva</span><span class="tool-chip">Higgsfield</span><span class="tool-chip">Google Flow · Veo</span><span class="tool-chip">ElevenLabs</span><span class="tool-chip">Claude</span><span class="tool-chip">Gemini</span><span class="tool-chip">GitHub</span>
+    </div></section>
+  </main>
+
+  <footer class="contact-footer" id="contact"><div class="wrap footer-main"><div><span class="eyebrow">03 — Contact</span><h2>Let’s make<br>something great<span>.</span></h2><p>Have a project in mind? Tell me what you’re making, who it’s for, and when you need it.</p></div><div class="footer-links"><a class="pill yellow" href="mailto:brixallandaveo07@gmail.com">Email me</a><a class="footer-email" href="mailto:brixallandaveo07@gmail.com">brixallandaveo07@gmail.com</a><a class="footer-phone" href="tel:+639455313866">+63 945 531 3866</a><span>Ilocos Sur, Philippines</span></div></div><div class="wrap footer-bottom"><span>© <span id="year">2026</span> Brix Olegario · Video Editor &amp; AI Creative</span><a href="#home">Back to top ↑</a></div></footer>
+
+  <dialog id="project-dialog" aria-labelledby="dialog-title"><button class="dialog-close" aria-label="Close project">×</button><span class="eyebrow">Project preview</span><h2 id="dialog-title">Project</h2><div id="dialog-media"></div><p id="dialog-description"></p><div class="dialog-actions"><a class="pill yellow youtube-source" id="youtube-link" href="#" target="_blank" rel="noopener">Open on YouTube</a><button class="pill black dialog-done">Done</button></div></dialog>
+  <a class="back-top" href="#home" aria-label="Back to top"><svg viewBox="0 0 48 48" aria-hidden="true"><circle class="track" cx="24" cy="24" r="21"></circle><circle class="meter" cx="24" cy="24" r="21"></circle></svg><span aria-hidden="true">↑</span></a>
+  <script>
+  const PROJECTS = [
+    {category:'video',type:'youtube',media:'RUW_7e6cpBQ',title:'Video Editing Sample 01',description:'A sample video edit from my portfolio.',short:true},
+    {category:'ai',type:'youtube',media:'WA4s5PUvHxA',title:'AI Creative Sample 01',description:'An AI-generated creative from my portfolio.',short:true},
+    {category:'ai',type:'youtube',media:'sG_rrRoaroo',title:'AI Creative Sample 02',description:'An AI-generated creative from my portfolio.',short:true},
+    {category:'ai',type:'youtube',media:'L8A35RO6uX4',title:'AI Creative Sample 03',description:'An AI-generated creative from my portfolio.',short:true},
+    {category:'ai',type:'youtube',media:'odMvFs9X6Bw',title:'AI Creative Sample 04',description:'An AI-generated creative from my portfolio.',short:true},
+    {category:'ai',type:'youtube',media:'gwoxU_mjmRc',title:'AI Creative Sample 05',description:'An AI-generated creative from my portfolio.',short:true},
+    {category:'ai',type:'youtube',media:'r1YOo0jmUhI',title:'AI Creative Sample 06',description:'An AI-generated creative from my portfolio.',short:true},
+    {category:'ai',type:'youtube',media:'cZd-4XwCfl4',title:'AI Creative Sample 07',description:'An AI-generated creative from my portfolio.',short:true},
+    {category:'ai',type:'youtube',media:'P9yNcy-9N6g',title:'AI Creative Sample 08',description:'An AI-generated creative from my portfolio.',short:true},
+    {category:'ai',type:'youtube',media:'SzvHUkWb4tc',title:'AI Creative Sample 09',description:'An AI-generated creative from my portfolio.',short:true},
+    {category:'ai',type:'youtube',media:'sa_gY8AqlWo',title:'AI Creative Sample 10',description:'An AI-generated creative from my portfolio.',short:true},
+    {category:'ai',type:'youtube',media:'cVtREW3naVU',title:'AI Creative Sample 11',description:'An AI-generated creative from my portfolio.',short:true},
+    {category:'ai',type:'youtube',media:'B1I1StHxQTA',title:'AI Creative Sample 12',description:'An AI-generated creative from my portfolio.',short:true},
+    {category:'ai',type:'youtube',media:'WodrD-Y30TA',title:'AI Creative Sample 13',description:'An AI-generated creative from my portfolio.',short:true},
+    {category:'ugc',type:'youtube',media:'xFpjU0ZrEhk',title:'UGC Ad Sample 01',description:'A UGC-style ad from my portfolio.',short:true},
+    {category:'ugc',type:'youtube',media:'02YKYbcY_OE',title:'UGC Ad Sample 02',description:'A UGC-style ad from my portfolio.',short:true},
+    {category:'ugc',type:'youtube',media:'SkmKW3NP0vw',title:'UGC Ad Sample 03',description:'A UGC-style ad from my portfolio.',short:true},
+    {category:'ugc',type:'youtube',media:'eri5FQMr1yc',title:'UGC Ad Sample 04',description:'A UGC-style ad from my portfolio.',short:true},
+    {category:'graphic',type:'image',media:'images/graphic-1.jpg',title:'Graphic Design 01',description:'A graphic design sample from my portfolio.'},
+    {category:'graphic',type:'image',media:'images/graphic-2.jpg',title:'Graphic Design 02',description:'A graphic design sample from my portfolio.'},
+    {category:'graphic',type:'image',media:'images/graphic-3.jpg',title:'Graphic Design 03',description:'A graphic design sample from my portfolio.'},
+    {category:'graphic',type:'image',media:'images/graphic-4.jpg',title:'Graphic Design 04',description:'A graphic design sample from my portfolio.'},
+    {category:'poster',type:'image',media:'workimages/work1.jpg',title:'Product Poster 01',description:'A product poster sample from my portfolio.'},
+    {category:'poster',type:'image',media:'workimages/work2.jpg',title:'Product Poster 02',description:'A product poster sample from my portfolio.'},
+    {category:'poster',type:'image',media:'workimages/work3.jpg',title:'Product Poster 03',description:'A product poster sample from my portfolio.'},
+    {category:'poster',type:'image',media:'workimages/work4.jpg',title:'Product Poster 04',description:'A product poster sample from my portfolio.'}
+  ];
+  const LABELS={ai:'AI Creatives',ugc:'UGC Ads',video:'Video Editing',graphic:'Graphic Design',poster:'Product Posters'};
+  let active='all',current=0,entries=[],cards=[];
+  const stage=document.querySelector('#cards');let suppressCardClick=false;
+  function filtered(){return active==='all'?PROJECTS:PROJECTS.filter(p=>p.category===active)}
+  function changeFilter(category,button){active=category;current=0;document.querySelectorAll('[data-filter]').forEach(b=>{const yes=b===button;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',String(yes))});render()}
+  document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>changeFilter(b.dataset.filter,b)));
+  function cardFor(p,i){const b=document.createElement('button');b.className=`project-card style-${i%6}`;b.setAttribute('aria-label',`Select ${p.title}`);b.innerHTML=`<span class="card-no">PROJECT ${String(i+1).padStart(2,'0')}</span><span class="card-circle" aria-hidden="true">▶</span><span class="card-title">${p.title}</span><span class="card-type">${p.type==='youtube'?'WATCH VIDEO':'VIEW IMAGE'}</span>`;const img=document.createElement('img');img.className='craft-thumbnail';img.alt='';img.loading=i===0?'eager':'lazy';img.src=p.type==='youtube'?`https://img.youtube.com/vi/${p.media}/hqdefault.jpg`:p.media;img.onerror=()=>img.remove();b.prepend(img);b.addEventListener('click',()=>{if(suppressCardClick){suppressCardClick=false;return}if(b.classList.contains('current'))openProject();else{current=i;render()}});stage.appendChild(b);return b}
+  function slotFor(i,n){if(n<=2)return i-current;let x=(i-current+n)%n;return x>n/2?x-n:x}
+  function render(){entries=filtered();stage.replaceChildren();cards=entries.map(cardFor);stage.dataset.count=entries.length;document.querySelector('.gallery-bottom').hidden=entries.length<2;if(!entries.length)return;cards.forEach((card,i)=>{const slot=slotFor(i,entries.length);card.style.setProperty('--slot',slot);card.style.setProperty('--scale',slot===0?1:Math.abs(slot)===1?.82:.66);card.style.setProperty('--shade',slot===0?0:Math.abs(slot)===1?.25:.5);card.style.zIndex=10-Math.abs(slot);card.classList.toggle('current',slot===0);card.classList.toggle('side',slot!==0);card.tabIndex=slot===0?0:-1});const p=entries[current];document.querySelector('#gallery-count').textContent=`${String(current+1).padStart(2,'0')} / ${String(entries.length).padStart(2,'0')}`;document.querySelector('#project-category').textContent=LABELS[p.category];document.querySelector('#project-title').textContent=p.title;document.querySelector('#project-sub').textContent=`${LABELS[p.category]} · Portfolio project`;document.querySelector('#project-description').textContent=p.description;document.querySelector('#project-format').textContent=p.type==='youtube'?(p.short?'9:16 · SHORT-FORM VIDEO':'16:9 · VIDEO PROJECT'):'IMAGE PROJECT';}
+  function move(n){if(entries.length<2)return;current=(current+n+entries.length)%entries.length;render()}
+  document.querySelector('#prev').addEventListener('click',()=>move(-1));document.querySelector('#next').addEventListener('click',()=>move(1));
+  let pointer=null;stage.addEventListener('pointerdown',e=>{pointer={x:e.clientX,y:e.clientY}});stage.addEventListener('pointerup',e=>{if(!pointer)return;const dx=e.clientX-pointer.x,dy=e.clientY-pointer.y;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)){suppressCardClick=true;move(dx<0?1:-1);setTimeout(()=>{suppressCardClick=false},250)}pointer=null});stage.addEventListener('pointercancel',()=>pointer=null);stage.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();move(e.key==='ArrowRight'?1:-1);cards[current]?.focus({preventScroll:true})}});
+  function openProject(){const p=entries[current],dialog=document.querySelector('#project-dialog'),media=document.querySelector('#dialog-media');media.replaceChildren();document.querySelector('#dialog-title').textContent=p.title;document.querySelector('#dialog-description').textContent=p.description;const link=document.querySelector('#youtube-link');if(p.type==='youtube'){const frame=document.createElement('iframe');frame.src=`https://www.youtube-nocookie.com/embed/${p.media}?playsinline=1&rel=0`;frame.allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share';frame.allowFullscreen=true;frame.title=p.title;frame.className=`dialog-video ${p.short?'portrait':'landscape'}`;media.append(frame);link.href=`https://www.youtube.com/watch?v=${p.media}`;link.hidden=false}else{const img=document.createElement('img');img.src=p.media;img.alt=p.title;img.className='dialog-image';media.append(img);link.hidden=true}dialog.showModal()}
+  document.querySelector('#view-project').addEventListener('click',openProject);document.querySelectorAll('.dialog-close,.dialog-done').forEach(b=>b.addEventListener('click',()=>document.querySelector('#project-dialog').close()));
+  const process=[
+    ['PLAN','I start by understanding the brief.','I align on the project goal, audience, offer, message, and platform before deciding how the creative should look and feel.','Get clear on the message.',['Audience and offer','Core message and proof','Platform and deliverables']],
+    ['CONCEPT','I shape the idea around the hook.','I identify the strongest opening, story angle, and visual direction so the creative earns attention and keeps the product message clear.','Build the story direction.',['Hook and story angle','Visual references','Tone and pacing']],
+    ['STORYBOARD','I plan the scenes before generating.','I map the script into visual beats, choose POV or third-person coverage, and keep the character, location, and product consistent.','Turn the script into scenes.',['Script-to-visual beats','Shot and camera choices','Character consistency']],
+    ['CREATE','I create the footage and visual assets.','I use AI video and image tools to produce the planned scenes, then select the strongest shots for the edit.','Make each visual support the idea.',['AI-generated scenes','Product-focused moments','B-roll and cutaways']],
+    ['EDIT','I shape the final rhythm.','I assemble the scenes, refine pacing, captions, sound, and transitions, and keep the finished ad clear on a phone screen.','Tighten the finished story.',['Editing and pacing','Captions and sound','Mobile-first framing']],
+    ['DELIVER','I prepare the approved files.','I export the agreed formats and check that the final videos are organized and ready to upload.','Ready for the platform.',['Correct aspect ratio','Final quality check','Organized exports']]
+  ];
+  const steps=document.querySelector('.steps');process.forEach((s,i)=>{const b=document.createElement('button');b.id=`step-${i}`;b.dataset.step=i;b.setAttribute('role','tab');b.setAttribute('aria-controls','step-panel');b.innerHTML=`${String(i+1).padStart(2,'0')} <span>${s[0]}</span>`;steps.appendChild(b)});
+  function showStep(i){steps.style.setProperty('--active-step',i);document.querySelectorAll('[data-step]').forEach((b,j)=>{b.setAttribute('aria-selected',String(j===i));b.tabIndex=j===i?0:-1});const s=process[i];document.querySelector('#step-panel').setAttribute('aria-labelledby',`step-${i}`);for(const[id,v]of Object.entries({'step-number':String(i+1).padStart(2,'0'),'step-label':s[0],'step-title':s[1],'step-description':s[2],'board-number':`${String(i+1).padStart(2,'0')} / 06`,'board-title':s[3]}))document.getElementById(id).textContent=v;document.querySelector('#board-list').innerHTML=s[4].map(x=>`<li>${x}</li>`).join('')}
+  document.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>showStep(Number(b.dataset.step))));
+  const themeButton=document.querySelector('#theme-toggle');function themeLabel(){const dark=document.documentElement.dataset.theme==='dark';themeButton.setAttribute('aria-pressed',String(dark));document.querySelector('#theme-icon').textContent=dark?'☀':'☾';document.querySelector('#theme-label').textContent=dark?'Light mode':'Dark mode'}
+  try{document.documentElement.dataset.theme=localStorage.getItem('portfolio-theme')||'light'}catch{}themeLabel();themeButton.addEventListener('click',()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('portfolio-theme',t)}catch{}themeLabel()});
+  const header=document.querySelector('.header'),menu=document.querySelector('#menu-toggle'),nav=document.querySelector('#site-navigation');header.classList.add('menu-ready');menu.addEventListener('click',()=>{const open=header.dataset.menuOpen!=='true';header.dataset.menuOpen=String(open);menu.setAttribute('aria-expanded',String(open));document.querySelector('#menu-label').textContent=open?'Close':'Menu'});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{if(innerWidth<980){header.dataset.menuOpen='false';menu.setAttribute('aria-expanded','false');document.querySelector('#menu-label').textContent='Menu'}}));
+  const revealObserver=new IntersectionObserver(items=>items.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');revealObserver.unobserve(x.target)}}),{threshold:.12});document.querySelectorAll('.section-heading,.about,.tools,.footer-main,.work-top').forEach(x=>revealObserver.observe(x));
+  const backTop=document.querySelector('.back-top'),meter=document.querySelector('.back-top .meter');function onScroll(){const max=document.documentElement.scrollHeight-innerHeight;const p=max>0?scrollY/max:0;document.querySelector('.scroll-progress').style.transform=`scaleX(${p})`;meter.style.strokeDasharray='132';meter.style.strokeDashoffset=String(132*(1-p));backTop.classList.toggle('is-visible',scrollY>500)}window.addEventListener('scroll',onScroll,{passive:true});onScroll();document.querySelector('#year').textContent=new Date().getFullYear();
+  render();showStep(0);
+  </script>
 </body>
 </html>

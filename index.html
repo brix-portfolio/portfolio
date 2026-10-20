@@ -305,11 +305,31 @@ dialog .dialog-image{display:block;max-width:100%;max-height:70vh;margin:16px au
 @media(max-width:700px){.service-grid-redesign{grid-template-columns:1fr}.service-card-redesign{min-height:0}.services-redesign{padding-block:38px 50px}}
 @media(max-width:820px){.hero .portrait-art{height:auto;max-height:none;aspect-ratio:4/5}.hero .portrait-art>img{object-position:center 22%}.tool-chip{font-size:.82rem;padding:7px 12px 7px 7px}.tool-chip img{width:34px;height:34px}}
 
-    .preview-gallery[hidden]{display:none!important}.preview-gallery{margin-top:26px}.preview-gallery-heading{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:16px}.preview-gallery-heading h3{font-size:1.3rem}.preview-back{border:1px solid var(--ink);background:transparent;border-radius:999px;padding:9px 15px;font-weight:700}.preview-back:hover{background:var(--ink);color:var(--yellow)}.preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px}.preview-card{overflow:hidden;border-radius:14px;background:#171811;color:white;box-shadow:0 8px 22px #17181118}.preview-card-media{position:relative;aspect-ratio:9/16;background:#111;overflow:hidden}.preview-card-media iframe,.preview-card-media img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}.preview-card-meta{padding:11px 12px 13px}.preview-card-meta strong{display:block;font:900 .95rem/1.2 'Nunito',sans-serif}.preview-card-meta span{display:block;margin-top:5px;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:#ffcb05}.preview-card[data-type="image"] .preview-card-media{aspect-ratio:4/5}
-    @media(max-width:700px){.preview-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.preview-gallery-heading h3{font-size:1.1rem}.preview-back{font-size:.8rem;padding:8px 10px}}
+
+/* Ambient particle layer + pointer interaction */
+body{isolation:isolate}
+#particle-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.42}
+.cursor-ring,.cursor-dot{position:fixed;left:0;top:0;z-index:9998;pointer-events:none;border-radius:50%;opacity:0;translate:-50% -50%;transition:opacity .2s,width .28s cubic-bezier(.2,.8,.2,1),height .28s cubic-bezier(.2,.8,.2,1),background .25s,border-color .25s}
+body.cursor-on{cursor:none}
+body.cursor-on .cursor-ring,body.cursor-on .cursor-dot{opacity:1}
+.cursor-ring{width:38px;height:38px;margin:0;border:1.5px solid var(--ink);display:grid;place-items:center;mix-blend-mode:difference}
+.cursor-dot{width:6px;height:6px;margin:0;background:var(--yellow);box-shadow:0 0 12px #ffcb05aa}
+.cursor-ring.is-hover{width:58px;height:58px;background:#ffcb0526;border-color:var(--yellow)}
+.cursor-ring.is-play{width:78px;height:78px;background:#ffcb05d9;border-color:var(--yellow);box-shadow:0 0 35px #ffcb0570}
+.cursor-ring.is-down{width:28px;height:28px}
+.cursor-label{font:900 10px 'DM Sans',sans-serif;letter-spacing:.12em;color:var(--ink);opacity:0;transition:opacity .18s}
+.cursor-ring.is-play .cursor-label{opacity:1}
+.project-card.current:hover{filter:brightness(1.08);box-shadow:0 30px 60px #59470070}
+.project-card:not(.current):hover{opacity:.82;filter:brightness(1.1)}
+.service-card-redesign:hover,.contact-card:hover,.name-card:hover{box-shadow:0 16px 38px #17181120}
+.pill,.round,.filters button,.tool-chip,.service-card-redesign,.contact-card,.name-card{transition-timing-function:cubic-bezier(.2,.8,.2,1)}
+html[data-theme=dark] #particle-canvas{opacity:.58}
+@media(pointer:coarse),(prefers-reduced-motion:reduce){#particle-canvas,.cursor-ring,.cursor-dot{display:none!important}body.cursor-on{cursor:auto}}
+
   </style>
 </head>
 <body>
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
   <div class="scroll-progress" aria-hidden="true"></div>
   <header class="header wrap" data-menu-open="false">
     <a class="brand" href="#home">BRIX OLEGARIO<span>VIDEO EDITOR · AI CREATIVE</span></a>
@@ -347,7 +367,6 @@ dialog .dialog-image{display:block;max-width:100%;max-height:70vh;margin:16px au
           <button data-filter="video" aria-pressed="false">Video Editing</button>
           <button data-filter="graphic" aria-pressed="false">Graphic Design</button>
           <button data-filter="poster" aria-pressed="false">Product Posters</button>
-          <button class="preview-all" id="play-all-previews" type="button" aria-label="Show all project previews">▶ Play all previews</button>
         </div>
       </div>
       <div class="work-body">
@@ -360,10 +379,6 @@ dialog .dialog-image{display:block;max-width:100%;max-height:70vh;margin:16px au
           <div class="project-meta"><span id="project-format">VIDEO PROJECT</span></div>
           <button class="pill black" id="view-project">Watch project</button>
         </article>
-      </div>
-      <div class="preview-gallery" id="previewGallery" hidden>
-        <div class="preview-gallery-heading"><h3>All project previews</h3><button class="preview-back" id="back-to-carousel" type="button">← Back to carousel</button></div>
-        <div class="preview-grid" id="previewGrid" aria-label="All project video previews"></div>
       </div>
     </section>
 
@@ -431,22 +446,16 @@ dialog .dialog-image{display:block;max-width:100%;max-height:70vh;margin:16px au
     {category:'poster',type:'image',media:'workimages/work4.jpg',title:'Product Poster 04',description:'A product poster sample from my portfolio.'}
   ];
   const LABELS={ai:'AI Creatives',ugc:'UGC Ads',video:'Video Editing',graphic:'Graphic Design',poster:'Product Posters'};
-  let active='all',current=0,entries=[],cards=[];
-  const stage=document.querySelector('#cards'),workBody=document.querySelector('.work-body'),previewGallery=document.querySelector('#previewGallery'),previewGrid=document.querySelector('#previewGrid');let suppressCardClick=false;
-  let previewsUserStarted=false;
+  let active='ai',current=0,entries=[],cards=[];
+  const stage=document.querySelector('#cards');let suppressCardClick=false;
   function filtered(){return active==='all'?PROJECTS:PROJECTS.filter(p=>p.category===active)}
-  function startCardPreview(card,p){if(p.type!=='youtube'||card.querySelector('.card-preview-video'))return;const frame=document.createElement('iframe');frame.className='card-preview-video';frame.title=`Muted preview: ${p.title}`;frame.allow='autoplay; encrypted-media; picture-in-picture';frame.loading='eager';frame.referrerPolicy='strict-origin-when-cross-origin';const origin=location.protocol==='file:'?'':`&origin=${encodeURIComponent(location.origin)}`;frame.src=`https://www.youtube-nocookie.com/embed/${p.media}?autoplay=1&mute=1&controls=0&loop=1&playlist=${p.media}&playsinline=1&enablejsapi=1&modestbranding=1&rel=0&iv_load_policy=3${origin}`;card.append(frame);frame.addEventListener('load',()=>{if(previewsUserStarted){sendPlayerCommand(frame,'mute');sendPlayerCommand(frame,'playVideo')}})}
-  function sendPlayerCommand(frame,func){if(!frame.isConnected||!frame.contentWindow)return;frame.contentWindow.postMessage(JSON.stringify({event:'command',func,args:[]}), '*')}
-  function buildPreviewGrid(){previewGrid.replaceChildren();const cardsToShow=filtered();const frames=[];cardsToShow.forEach((p,i)=>{const item=document.createElement('article');item.className='preview-card';item.dataset.type=p.type;const media=document.createElement('div');media.className='preview-card-media';if(p.type==='youtube'){const frame=document.createElement('iframe');frame.className='preview-grid-video';frame.title=`Muted preview: ${p.title}`;frame.allow='autoplay; encrypted-media; picture-in-picture';frame.loading='eager';frame.referrerPolicy='strict-origin-when-cross-origin';const origin=location.protocol==='file:'?'':`&origin=${encodeURIComponent(location.origin)}`;frame.src=`https://www.youtube-nocookie.com/embed/${p.media}?autoplay=1&mute=1&controls=0&loop=1&playlist=${p.media}&playsinline=1&enablejsapi=1&modestbranding=1&rel=0&iv_load_policy=3${origin}`;media.append(frame);frames.push(frame);frame.addEventListener('load',()=>{if(previewsUserStarted){sendPlayerCommand(frame,'mute');sendPlayerCommand(frame,'playVideo')}})}else{const img=document.createElement('img');img.src=p.media;img.alt=p.title;img.loading='lazy';media.append(img)}const meta=document.createElement('div');meta.className='preview-card-meta';meta.innerHTML=`<strong>${p.title}</strong><span>${LABELS[p.category]}</span>`;item.append(media,meta);previewGrid.append(item)});if(previewsUserStarted)frames.forEach(frame=>{[0,350,900].forEach(delay=>setTimeout(()=>{sendPlayerCommand(frame,'mute');sendPlayerCommand(frame,'playVideo')},delay))})}
-  function playAllPreviews(){previewsUserStarted=true;stage.querySelectorAll('.card-preview-video').forEach(frame=>frame.remove());workBody.hidden=true;previewGallery.hidden=false;buildPreviewGrid();const button=document.querySelector('#play-all-previews');button.textContent='▶ Refresh all previews';button.setAttribute('aria-label','Refresh all muted video previews')}
-  document.querySelector('#play-all-previews').addEventListener('click',playAllPreviews);
-  document.querySelector('#back-to-carousel').addEventListener('click',()=>{previewGallery.hidden=true;previewGrid.replaceChildren();workBody.hidden=false;render();const button=document.querySelector('#play-all-previews');button.textContent='▶ Play all previews';button.setAttribute('aria-label','Show all project previews')});
-  function changeFilter(category,button){active=category;current=0;document.querySelectorAll('[data-filter]').forEach(b=>{const yes=b===button;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',String(yes))});render();if(!previewGallery.hidden)buildPreviewGrid()}
-  document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>changeFilter(b.dataset.filter,b)));
+  function startCardPreview(card,p){if(p.type!=='youtube'||card.querySelector('.card-preview-video'))return;const frame=document.createElement('iframe');frame.className='card-preview-video';frame.title=`Muted preview: ${p.title}`;frame.allow='autoplay; encrypted-media; picture-in-picture';frame.loading='lazy';frame.referrerPolicy='strict-origin-when-cross-origin';frame.src=`https://www.youtube-nocookie.com/embed/${p.media}?autoplay=1&mute=1&controls=0&loop=1&playlist=${p.media}&playsinline=1&modestbranding=1&rel=0&iv_load_policy=3`;card.append(frame)}
+  function changeFilter(category,button){active=category;current=0;document.querySelectorAll('[data-filter]').forEach(b=>{const yes=b===button;b.classList.toggle('active',yes);b.setAttribute('aria-pressed',String(yes))});render()}
+  document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>changeFilter(b.dataset.filter,b)));const initialFilter=document.querySelector('[data-filter="ai"]');initialFilter.classList.add('active');initialFilter.setAttribute('aria-pressed','true');
   function cardFor(p,i){const b=document.createElement('div');b.className=`project-card style-${i%6}`;b.setAttribute('role','button');b.setAttribute('tabindex','-1');b.setAttribute('aria-label',`Select ${p.title}`);b.innerHTML=`<span class="card-no">PROJECT ${String(i+1).padStart(2,'0')}</span><span class="card-circle" aria-hidden="true">▶</span><span class="card-title">${p.title}</span><span class="card-type">${p.type==='youtube'?'LIVE PREVIEW':'VIEW IMAGE'}</span>`;const img=document.createElement('img');img.className='craft-thumbnail';img.alt='';img.loading=i===0?'eager':'lazy';img.src=p.type==='youtube'?`https://img.youtube.com/vi/${p.media}/hqdefault.jpg`:p.media;img.onerror=()=>img.remove();b.prepend(img);b.addEventListener('click',()=>{if(suppressCardClick){suppressCardClick=false;return}if(b.classList.contains('current'))openProject();else{current=i;render()}});b.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();b.click()}});stage.appendChild(b);return b}
   function slotFor(i,n){if(n<=2)return i-current;let x=(i-current+n)%n;return x>n/2?x-n:x}
   let renderedFilter=null;
-  function render(){const nextEntries=filtered();if(active!==renderedFilter){entries=nextEntries;stage.replaceChildren();cards=entries.map(cardFor);renderedFilter=active}else{entries=nextEntries}stage.dataset.count=entries.length;document.querySelector('.gallery-bottom').hidden=entries.length<2;if(!entries.length)return;cards.forEach((card,i)=>{const slot=slotFor(i,entries.length),oldSlot=Number(card.dataset.slot??slot),teleport=Math.abs(slot-oldSlot)>2;if(teleport)card.classList.add('teleport');card.dataset.slot=slot;card.style.setProperty('--slot',slot);card.style.setProperty('--scale',slot===0?1:Math.abs(slot)===1?.82:.66);card.style.setProperty('--shade',slot===0?0:Math.abs(slot)===1?.25:.5);card.style.zIndex=10-Math.abs(slot);card.classList.toggle('current',slot===0);card.classList.toggle('side',slot!==0);card.tabIndex=slot===0?0:-1;const wantsPreview=entries[i].type==='youtube';if(wantsPreview)startCardPreview(card,entries[i]);else card.querySelector('.card-preview-video')?.remove();if(teleport){card.getBoundingClientRect();card.classList.remove('teleport')}});const p=entries[current];document.querySelector('#gallery-count').textContent=`${String(current+1).padStart(2,'0')} / ${String(entries.length).padStart(2,'0')}`;document.querySelector('#project-category').textContent=LABELS[p.category];document.querySelector('#project-title').textContent=p.title;document.querySelector('#project-sub').textContent=`${LABELS[p.category]} · Portfolio project`;document.querySelector('#project-description').textContent=p.description;document.querySelector('#project-format').textContent=p.type==='youtube'?(p.short?'9:16 · SHORT-FORM VIDEO':'16:9 · VIDEO PROJECT'):'IMAGE PROJECT';}
+  function render(){const nextEntries=filtered();if(active!==renderedFilter){entries=nextEntries;stage.replaceChildren();cards=entries.map(cardFor);renderedFilter=active}else{entries=nextEntries}stage.dataset.count=entries.length;document.querySelector('.gallery-bottom').hidden=entries.length<2;if(!entries.length)return;cards.forEach((card,i)=>{const slot=slotFor(i,entries.length),oldSlot=Number(card.dataset.slot??slot),teleport=Math.abs(slot-oldSlot)>2;if(teleport)card.classList.add('teleport');card.dataset.slot=slot;card.style.setProperty('--slot',slot);card.style.setProperty('--scale',slot===0?1:Math.abs(slot)===1?.82:.66);card.style.setProperty('--shade',slot===0?0:Math.abs(slot)===1?.25:.5);card.style.zIndex=10-Math.abs(slot);card.classList.toggle('current',slot===0);card.classList.toggle('side',slot!==0);card.tabIndex=slot===0?0:-1;const wantsPreview=entries[i].type==='youtube'&&Math.abs(slot)<=1;if(wantsPreview)startCardPreview(card,entries[i]);else card.querySelector('.card-preview-video')?.remove();if(teleport){card.getBoundingClientRect();card.classList.remove('teleport')}});const p=entries[current];document.querySelector('#gallery-count').textContent=`${String(current+1).padStart(2,'0')} / ${String(entries.length).padStart(2,'0')}`;document.querySelector('#project-category').textContent=LABELS[p.category];document.querySelector('#project-title').textContent=p.title;document.querySelector('#project-sub').textContent=`${LABELS[p.category]} · Portfolio project`;document.querySelector('#project-description').textContent=p.description;document.querySelector('#project-format').textContent=p.type==='youtube'?(p.short?'9:16 · SHORT-FORM VIDEO':'16:9 · VIDEO PROJECT'):'IMAGE PROJECT';}
   function move(n){if(entries.length<2)return;current=(current+n+entries.length)%entries.length;render()}
   document.querySelector('#prev').addEventListener('click',()=>move(-1));document.querySelector('#next').addEventListener('click',()=>move(1));
   let pointer=null;stage.addEventListener('pointerdown',e=>{pointer={x:e.clientX,y:e.clientY}});stage.addEventListener('pointerup',e=>{if(!pointer)return;const dx=e.clientX-pointer.x,dy=e.clientY-pointer.y;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)){suppressCardClick=true;move(dx<0?1:-1);setTimeout(()=>{suppressCardClick=false},250)}pointer=null});stage.addEventListener('pointercancel',()=>pointer=null);stage.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();move(e.key==='ArrowRight'?1:-1);cards[current]?.focus({preventScroll:true})}});
@@ -495,6 +504,19 @@ dialog .dialog-image{display:block;max-width:100%;max-height:70vh;margin:16px au
     toolsMarquee.addEventListener('wheel',e=>{if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){scrollPos+=e.deltaY;e.preventDefault()}},{passive:false});
     requestAnimationFrame(tick);
   }
+  // Soft animated particles, kept behind the page and disabled for reduced motion/touch.
+  const particleCanvas=document.querySelector('#particle-canvas');
+  const particleCtx=particleCanvas&&particleCanvas.getContext('2d');
+  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer=matchMedia('(pointer: fine)').matches;
+  if(particleCtx&&!reducedMotion&&!matchMedia('(pointer: coarse)').matches){
+    let pw=0,ph=0,ratio=1,particles=[],pointer={x:-1000,y:-1000};
+    function resizeParticles(){ratio=Math.min(devicePixelRatio||1,1.5);pw=innerWidth;ph=innerHeight;particleCanvas.width=pw*ratio;particleCanvas.height=ph*ratio;particleCanvas.style.width=pw+'px';particleCanvas.style.height=ph+'px';particleCtx.setTransform(ratio,0,0,ratio,0,0);const count=Math.min(72,Math.max(30,Math.round(pw*ph/18000)));particles=Array.from({length:count},()=>({x:Math.random()*pw,y:Math.random()*ph,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:Math.random()*1.8+.7,a:Math.random()*.4+.16}))}
+    function drawParticles(){particleCtx.clearRect(0,0,pw,ph);const dark=document.documentElement.dataset.theme==='dark',color=dark?'255,203,5':'170,130,0';for(let i=0;i<particles.length;i++){const p=particles[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>pw)p.vx*=-1;if(p.y<0||p.y>ph)p.vy*=-1;const dx=p.x-pointer.x,dy=p.y-pointer.y,d=Math.hypot(dx,dy);if(d<120&&d>0){p.x+=dx/d*.32;p.y+=dy/d*.32}particleCtx.beginPath();particleCtx.arc(p.x,p.y,p.r,0,Math.PI*2);particleCtx.fillStyle='rgba('+color+','+p.a+')';particleCtx.fill();for(let j=i+1;j<particles.length;j++){const q=particles[j],dist=Math.hypot(p.x-q.x,p.y-q.y);if(dist<105){particleCtx.beginPath();particleCtx.moveTo(p.x,p.y);particleCtx.lineTo(q.x,q.y);particleCtx.strokeStyle='rgba('+color+','+(.1*(1-dist/105))+')';particleCtx.lineWidth=.7;particleCtx.stroke()}}}if(!document.hidden)requestAnimationFrame(drawParticles)}
+    resizeParticles();requestAnimationFrame(drawParticles);addEventListener('resize',resizeParticles,{passive:true});addEventListener('pointermove',e=>{pointer.x=e.clientX;pointer.y=e.clientY},{passive:true});document.addEventListener('visibilitychange',()=>{if(!document.hidden)requestAnimationFrame(drawParticles)});
+  }
+  // Desktop cursor ring: magnetic-feeling hover response, without blocking clicks.
+  if(finePointer&&!reducedMotion){const ring=document.createElement('span'),dot=document.createElement('span');ring.className='cursor-ring';ring.innerHTML='<span class="cursor-label">VIEW</span>';dot.className='cursor-dot';document.body.append(ring,dot);document.addEventListener('pointermove',e=>{document.body.classList.add('cursor-on');ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px'},{passive:true});document.addEventListener('pointerover',e=>{const target=e.target.closest('a,button,.project-card,.tool-chip');ring.classList.toggle('is-hover',!!target);ring.classList.toggle('is-play',!!target&&target.classList.contains('project-card'))});document.addEventListener('pointerdown',()=>ring.classList.add('is-down'));document.addEventListener('pointerup',()=>ring.classList.remove('is-down'));document.addEventListener('pointerleave',()=>document.body.classList.remove('cursor-on'))}
   render();showStep(0);
   </script>
 </body>
